@@ -14,6 +14,10 @@
 	.global __aeabi_idivmod
 	.global __aeabi_uldivmod
 	.global __aeabi_ldivmod
+	.global __divdi3
+	.global __moddi3
+	.global __udivdi3
+	.global __umoddi3
 
 @ ---- local core: r0/r1 -> quot r0, rem r1 ----
 @ 32-bit restoring division, fixed 32 iterations.
@@ -126,3 +130,32 @@ __aeabi_ldivmod:
 	rsbmi	r2, r2, #0
 	rscmi	r3, r3, #0
 	ldmfd	sp!, {r4, r5, pc}
+
+@ ---- compiler-rt spellings of the same four operations ----
+@ LLVM does not always emit the AEABI names. Anything that divides or prints
+@ an Int64 - and Mojo's Int is 64-bit, so that is any Int64 at all reaching
+@ String() - comes out as __moddi3/__divdi3 instead, and the link then fails
+@ on a symbol the runtime already implements under another name.
+@ __aeabi_{u,}ldivmod leaves quotient in r0,r1 and remainder in r2,r3, so the
+@ quotient forms are a plain tail call and the remainder forms just move the
+@ pair down.
+
+__divdi3:
+	b	__aeabi_ldivmod		@ quotient already in r0,r1
+
+__udivdi3:
+	b	uldiv_core		@ quotient already in r0,r1
+
+__moddi3:
+	stmfd	sp!, {lr}
+	bl	__aeabi_ldivmod
+	mov	r0, r2			@ remainder lo
+	mov	r1, r3			@ remainder hi
+	ldmfd	sp!, {pc}
+
+__umoddi3:
+	stmfd	sp!, {lr}
+	bl	uldiv_core
+	mov	r0, r2
+	mov	r1, r3
+	ldmfd	sp!, {pc}
