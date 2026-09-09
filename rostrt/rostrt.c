@@ -164,10 +164,13 @@ void KGEN_CompilerRT_SetArgV(int argc, void *argv)
     (void)argv;
 }
 
-void KGEN_CompilerRT_PrintStackTraceOnFault(void)
-{
-    puts_ro("rostrt: fault\n");
-}
+/* Mojo calls this once during start-up to install a fault handler, not when a
+ * fault happens - so printing here made every program announce "rostrt: fault"
+ * before it had done anything, which reads as a crash in a program that is
+ * fine. There is nothing to install: RISC OS reports aborts itself, and the
+ * emulator's fault trap catches them with the register file intact, which is
+ * more than a stack trace would give us. Silence is the honest stub. */
+void KGEN_CompilerRT_PrintStackTraceOnFault(void) {}
 
 void KGEN_CompilerRT_DestroyGlobals(void) {}
 
