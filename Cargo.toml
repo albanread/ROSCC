@@ -1,0 +1,8 @@
+[package]
+name = "roscc"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+llvm-sys = "221.1.0"
