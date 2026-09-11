@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* IIC_Control (SWI &240): Control IIC devices */
+/* IIC_Control (SWI &240). See PRM 1-979. */
 void IIC_Control(void *address, void *block, void *block2)
 {
     register void * reg0 __asm("r0") = address;

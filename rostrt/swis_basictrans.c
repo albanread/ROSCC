@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* BASICTrans_Error (SWI &42C81): Copy translated error string to buffer */
+/* BASICTrans_Error (SWI &42C81). See PRM 4-243. */
 void BASICTrans_Error(int unique, void *buffer)
 {
     register int reg0 __asm("r0") = unique;
@@ -10,7 +10,7 @@ void BASICTrans_Error(int unique, void *buffer)
     __asm__ volatile("swi 0x42C81" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* BASICTrans_HELP (SWI &42C80): Interpret, translate if required, and print HELP messages */
+/* BASICTrans_HELP (SWI &42C80). See PRM 4-242. */
 void BASICTrans_HELP(void *ptr, void *ptr2, void *ptr3)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -19,7 +19,7 @@ void BASICTrans_HELP(void *ptr, void *ptr2, void *ptr3)
     __asm__ volatile("swi 0x42C80" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* BASICTrans_Message (SWI &42C82): Translate and print miscellaneous message */
+/* BASICTrans_Message (SWI &42C82). See PRM 4-244. */
 void BASICTrans_Message(int message, int message2)
 {
     register int reg0 __asm("r0") = message;

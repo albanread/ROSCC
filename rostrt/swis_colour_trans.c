@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* ColourTrans_ColourNumberToGCOL (SWI &4074D): Translates a colour number to a GCOL */
+/* ColourTrans_ColourNumberToGCOL (SWI &4074D). See PRM 3-367. */
 int ColourTrans_ColourNumberToGCOL(int colour)
 {
     register int reg0 __asm("r0") = colour;
@@ -10,7 +10,7 @@ int ColourTrans_ColourNumberToGCOL(int colour)
     return reg0;
 }
 
-/* ColourTrans_ConvertCIEToRGB (SWI &40756): Converts industry standard CIE colours to RISC OS RGB colours */
+/* ColourTrans_ConvertCIEToRGB (SWI &40756). See PRM 3-381. */
 int ColourTrans_ConvertCIEToRGB(int value, int value2, int value3, int *out_green, int *out_blue)
 {
     register int reg0 __asm("r0") = value;
@@ -22,7 +22,7 @@ int ColourTrans_ConvertCIEToRGB(int value, int value2, int value3, int *out_gree
     return reg0;
 }
 
-/* ColourTrans_ConvertCMYKToRGB (SWI &4075B): Converts from the CMYK model to RISC OS RGB colours */
+/* ColourTrans_ConvertCMYKToRGB (SWI &4075B). See PRM 3-391. */
 int ColourTrans_ConvertCMYKToRGB(int cyan, int magenta, int yellow, int key, int *out_green, int *out_blue)
 {
     register int reg0 __asm("r0") = cyan;
@@ -35,7 +35,7 @@ int ColourTrans_ConvertCMYKToRGB(int cyan, int magenta, int yellow, int key, int
     return reg0;
 }
 
-/* ColourTrans_ConvertDeviceColour (SWI &40753): Converts a device colour to a standard colour */
+/* ColourTrans_ConvertDeviceColour (SWI &40753). See PRM 3-376. */
 int ColourTrans_ConvertDeviceColour(int colour, void *ptr)
 {
     register int reg1 __asm("r1") = colour;
@@ -45,7 +45,7 @@ int ColourTrans_ConvertDeviceColour(int colour, void *ptr)
     return reg2;
 }
 
-/* ColourTrans_ConvertDevicePalette (SWI &40754): Converts a device palette to standard colours */
+/* ColourTrans_ConvertDevicePalette (SWI &40754). See PRM 3-377. */
 void ColourTrans_ConvertDevicePalette(int count, void *colour, void *colour2, void *ptr)
 {
     register int reg0 __asm("r0") = count;
@@ -55,7 +55,7 @@ void ColourTrans_ConvertDevicePalette(int count, void *colour, void *colour2, vo
     __asm__ volatile("swi 0x40754" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* ColourTrans_ConvertHSVToRGB (SWI &40759): Converts hue, saturation and value into corresponding RISC OS RGB colours */
+/* ColourTrans_ConvertHSVToRGB (SWI &40759). See PRM 3-387. */
 int ColourTrans_ConvertHSVToRGB(int hue, int saturation, int value, int *out_green, int *out_blue)
 {
     register int reg0 __asm("r0") = hue;
@@ -67,7 +67,7 @@ int ColourTrans_ConvertHSVToRGB(int hue, int saturation, int value, int *out_gre
     return reg0;
 }
 
-/* ColourTrans_ConvertRGBToCIE (SWI &40755): Converts RISC OS RGB colours to industry standard CIE colours */
+/* ColourTrans_ConvertRGBToCIE (SWI &40755). See PRM 3-379. */
 int ColourTrans_ConvertRGBToCIE(int red, int green, int blue, int *out_value, int *out_value2)
 {
     register int reg0 __asm("r0") = red;
@@ -79,7 +79,7 @@ int ColourTrans_ConvertRGBToCIE(int red, int green, int blue, int *out_value, in
     return reg0;
 }
 
-/* ColourTrans_ConvertRGBToCMYK (SWI &4075A): Converts RISC OS RGB colours into the CMYK model */
+/* ColourTrans_ConvertRGBToCMYK (SWI &4075A). See PRM 3-389. */
 int ColourTrans_ConvertRGBToCMYK(int red, int green, int blue, int *out_magenta, int *out_yellow, int *out_key)
 {
     register int reg0 __asm("r0") = red;
@@ -93,7 +93,7 @@ int ColourTrans_ConvertRGBToCMYK(int red, int green, int blue, int *out_magenta,
     return reg0;
 }
 
-/* ColourTrans_ConvertRGBToHSV (SWI &40758): Converts RISC OS RGB colours into corresponding hue, saturation and value */
+/* ColourTrans_ConvertRGBToHSV (SWI &40758). See PRM 3-385. */
 int ColourTrans_ConvertRGBToHSV(int red, int green, int blue, int *out_saturation, int *out_value)
 {
     register int reg0 __asm("r0") = red;
@@ -105,7 +105,7 @@ int ColourTrans_ConvertRGBToHSV(int red, int green, int blue, int *out_saturatio
     return reg0;
 }
 
-/* ColourTrans_GCOLToColourNumber (SWI &4074C): Translates a GCOL to a colour number */
+/* ColourTrans_GCOLToColourNumber (SWI &4074C). See PRM 3-366. */
 int ColourTrans_GCOLToColourNumber(int gcol)
 {
     register int reg0 __asm("r0") = gcol;
@@ -113,25 +113,25 @@ int ColourTrans_GCOLToColourNumber(int gcol)
     return reg0;
 }
 
-/* ColourTrans_GenerateTable (SWI &40763): This call is exactly the same as ColourTrans_SelectTable (see page 3-344), except that it */
+/* ColourTrans_GenerateTable (SWI &40763). See PRM 3-406. */
 void ColourTrans_GenerateTable(void)
 {
     __asm__ volatile("swi 0x40763" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourTrans_InvalidateCache (SWI &40750): Informs ColourTrans that the palette has been changed by some other means */
+/* ColourTrans_InvalidateCache (SWI &40750). See PRM 3-372. */
 void ColourTrans_InvalidateCache(void)
 {
     __asm__ volatile("swi 0x40750" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourTrans_MiscOp (SWI &4075F): This call is for internal use only. It is not available in RISC OS 2 */
+/* ColourTrans_MiscOp (SWI &4075F). See PRM 3-399. */
 void ColourTrans_MiscOp(void)
 {
     __asm__ volatile("swi 0x4075F" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourTrans_ReadCalibration (SWI &40752): Reads the calibration table for the screen */
+/* ColourTrans_ReadCalibration (SWI &40752). See PRM 3-375. */
 int ColourTrans_ReadCalibration(void *size)
 {
     register void * reg0 __asm("r0") = size;
@@ -140,7 +140,7 @@ int ColourTrans_ReadCalibration(void *size)
     return reg1;
 }
 
-/* ColourTrans_ReturnColourNumber (SWI &40744): Gets the closest colour for a palette entry */
+/* ColourTrans_ReturnColourNumber (SWI &40744). See PRM 3-352. */
 int ColourTrans_ReturnColourNumber(int palette_entry)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -148,7 +148,7 @@ int ColourTrans_ReturnColourNumber(int palette_entry)
     return reg0;
 }
 
-/* ColourTrans_ReturnColourNumberForMode (SWI &40746): Gets the closest colour for a palette entry */
+/* ColourTrans_ReturnColourNumberForMode (SWI &40746). See PRM 3-355. */
 int ColourTrans_ReturnColourNumberForMode(int palette_entry, int mode, void *palette)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -158,7 +158,7 @@ int ColourTrans_ReturnColourNumberForMode(int palette_entry, int mode, void *pal
     return reg0;
 }
 
-/* ColourTrans_ReturnFontColours (SWI &4074E): Finds the best range of anti-alias colours to match a pair of palette entries */
+/* ColourTrans_ReturnFontColours (SWI &4074E). See PRM 3-368. */
 int ColourTrans_ReturnFontColours(int font, int palette_entry, int palette_entry2, int offset, int *out_offset)
 {
     register int reg0 __asm("r0") = font;
@@ -170,7 +170,7 @@ int ColourTrans_ReturnFontColours(int font, int palette_entry, int palette_entry
     return reg2;
 }
 
-/* ColourTrans_ReturnGCOL (SWI &40742): Gets the closest GCOL for a palette entry */
+/* ColourTrans_ReturnGCOL (SWI &40742). See PRM 3-348. */
 int ColourTrans_ReturnGCOL(int palette_entry)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -178,7 +178,7 @@ int ColourTrans_ReturnGCOL(int palette_entry)
     return reg0;
 }
 
-/* ColourTrans_ReturnGCOLForMode (SWI &40745): Gets the closest GCOL for a palette entry */
+/* ColourTrans_ReturnGCOLForMode (SWI &40745). See PRM 3-353. */
 int ColourTrans_ReturnGCOLForMode(int palette_entry, int mode, void *palette)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -188,7 +188,7 @@ int ColourTrans_ReturnGCOLForMode(int palette_entry, int mode, void *palette)
     return reg0;
 }
 
-/* ColourTrans_ReturnOppColourNumber (SWI &40749): Gets the furthest colour for a palette entry */
+/* ColourTrans_ReturnOppColourNumber (SWI &40749). See PRM 3-361. */
 int ColourTrans_ReturnOppColourNumber(int palette_entry)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -196,7 +196,7 @@ int ColourTrans_ReturnOppColourNumber(int palette_entry)
     return reg0;
 }
 
-/* ColourTrans_ReturnOppColourNumberForMode (SWI &4074B): Gets the furthest colour for a palette entry */
+/* ColourTrans_ReturnOppColourNumberForMode (SWI &4074B). See PRM 3-364. */
 int ColourTrans_ReturnOppColourNumberForMode(int palette_entry, int mode, void *palette)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -206,7 +206,7 @@ int ColourTrans_ReturnOppColourNumberForMode(int palette_entry, int mode, void *
     return reg0;
 }
 
-/* ColourTrans_ReturnOppGCOL (SWI &40747): Gets the furthest GCOL for a palette entry */
+/* ColourTrans_ReturnOppGCOL (SWI &40747). See PRM 3-357. */
 int ColourTrans_ReturnOppGCOL(int palette_entry)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -214,7 +214,7 @@ int ColourTrans_ReturnOppGCOL(int palette_entry)
     return reg0;
 }
 
-/* ColourTrans_ReturnOppGCOLForMode (SWI &4074A): Gets the furthest GCOL for a palette entry */
+/* ColourTrans_ReturnOppGCOLForMode (SWI &4074A). See PRM 3-362. */
 int ColourTrans_ReturnOppGCOLForMode(int palette_entry, int mode, void *palette)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -224,14 +224,14 @@ int ColourTrans_ReturnOppGCOLForMode(int palette_entry, int mode, void *palette)
     return reg0;
 }
 
-/* ColourTrans_SetCalibration (SWI &40751): Sets the calibration table for the screen */
+/* ColourTrans_SetCalibration (SWI &40751). See PRM 3-374. */
 void ColourTrans_SetCalibration(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
     __asm__ volatile("swi 0x40751" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourTrans_SetFontColours (SWI &4074F): Sets the best range of anti-alias colours to match a pair of palette entries */
+/* ColourTrans_SetFontColours (SWI &4074F). See PRM 3-370. */
 int ColourTrans_SetFontColours(int font, int palette_entry, int palette_entry2, int offset, int *out_offset)
 {
     register int reg0 __asm("r0") = font;
@@ -243,7 +243,7 @@ int ColourTrans_SetFontColours(int font, int palette_entry, int palette_entry2, 
     return reg2;
 }
 
-/* ColourTrans_SetOppTextColour (SWI &40762): Changes the text foreground or background colour to a GCOL number */
+/* ColourTrans_SetOppTextColour (SWI &40762). See PRM 3-403. */
 int ColourTrans_SetOppTextColour(int palette_entry, int colour)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -252,7 +252,7 @@ int ColourTrans_SetOppTextColour(int palette_entry, int colour)
     return reg0;
 }
 
-/* ColourTrans_SetTextColour (SWI &40761): Changes the text foreground or background colour to a GCOL number */
+/* ColourTrans_SetTextColour (SWI &40761). See PRM 3-401. */
 int ColourTrans_SetTextColour(int palette_entry, int colour)
 {
     register int reg0 __asm("r0") = palette_entry;
@@ -261,7 +261,7 @@ int ColourTrans_SetTextColour(int palette_entry, int colour)
     return reg0;
 }
 
-/* ColourTrans_WriteCalibrationToFile (SWI &40757): Saves the current calibration to a file */
+/* ColourTrans_WriteCalibrationToFile (SWI &40757). See PRM 3-383. */
 void ColourTrans_WriteCalibrationToFile(int flags, int file)
 {
     register int reg0 __asm("r0") = flags;
@@ -269,7 +269,7 @@ void ColourTrans_WriteCalibrationToFile(int flags, int file)
     __asm__ volatile("swi 0x40757" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourTrans_WriteLoadingsToFile (SWI &40760): Writes a * Command to a file that will set the ColourTrans error loadings */
+/* ColourTrans_WriteLoadingsToFile (SWI &40760). See PRM 3-400. */
 void ColourTrans_WriteLoadingsToFile(int file)
 {
     register int reg1 __asm("r1") = file;

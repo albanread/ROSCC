@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* NetFS_ConvertDate (SWI &4004B): Converts a file server time and date to a RISC OS time and date */
+/* NetFS_ConvertDate (SWI &4004B). See PRM 2-364. */
 void NetFS_ConvertDate(void *ptr, void *buffer)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -10,7 +10,7 @@ void NetFS_ConvertDate(void *ptr, void *buffer)
     __asm__ volatile("swi 0x4004B" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_DoFSOp (SWI &40048): Commands the current file server to perform an operation */
+/* NetFS_DoFSOp (SWI &40048). See PRM 2-358. */
 int NetFS_DoFSOp(int file, void *buffer, void *count, void *size)
 {
     register int reg0 __asm("r0") = file;
@@ -21,13 +21,13 @@ int NetFS_DoFSOp(int file, void *buffer, void *count, void *size)
     return reg0;
 }
 
-/* NetFS_EnableCache (SWI &40051): *AddFS adds a remote file server’s disc to the list of file servers’ discs that are known to */
+/* NetFS_EnableCache (SWI &40051). See PRM 2-376. */
 void NetFS_EnableCache(void)
 {
     __asm__ volatile("swi 0x40051" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_EnumerateFS (SWI &4004A): Lists all file servers to which the NetFS software is currently logged on */
+/* NetFS_EnumerateFS (SWI &4004A). See PRM 2-362. */
 int NetFS_EnumerateFS(int offset, void *buffer, void *size, int count, int *out_count)
 {
     register int reg0 __asm("r0") = offset;
@@ -39,7 +39,7 @@ int NetFS_EnumerateFS(int offset, void *buffer, void *size, int count, int *out_
     return reg0;
 }
 
-/* NetFS_EnumerateFSContexts (SWI &4004E): Lists all the entries in the list of file servers to which NetFS is currently logged on */
+/* NetFS_EnumerateFSContexts (SWI &4004E). See PRM 2-370. */
 int NetFS_EnumerateFSContexts(int entry, void *buffer, void *count, int count2, int *out_count)
 {
     register int reg0 __asm("r0") = entry;
@@ -51,7 +51,7 @@ int NetFS_EnumerateFSContexts(int entry, void *buffer, void *count, int count2, 
     return reg0;
 }
 
-/* NetFS_EnumerateFSList (SWI &40049): Lists all file servers of which the NetFS software currently knows */
+/* NetFS_EnumerateFSList (SWI &40049). See PRM 2-360. */
 int NetFS_EnumerateFSList(int offset, void *buffer, void *size, int count, int *out_count)
 {
     register int reg0 __asm("r0") = offset;
@@ -63,13 +63,13 @@ int NetFS_EnumerateFSList(int offset, void *buffer, void *size, int count, int *
     return reg0;
 }
 
-/* NetFS_ReadCurrentContext (SWI &40044): Unimplemented */
+/* NetFS_ReadCurrentContext (SWI &40044). See PRM 2-354. */
 void NetFS_ReadCurrentContext(void)
 {
     __asm__ volatile("swi 0x40044" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_ReadFSName (SWI &40042): Reads the name of the your current file server */
+/* NetFS_ReadFSName (SWI &40042). See PRM 2-352. */
 int NetFS_ReadFSName(void *buffer, void *size)
 {
     register void * reg1 __asm("r1") = buffer;
@@ -79,7 +79,7 @@ int NetFS_ReadFSName(void *buffer, void *size)
     return reg0;
 }
 
-/* NetFS_ReadFSNumber (SWI &40040): Returns the full station number of your current file server */
+/* NetFS_ReadFSNumber (SWI &40040). See PRM 2-350. */
 int NetFS_ReadFSNumber(int *out_net)
 {
     register int reg0 __asm("r0");
@@ -89,7 +89,7 @@ int NetFS_ReadFSNumber(int *out_net)
     return reg0;
 }
 
-/* NetFS_ReadFSTimeouts (SWI &40046): Reads the current values for timeouts used by NetFS */
+/* NetFS_ReadFSTimeouts (SWI &40046). See PRM 2-356. */
 int NetFS_ReadFSTimeouts(int *out_transmit, int *out_machine, int *out_machine2, int *out_receive, int *out_broadcast)
 {
     register int reg0 __asm("r0");
@@ -107,7 +107,7 @@ int NetFS_ReadFSTimeouts(int *out_transmit, int *out_machine, int *out_machine2,
     return reg0;
 }
 
-/* NetFS_ReadUserId (SWI &4004F): Returns the current user ID if logged on to the current file server */
+/* NetFS_ReadUserId (SWI &4004F). See PRM 2-372. */
 void NetFS_ReadUserId(void *buffer, void *count)
 {
     register void * reg1 __asm("r1") = buffer;
@@ -115,20 +115,20 @@ void NetFS_ReadUserId(void *buffer, void *count)
     __asm__ volatile("swi 0x4004F" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_SetCurrentContext (SWI &40045): Unimplemented */
+/* NetFS_SetCurrentContext (SWI &40045). See PRM 2-355. */
 void NetFS_SetCurrentContext(void)
 {
     __asm__ volatile("swi 0x40045" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_SetFSName (SWI &40043): Sets by name the file server used as your current one */
+/* NetFS_SetFSName (SWI &40043). See PRM 2-353. */
 void NetFS_SetFSName(void *buffer)
 {
     register void * reg0 __asm("r0") = buffer;
     __asm__ volatile("swi 0x40043" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_SetFSNumber (SWI &40041): Sets the full station number used as the current file server */
+/* NetFS_SetFSNumber (SWI &40041). See PRM 2-351. */
 void NetFS_SetFSNumber(int station, int net)
 {
     register int reg0 __asm("r0") = station;
@@ -136,7 +136,7 @@ void NetFS_SetFSNumber(int station, int net)
     __asm__ volatile("swi 0x40041" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetFS_UpdateFSList (SWI &4004D): Adds names of discs to the list of names held by NetFS */
+/* NetFS_UpdateFSList (SWI &4004D). See PRM 2-368. */
 void NetFS_UpdateFSList(int station, int net)
 {
     register int reg0 __asm("r0") = station;

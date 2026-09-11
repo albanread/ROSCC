@@ -2,69 +2,69 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* ADFS_ControllerType (SWI &40248): Returns the controller type of a drive */
+/* ADFS_ControllerType (SWI &40248). See PRM 2-294. */
 void ADFS_ControllerType(int drive)
 {
     register int reg0 __asm("r0") = drive;
     __asm__ volatile("swi 0x40248" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_DescribeDisc (SWI &40245): Calls FileCore_DescribeDisc */
+/* ADFS_DescribeDisc (SWI &40245). See PRM 2-290. */
 void ADFS_DescribeDisc(void)
 {
     __asm__ volatile("swi 0x40245" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_DiscOp (SWI &40240): Calls FileCore_DiscOp */
+/* ADFS_DiscOp (SWI &40240). See PRM 2-283. */
 void ADFS_DiscOp(void)
 {
     __asm__ volatile("swi 0x40240" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_Drives (SWI &40242): Calls FileCore_Drives */
+/* ADFS_Drives (SWI &40242). See PRM 2-286. */
 void ADFS_Drives(void)
 {
     __asm__ volatile("swi 0x40242" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_ECCSAndRetries (SWI &40250): For internal use only */
+/* ADFS_ECCSAndRetries (SWI &40250). See PRM 2-303. */
 void ADFS_ECCSAndRetries(void)
 {
     __asm__ volatile("swi 0x40250" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_FlpProcessDCB (SWI &40247): For internal use only */
+/* ADFS_FlpProcessDCB (SWI &40247). See PRM 2-293. */
 void ADFS_FlpProcessDCB(void)
 {
     __asm__ volatile("swi 0x40247" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_FreeSpace (SWI &40243): Calls FileCore_FreeSpace */
+/* ADFS_FreeSpace (SWI &40243). See PRM 2-287. */
 void ADFS_FreeSpace(void)
 {
     __asm__ volatile("swi 0x40243" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_FreeSpace64 (SWI &40252): Calls FileCore_FreeSpace64 */
+/* ADFS_FreeSpace64 (SWI &40252). See PRM 5a-189. */
 void ADFS_FreeSpace64(void)
 {
     __asm__ volatile("swi 0x40252" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_LockIDE (SWI &40251): Locks/unlocks the IDE bus */
+/* ADFS_LockIDE (SWI &40251). See PRM 5a-188. */
 void ADFS_LockIDE(int flags)
 {
     register int reg0 __asm("r0") = flags;
     __asm__ volatile("swi 0x40251" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_MiscOp (SWI &4024C): Calls FileCore_MiscOp */
+/* ADFS_MiscOp (SWI &4024C). See PRM 2-302. */
 void ADFS_MiscOp(void)
 {
     __asm__ volatile("swi 0x4024C" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_Retries (SWI &40244): Sets the number of retries used for various operations */
+/* ADFS_Retries (SWI &40244). See PRM 2-288. */
 int ADFS_Retries(int mask, int value, int *out_value, int *out_value2)
 {
     register int reg0 __asm("r0") = mask;
@@ -77,13 +77,13 @@ int ADFS_Retries(int mask, int value, int *out_value, int *out_value2)
     return reg1;
 }
 
-/* ADFS_SectorDiscOp (SWI &4024D): Calls FileCore_SectorOp */
+/* ADFS_SectorDiscOp (SWI &4024D). See PRM 5a-187. */
 void ADFS_SectorDiscOp(void)
 {
     __asm__ volatile("swi 0x4024D" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ADFS_VetFormat (SWI &40246): Vets a disc format structure for achievability with the available hardware */
+/* ADFS_VetFormat (SWI &40246). See PRM 2-291. */
 void ADFS_VetFormat(void *ptr, int parameter)
 {
     register void * reg0 __asm("r0") = ptr;

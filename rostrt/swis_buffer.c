@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Buffer_Create (SWI &42940): Claims an area of memory from the RMA and registers it as a buffer */
+/* Buffer_Create (SWI &42940). See PRM 4-88. */
 void Buffer_Create(void *buffer, void *size, void *handle)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -11,14 +11,14 @@ void Buffer_Create(void *buffer, void *size, void *handle)
     __asm__ volatile("swi 0x42940" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Buffer_Deregister (SWI &42943): Deregisters a buffer */
+/* Buffer_Deregister (SWI &42943). See PRM 4-93. */
 void Buffer_Deregister(void *handle)
 {
     register void * reg0 __asm("r0") = handle;
     __asm__ volatile("swi 0x42943" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Buffer_GetInfo (SWI &42947): Returns data about the buffer */
+/* Buffer_GetInfo (SWI &42947). See PRM 4-99. */
 int Buffer_GetInfo(void *handle, int *out_buffer, int *out_offset, int *out_offset2, int *out_buffer2, int *out_count)
 {
     register void * reg0 __asm("r0") = handle;
@@ -37,7 +37,7 @@ int Buffer_GetInfo(void *handle, int *out_buffer, int *out_offset, int *out_offs
     return reg1;
 }
 
-/* Buffer_ModifyFlags (SWI &42944): Modifies a buffer’s flags word */
+/* Buffer_ModifyFlags (SWI &42944). See PRM 4-94. */
 int Buffer_ModifyFlags(void *handle, int mask, int mask2, int *out_value)
 {
     register void * reg0 __asm("r0") = handle;
@@ -48,7 +48,7 @@ int Buffer_ModifyFlags(void *handle, int mask, int mask2, int *out_value)
     return reg1;
 }
 
-/* Buffer_Register (SWI &42942): Registers an area of memory as a buffer */
+/* Buffer_Register (SWI &42942). See PRM 4-91. */
 void Buffer_Register(void *buffer, void *buffer2, void *buffer3, void *handle)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -58,14 +58,14 @@ void Buffer_Register(void *buffer, void *buffer2, void *buffer3, void *handle)
     __asm__ volatile("swi 0x42942" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Buffer_Remove (SWI &42941): Deregisters a buffer and frees its memory */
+/* Buffer_Remove (SWI &42941). See PRM 4-90. */
 void Buffer_Remove(void *handle)
 {
     register void * reg0 __asm("r0") = handle;
     __asm__ volatile("swi 0x42941" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Buffer_Threshold (SWI &42948): Sets or reads the warning threshold of the buffer */
+/* Buffer_Threshold (SWI &42948). See PRM 4-101. */
 int Buffer_Threshold(void *handle, int threshold)
 {
     register void * reg0 __asm("r0") = handle;
@@ -74,7 +74,7 @@ int Buffer_Threshold(void *handle, int threshold)
     return reg1;
 }
 
-/* Buffer_UnlinkDevice (SWI &42946): Unlinks a set of routines from the specified buffer */
+/* Buffer_UnlinkDevice (SWI &42946). See PRM 4-98. */
 void Buffer_UnlinkDevice(void *handle)
 {
     register void * reg0 __asm("r0") = handle;

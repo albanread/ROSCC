@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* FSLock_Status (SWI &44781): Returns the current lock status, and the locked filing system’s number */
+/* FSLock_Status (SWI &44781). See PRM 5a-252. */
 int FSLock_Status(int *out_locked)
 {
     register int reg0 __asm("r0");
@@ -12,7 +12,7 @@ int FSLock_Status(int *out_locked)
     return reg0;
 }
 
-/* FSLock_Version (SWI &44780): Returns information describing the FSLock module */
+/* FSLock_Version (SWI &44780). See PRM 5a-251. */
 int FSLock_Version(int *out_ptr)
 {
     register int reg0 __asm("r0");

@@ -2,21 +2,21 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* MessageTrans_CloseFile (SWI &41504): Closes a message file */
+/* MessageTrans_CloseFile (SWI &41504). See PRM 3-759. */
 void MessageTrans_CloseFile(void *message)
 {
     register void * reg0 __asm("r0") = message;
     __asm__ volatile("swi 0x41504" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* MessageTrans_CopyError (SWI &41508): Copies an error to one of the MessageTrans internal buffers */
+/* MessageTrans_CopyError (SWI &41508). See PRM 3-766. */
 void MessageTrans_CopyError(void *block)
 {
     register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x41508" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* MessageTrans_FileInfo (SWI &41500): Gives information about a message file */
+/* MessageTrans_FileInfo (SWI &41500). See PRM 3-750. */
 int MessageTrans_FileInfo(void *filename, int *out_size)
 {
     register void * reg1 __asm("r1") = filename;
@@ -27,7 +27,7 @@ int MessageTrans_FileInfo(void *filename, int *out_size)
     return reg0;
 }
 
-/* MessageTrans_MakeMenus (SWI &41503): Sets up a menu structure from a definition containing references to tokens */
+/* MessageTrans_MakeMenus (SWI &41503). See PRM 3-756. */
 void MessageTrans_MakeMenus(void *message, void *ptr, void *buffer, void *size)
 {
     register void * reg0 __asm("r0") = message;
@@ -37,7 +37,7 @@ void MessageTrans_MakeMenus(void *message, void *ptr, void *buffer, void *size)
     __asm__ volatile("swi 0x41503" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* MessageTrans_OpenFile (SWI &41501): Opens a message file */
+/* MessageTrans_OpenFile (SWI &41501). See PRM 3-752. */
 void MessageTrans_OpenFile(void *ptr, void *filename, void *buffer)
 {
     register void * reg0 __asm("r0") = ptr;

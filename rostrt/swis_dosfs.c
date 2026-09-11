@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DOSFS_DiscFormat (SWI &44B00): Fills in a disc format structure with parameters for the specified format */
+/* DOSFS_DiscFormat (SWI &44B00). See PRM 2-335. */
 void DOSFS_DiscFormat(void *ptr, int swi, int parameter, int format)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -12,7 +12,7 @@ void DOSFS_DiscFormat(void *ptr, int swi, int parameter, int format)
     __asm__ volatile("swi 0x44B00" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* DOSFS_LayoutStructure (SWI &44B01): Lays out into the specified image a set of structures for its format */
+/* DOSFS_LayoutStructure (SWI &44B01). See PRM 2-338. */
 void DOSFS_LayoutStructure(int structure, void *block, void *ptr, int file)
 {
     register int reg0 __asm("r0") = structure;

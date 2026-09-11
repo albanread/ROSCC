@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* FPEmulator_Version (SWI &40480): Returns the version number of the floating point emulator */
+/* FPEmulator_Version (SWI &40480). See PRM 4-190. */
 int FPEmulator_Version(void)
 {
     register int reg0 __asm("r0");

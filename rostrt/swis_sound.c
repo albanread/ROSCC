@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Sound_AttachNamedVoice (SWI &4018A): Attaches a named voice to a channel */
+/* Sound_AttachNamedVoice (SWI &4018A). See PRM 4-43. */
 void Sound_AttachNamedVoice(int channel, void *string)
 {
     register int reg0 __asm("r0") = channel;
@@ -10,7 +10,7 @@ void Sound_AttachNamedVoice(int channel, void *string)
     __asm__ volatile("swi 0x4018A" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_AttachVoice (SWI &40185): Attaches a voice to a channel */
+/* Sound_AttachVoice (SWI &40185). See PRM 4-37. */
 int Sound_AttachVoice(int channel, int voice)
 {
     register int reg0 __asm("r0") = channel;
@@ -19,7 +19,7 @@ int Sound_AttachVoice(int channel, int voice)
     return reg1;
 }
 
-/* Sound_Control (SWI &40189): Makes an immediate sound */
+/* Sound_Control (SWI &40189). See PRM 4-41. */
 void Sound_Control(int channel, int date, int pitch, int time)
 {
     register int reg0 __asm("r0") = channel;
@@ -29,7 +29,7 @@ void Sound_Control(int channel, int date, int pitch, int time)
     __asm__ volatile("swi 0x40189" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Sound_ControlPacked (SWI &40186): Makes an immediate sound */
+/* Sound_ControlPacked (SWI &40186). See PRM 4-38. */
 void Sound_ControlPacked(int aaaacccc, int ddddpppp)
 {
     register int reg0 __asm("r0") = aaaacccc;
@@ -37,7 +37,7 @@ void Sound_ControlPacked(int aaaacccc, int ddddpppp)
     __asm__ volatile("swi 0x40186" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_Enable (SWI &40141): Enables or disables the Sound system */
+/* Sound_Enable (SWI &40141). See PRM 4-20. */
 int Sound_Enable(int new)
 {
     register int reg0 __asm("r0") = new;
@@ -45,7 +45,7 @@ int Sound_Enable(int new)
     return reg0;
 }
 
-/* Sound_LogScale (SWI &40182): Scales a signed logarithm by the current volume setting */
+/* Sound_LogScale (SWI &40182). See PRM 4-28. */
 int Sound_LogScale(int arg0)
 {
     register int reg0 __asm("r0") = arg0;
@@ -53,14 +53,14 @@ int Sound_LogScale(int arg0)
     return reg0;
 }
 
-/* Sound_Pitch (SWI &40188): Converts a pitch to internal format (a phase accumulator value) */
+/* Sound_Pitch (SWI &40188). See PRM 4-40. */
 void Sound_Pitch(int value)
 {
     register int reg0 __asm("r0") = value;
     __asm__ volatile("swi 0x40188" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_QBeat (SWI &401C6): Sets or reads the beat counter or bar length */
+/* Sound_QBeat (SWI &401C6). See PRM 4-54. */
 int Sound_QBeat(int length)
 {
     register int reg0 __asm("r0") = length;
@@ -68,7 +68,7 @@ int Sound_QBeat(int length)
     return reg0;
 }
 
-/* Sound_QFree (SWI &401C3): Returns minimum number of free slots in the event queue */
+/* Sound_QFree (SWI &401C3). See PRM 4-51. */
 int Sound_QFree(void)
 {
     register int reg0 __asm("r0");
@@ -76,7 +76,7 @@ int Sound_QFree(void)
     return reg0;
 }
 
-/* Sound_QInit (SWI &401C0): Initialises the Scheduler’s event queue */
+/* Sound_QInit (SWI &401C0). See PRM 4-47. */
 int Sound_QInit(void)
 {
     register int reg0 __asm("r0");
@@ -84,25 +84,25 @@ int Sound_QInit(void)
     return reg0;
 }
 
-/* Sound_QInterface (SWI &401C7): This SWI call is for use by the Scheduler only. You must not use it in your own code */
+/* Sound_QInterface (SWI &401C7). See PRM 4-56. */
 void Sound_QInterface(void)
 {
     __asm__ volatile("swi 0x401C7" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_QRemove (SWI &401C2): Sound_QRemove (SWI &401C2) */
+/* Sound_QRemove (SWI &401C2). See PRM 4-50. */
 void Sound_QRemove(void)
 {
     __asm__ volatile("swi 0x401C2" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_QSDispatch (SWI &401C4): Sound_QSDispatch (SWI &401C4) */
+/* Sound_QSDispatch (SWI &401C4). See PRM 4-52. */
 void Sound_QSDispatch(void)
 {
     __asm__ volatile("swi 0x401C4" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Sound_QSchedule (SWI &401C1): Schedules a sound SWI on the event queue */
+/* Sound_QSchedule (SWI &401C1). See PRM 4-48. */
 int Sound_QSchedule(int schedule, int arg1, int swi, int swi2)
 {
     register int reg0 __asm("r0") = schedule;
@@ -113,7 +113,7 @@ int Sound_QSchedule(int schedule, int arg1, int swi, int swi2)
     return reg0;
 }
 
-/* Sound_QTempo (SWI &401C5): Sets the tempo for the Scheduler */
+/* Sound_QTempo (SWI &401C5). See PRM 4-53. */
 int Sound_QTempo(int new)
 {
     register int reg0 __asm("r0") = new;
@@ -121,7 +121,7 @@ int Sound_QTempo(int new)
     return reg0;
 }
 
-/* Sound_ReadControlBlock (SWI &4018B): Reads a value from the Sound Channel Control Block */
+/* Sound_ReadControlBlock (SWI &4018B). See PRM 4-44. */
 int Sound_ReadControlBlock(int channel, int offset)
 {
     register int reg0 __asm("r0") = channel;
@@ -131,7 +131,7 @@ int Sound_ReadControlBlock(int channel, int offset)
     return reg2;
 }
 
-/* Sound_RemoveVoice (SWI &40184): Removes a voice from the Sound system */
+/* Sound_RemoveVoice (SWI &40184). See PRM 4-35. */
 int Sound_RemoveVoice(int voice, int *out_voice)
 {
     register int reg1 __asm("r1") = voice;
@@ -141,7 +141,7 @@ int Sound_RemoveVoice(int voice, int *out_voice)
     return reg0;
 }
 
-/* Sound_SoundLog (SWI &40181): Converts a signed integer to a signed logarithm, scaling it by volume */
+/* Sound_SoundLog (SWI &40181). See PRM 4-27. */
 int Sound_SoundLog(int arg0)
 {
     register int reg0 __asm("r0") = arg0;
@@ -149,7 +149,7 @@ int Sound_SoundLog(int arg0)
     return reg0;
 }
 
-/* Sound_Speaker (SWI &40143): Enables or disables the speaker(s) */
+/* Sound_Speaker (SWI &40143). See PRM 4-24. */
 int Sound_Speaker(int new)
 {
     register int reg0 __asm("r0") = new;
@@ -157,7 +157,7 @@ int Sound_Speaker(int new)
     return reg0;
 }
 
-/* Sound_Stereo (SWI &40142): Sets the stereo position of a channel */
+/* Sound_Stereo (SWI &40142). See PRM 4-22. */
 int Sound_Stereo(int channel, int image)
 {
     register int reg0 __asm("r0") = channel;
@@ -166,7 +166,7 @@ int Sound_Stereo(int channel, int image)
     return reg1;
 }
 
-/* Sound_Tuning (SWI &40187): Sets the tuning for the Sound system */
+/* Sound_Tuning (SWI &40187). See PRM 4-39. */
 int Sound_Tuning(int value)
 {
     register int reg0 __asm("r0") = value;
@@ -174,7 +174,7 @@ int Sound_Tuning(int value)
     return reg0;
 }
 
-/* Sound_Volume (SWI &40180): Sets the overall volume of the Sound system */
+/* Sound_Volume (SWI &40180). See PRM 4-26. */
 int Sound_Volume(int sound)
 {
     register int reg0 __asm("r0") = sound;
@@ -182,7 +182,7 @@ int Sound_Volume(int sound)
     return reg0;
 }
 
-/* Sound_WriteControlBlock (SWI &4018C): Writes a value to the Sound Channel Control Block */
+/* Sound_WriteControlBlock (SWI &4018C). See PRM 4-45. */
 int Sound_WriteControlBlock(int channel, int offset, int arg2)
 {
     register int reg0 __asm("r0") = channel;

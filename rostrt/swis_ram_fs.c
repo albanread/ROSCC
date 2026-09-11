@@ -2,25 +2,25 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* RamFS_DescribeDisc (SWI &40785): Calls FileCore_DescribeDisc */
+/* RamFS_DescribeDisc (SWI &40785). See PRM 2-320. */
 void RamFS_DescribeDisc(void)
 {
     __asm__ volatile("swi 0x40785" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* RamFS_DiscOp (SWI &40780): Calls FileCore_DiscOp */
+/* RamFS_DiscOp (SWI &40780). See PRM 2-317. */
 void RamFS_DiscOp(void)
 {
     __asm__ volatile("swi 0x40780" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* RamFS_Drives (SWI &40782): Calls FileCore_Drives */
+/* RamFS_Drives (SWI &40782). See PRM 2-318. */
 void RamFS_Drives(void)
 {
     __asm__ volatile("swi 0x40782" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* RamFS_FreeSpace (SWI &40783): Calls FileCore_FreeSpace */
+/* RamFS_FreeSpace (SWI &40783). See PRM 2-319. */
 void RamFS_FreeSpace(void)
 {
     __asm__ volatile("swi 0x40783" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

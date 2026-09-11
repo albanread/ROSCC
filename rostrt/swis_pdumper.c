@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* PDumper_CopyFilename (SWI &41B09): Copies a specified filename into a buffer */
+/* PDumper_CopyFilename (SWI &41B09). See PRM 3-706. */
 void PDumper_CopyFilename(void *string, void *size, void *string2)
 {
     register void * reg0 __asm("r0") = string;
@@ -11,7 +11,7 @@ void PDumper_CopyFilename(void *string, void *size, void *string2)
     __asm__ volatile("swi 0x41B09" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* PDumper_Find (SWI &41B03): Scans the printer dumper’s chain for a block of memory with the given tag */
+/* PDumper_Find (SWI &41B03). See PRM 3-695. */
 void PDumper_Find(void *ptr, void *block)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -19,7 +19,7 @@ void PDumper_Find(void *ptr, void *block)
     __asm__ volatile("swi 0x41B03" : : "r"(reg0), "r"(reg2) : "r1", "r3", "r12", "lr", "memory");
 }
 
-/* PDumper_Free (SWI &41B02): Attempts to release a block of memory from the printer dumper’s chain */
+/* PDumper_Free (SWI &41B02). See PRM 3-694. */
 void PDumper_Free(void *ptr, void *block)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -27,7 +27,7 @@ void PDumper_Free(void *ptr, void *block)
     __asm__ volatile("swi 0x41B02" : : "r"(reg0), "r"(reg2) : "r1", "r3", "r12", "lr", "memory");
 }
 
-/* PDumper_Info (SWI &41B00): Returns information about the PDumper support module */
+/* PDumper_Info (SWI &41B00). See PRM 3-690. */
 int PDumper_Info(int *out_colour)
 {
     register int reg0 __asm("r0");
@@ -37,7 +37,7 @@ int PDumper_Info(int *out_colour)
     return reg0;
 }
 
-/* PDumper_LookupError (SWI &41B08): Accesses the internal error handling routines within the support module */
+/* PDumper_LookupError (SWI &41B08). See PRM 3-704. */
 void PDumper_LookupError(void *block, void *string)
 {
     register void * reg0 __asm("r0") = block;
@@ -45,7 +45,7 @@ void PDumper_LookupError(void *block, void *string)
     __asm__ volatile("swi 0x41B08" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDumper_StartJob (SWI &41B04): Sets up any workspace that is required for a job */
+/* PDumper_StartJob (SWI &41B04). See PRM 3-696. */
 void PDumper_StartJob(void *ptr, int flags, void *filename)
 {
     register void * reg0 __asm("r0") = ptr;

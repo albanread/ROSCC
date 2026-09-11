@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* ColourPicker_CloseDialogue (SWI &47703): Closes a colour picker dialogue which is in progress */
+/* ColourPicker_CloseDialogue (SWI &47703). See PRM 5a-566. */
 void ColourPicker_CloseDialogue(int flags, int handle)
 {
     register int reg0 __asm("r0") = flags;
@@ -10,13 +10,13 @@ void ColourPicker_CloseDialogue(int flags, int handle)
     __asm__ volatile("swi 0x47703" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_DeregisterModel (SWI &47701): ColourPicker_DeregisterModel (SWI &47701) */
+/* ColourPicker_DeregisterModel (SWI &47701). See PRM 5a-561. */
 void ColourPicker_DeregisterModel(void)
 {
     __asm__ volatile("swi 0x47701" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_HelpReply (SWI &47707): Makes the colour picker respond to a Message_HelpRequest with its own help text */
+/* ColourPicker_HelpReply (SWI &47707). See PRM 5a-572. */
 void ColourPicker_HelpReply(int flags, void *block)
 {
     register int reg0 __asm("r0") = flags;
@@ -24,13 +24,13 @@ void ColourPicker_HelpReply(int flags, void *block)
     __asm__ volatile("swi 0x47707" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_ModelSWI (SWI &47708): This call is for internal use only; you must not use it in your own code */
+/* ColourPicker_ModelSWI (SWI &47708). See PRM 5a-574. */
 void ColourPicker_ModelSWI(void)
 {
     __asm__ volatile("swi 0x47708" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_OpenDialogue (SWI &47702): Creates and opens a colour picker dialogue for a client */
+/* ColourPicker_OpenDialogue (SWI &47702). See PRM 5a-563. */
 int ColourPicker_OpenDialogue(int flags, void *block)
 {
     register int reg0 __asm("r0") = flags;
@@ -39,7 +39,7 @@ int ColourPicker_OpenDialogue(int flags, void *block)
     return reg0;
 }
 
-/* ColourPicker_ReadDialogue (SWI &47705): Reads the current state of a colour picker dialogue without changing it */
+/* ColourPicker_ReadDialogue (SWI &47705). See PRM 5a-569. */
 int ColourPicker_ReadDialogue(int flags, int handle, void *block)
 {
     register int reg0 __asm("r0") = flags;
@@ -49,19 +49,19 @@ int ColourPicker_ReadDialogue(int flags, int handle, void *block)
     return reg1;
 }
 
-/* ColourPicker_RegisterModel (SWI &47700): This call is for internal use only; you must not use it in your own code */
+/* ColourPicker_RegisterModel (SWI &47700). See PRM 5a-561. */
 void ColourPicker_RegisterModel(void)
 {
     __asm__ volatile("swi 0x47700" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_SetColour (SWI &47706): This call is reserved for future expansion; you must not use it in your own code */
+/* ColourPicker_SetColour (SWI &47706). See PRM 5a-571. */
 void ColourPicker_SetColour(void)
 {
     __asm__ volatile("swi 0x47706" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ColourPicker_UpdateDialogue (SWI &47704): This call updates some or all of the contents of the colour picker dialogue whose handle */
+/* ColourPicker_UpdateDialogue (SWI &47704). See PRM 5a-568. */
 void ColourPicker_UpdateDialogue(void)
 {
     __asm__ volatile("swi 0x47704" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

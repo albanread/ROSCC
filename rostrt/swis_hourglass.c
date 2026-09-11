@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Hourglass_Colours (SWI &406C6): Sets the colours used to display the hourglass */
+/* Hourglass_Colours (SWI &406C6). See PRM 2-755. */
 int Hourglass_Colours(int colour, int colour2, int *out_colour)
 {
     register int reg0 __asm("r0") = colour;
@@ -12,7 +12,7 @@ int Hourglass_Colours(int colour, int colour2, int *out_colour)
     return reg0;
 }
 
-/* Hourglass_LEDs (SWI &406C5): Controls the display indicators above and below the hourglass */
+/* Hourglass_LEDs (SWI &406C5). See PRM 2-754. */
 int Hourglass_LEDs(int value)
 {
     register int reg0 __asm("r0") = value;
@@ -20,32 +20,32 @@ int Hourglass_LEDs(int value)
     return reg0;
 }
 
-/* Hourglass_Off (SWI &406C1): Turns off the hourglass */
+/* Hourglass_Off (SWI &406C1). See PRM 2-748. */
 void Hourglass_Off(void)
 {
     __asm__ volatile("swi 0x406C1" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Hourglass_On (SWI &406C0): Turns on the hourglass */
+/* Hourglass_On (SWI &406C0). See PRM 2-746. */
 void Hourglass_On(void)
 {
     __asm__ volatile("swi 0x406C0" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Hourglass_Percentage (SWI &406C4): Displays a percentage below the hourglass */
+/* Hourglass_Percentage (SWI &406C4). See PRM 2-752. */
 void Hourglass_Percentage(int percentage)
 {
     register int reg0 __asm("r0") = percentage;
     __asm__ volatile("swi 0x406C4" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Hourglass_Smash (SWI &406C2): Turns off the hourglass immediately */
+/* Hourglass_Smash (SWI &406C2). See PRM 2-750. */
 void Hourglass_Smash(void)
 {
     __asm__ volatile("swi 0x406C2" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Hourglass_Start (SWI &406C3): Turns on the hourglass after a given delay */
+/* Hourglass_Start (SWI &406C3). See PRM 2-751. */
 void Hourglass_Start(int delay)
 {
     register int reg0 __asm("r0") = delay;

@@ -2,14 +2,14 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DMA_DeregisterChannel (SWI &46141): Deregisters a client device previously registered by DMA_RegisterChannel */
+/* DMA_DeregisterChannel (SWI &46141). See PRM 5a-90. */
 void DMA_DeregisterChannel(int handle)
 {
     register int reg0 __asm("r0") = handle;
     __asm__ volatile("swi 0x46141" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DMA_ResumeTransfer (SWI &46145): Resume a previously suspended DMA transfer */
+/* DMA_ResumeTransfer (SWI &46145). See PRM 5a-97. */
 void DMA_ResumeTransfer(int flags, int dma)
 {
     register int reg0 __asm("r0") = flags;
@@ -17,7 +17,7 @@ void DMA_ResumeTransfer(int flags, int dma)
     __asm__ volatile("swi 0x46145" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DMA_SuspendTransfer (SWI &46144): Suspends the given active DMA transfer */
+/* DMA_SuspendTransfer (SWI &46144). See PRM 5a-95. */
 void DMA_SuspendTransfer(int flags, int dma)
 {
     register int reg0 __asm("r0") = flags;
@@ -25,7 +25,7 @@ void DMA_SuspendTransfer(int flags, int dma)
     __asm__ volatile("swi 0x46144" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DMA_TerminateTransfer (SWI &46143): Terminates a DMA transfer */
+/* DMA_TerminateTransfer (SWI &46143). See PRM 5a-93. */
 void DMA_TerminateTransfer(void *block, int dma)
 {
     register void * reg0 __asm("r0") = block;

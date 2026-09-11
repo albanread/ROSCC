@@ -2,13 +2,13 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* ResourceFS_DeregisterFiles (SWI &41B41): *ResourceFS selects the Resource Filing System as the filing system for subsequent */
+/* ResourceFS_DeregisterFiles (SWI &41B41). See PRM 2-424. */
 void ResourceFS_DeregisterFiles(void)
 {
     __asm__ volatile("swi 0x41B41" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* ResourceFS_RegisterFiles (SWI &41B40): Add file(s) to the ResourceFS structure */
+/* ResourceFS_RegisterFiles (SWI &41B40). See PRM 2-422. */
 void ResourceFS_RegisterFiles(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;

@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Parallel_HardwareAddress (SWI &42EC0): This call is for internal use only. Do not use it; use the SWI Parallel_Op instead */
+/* Parallel_HardwareAddress (SWI &42EC0). See PRM 2-489. */
 void Parallel_HardwareAddress(void)
 {
     __asm__ volatile("swi 0x42EC0" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

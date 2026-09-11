@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* FilerAction_SendSelectedDirectory (SWI &40F80): Sends message specifying the selected directory */
+/* FilerAction_SendSelectedDirectory (SWI &40F80). See PRM 2-514. */
 void FilerAction_SendSelectedDirectory(int task, void *ptr)
 {
     register int reg0 __asm("r0") = task;
@@ -10,7 +10,7 @@ void FilerAction_SendSelectedDirectory(int task, void *ptr)
     __asm__ volatile("swi 0x40F80" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* FilerAction_SendSelectedFile (SWI &40F81): Sends message specifying the selected files within a directory */
+/* FilerAction_SendSelectedFile (SWI &40F81). See PRM 2-515. */
 void FilerAction_SendSelectedFile(int task, void *ptr)
 {
     register int reg0 __asm("r0") = task;
@@ -18,7 +18,7 @@ void FilerAction_SendSelectedFile(int task, void *ptr)
     __asm__ volatile("swi 0x40F81" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* FilerAction_SendStartOperation (SWI &40F82): This call sends the Wimp message Message_FilerAction (see page 3-234). Before doing */
+/* FilerAction_SendStartOperation (SWI &40F82). See PRM 2-518. */
 void FilerAction_SendStartOperation(void)
 {
     __asm__ volatile("swi 0x40F82" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

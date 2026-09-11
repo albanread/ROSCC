@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Joystick_CalibrateTopRight (SWI &43F41): Calibrates analogue joysticks to return the full range of values */
+/* Joystick_CalibrateTopRight (SWI &43F41). See PRM 5a-651. */
 void Joystick_CalibrateTopRight(void)
 {
     __asm__ volatile("swi 0x43F41" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

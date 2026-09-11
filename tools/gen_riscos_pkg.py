@@ -183,7 +183,8 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
             body_ret = (f"    if ({out_names[rn]}) *{out_names[rn]} = reg{rn};\n"
                         + body_ret)
 
-        shim_lines.append(f"/* {name} (SWI &{num:X}): {(r['one_line'] or '').strip().rstrip('.')} */")
+        pref = f" See PRM {r['page_ref']}." if r["page_ref"] else ""
+        shim_lines.append(f"/* {name} (SWI &{num:X}).{pref} */")
         shim_lines.append(
             f"{cret} {name}({', '.join(cparams) if cparams else 'void'})\n{{\n"
             f"{decl}    {full_asm}\n{body_ret}}}\n"
@@ -208,10 +209,12 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
                 f"{out_names[rn]}: UnsafePointer[Int32, MutUntrackedOrigin]")
             call_args.append(out_names[rn])
         mret = "Int32" if retreg is not None else "None"
-        doc = (r["one_line"] or "").strip().rstrip(".")
-        pr = f"(PRM {r['page_ref']})" if r["page_ref"] else ""
+        # The PRM's own wording is not reproduced here. SWI names, numbers
+        # and register roles are facts; the manual's prose is Acorn's, and
+        # this package is published. A citation points a reader at it.
+        pr = f" See PRM {r['page_ref']}." if r["page_ref"] else ""
         mojo_lines.append(f"def {fname}({', '.join(params)}) -> {mret}:")
-        mojo_lines.append(f'    """{doc} {pr}"""')
+        mojo_lines.append(f'    """{name} (SWI &{num:X}).{pr}"""')
         if retreg is not None:
             mojo_lines.append(
                 f'    return external_call["{name}", Int32]({", ".join(call_args)})'
@@ -238,7 +241,7 @@ def main():
 
     for chunk in [c.strip() for c in a.chunks.split(",")]:
         rows = con.execute(
-            "SELECT name, one_line, on_entry, on_exit, entry_regs, exit_regs, "
+            "SELECT name, on_entry, on_exit, entry_regs, exit_regs, "
             "page_ref, number FROM swi WHERE documented=1 AND number IS NOT NULL "
             "AND name LIKE ? ORDER BY name",
             (chunk + "_%",),

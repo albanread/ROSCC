@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* OS_AddCallBack (SWI &54): Add a transient CallBack to the list */
+/* OS_AddCallBack (SWI &54). See PRM 1-326. */
 void OS_AddCallBack(void *address, int value)
 {
     register void * reg0 __asm("r0") = address;
@@ -10,7 +10,7 @@ void OS_AddCallBack(void *address, int value)
     __asm__ volatile("swi 0x54" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_AddToVector (SWI &47): Adds a routine to the list of those that claim a vector */
+/* OS_AddToVector (SWI &47). See PRM 1-72. */
 void OS_AddToVector(int vector, void *address, int value)
 {
     register int reg0 __asm("r0") = vector;
@@ -19,7 +19,7 @@ void OS_AddToVector(int vector, void *address, int value)
     __asm__ volatile("swi 0x47" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_BGet (SWI &A): Reads a byte from an open file */
+/* OS_BGet (SWI &A). See PRM 2-63. */
 int OS_BGet(int file)
 {
     register int reg1 __asm("r1") = file;
@@ -28,7 +28,7 @@ int OS_BGet(int file)
     return reg0;
 }
 
-/* OS_BPut (SWI &B): Writes a byte to an open file */
+/* OS_BPut (SWI &B). See PRM 2-65. */
 void OS_BPut(int byte, int file)
 {
     register int reg0 __asm("r0") = byte;
@@ -36,7 +36,7 @@ void OS_BPut(int byte, int file)
     __asm__ volatile("swi 0xB" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_BinaryToDecimal (SWI &28): Convert a signed number to a string */
+/* OS_BinaryToDecimal (SWI &28). See PRM 1-470. */
 int OS_BinaryToDecimal(int signed_, void *buffer, int length)
 {
     register int reg0 __asm("r0") = signed_;
@@ -46,7 +46,7 @@ int OS_BinaryToDecimal(int signed_, void *buffer, int length)
     return reg2;
 }
 
-/* OS_BreakCtrl (SWI &18): Set up the BreakPoint handler */
+/* OS_BreakCtrl (SWI &18). See PRM 1-312. */
 void OS_BreakCtrl(void *block, void *handle)
 {
     register void * reg0 __asm("r0") = block;
@@ -54,13 +54,13 @@ void OS_BreakCtrl(void *block, void *handle)
     __asm__ volatile("swi 0x18" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_BreakPt (SWI &17): Cause a break point trap to occur and the BreakPoint handler to be entered */
+/* OS_BreakPt (SWI &17). See PRM 1-311. */
 void OS_BreakPt(void)
 {
     __asm__ volatile("swi 0x17" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_Byte (SWI &6): General purpose call to alter status variables, and perform other actions */
+/* OS_Byte (SWI &6). See PRM 1-54. */
 int OS_Byte(int os_byte, int arg1)
 {
     register int reg0 __asm("r0") = os_byte;
@@ -69,14 +69,14 @@ int OS_Byte(int os_byte, int arg1)
     return reg1;
 }
 
-/* OS_CLI (SWI &5): Process a supervisor command */
+/* OS_CLI (SWI &5). See PRM 1-963. */
 void OS_CLI(void *string)
 {
     register void * reg0 __asm("r0") = string;
     __asm__ volatile("swi 0x5" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_CRC (SWI &5B): Calculate the cyclic-redundancy check for a block of data */
+/* OS_CRC (SWI &5B). See PRM 1-977. */
 int OS_CRC(int value, void *block, void *block2, int increment)
 {
     register int reg0 __asm("r0") = value;
@@ -87,7 +87,7 @@ int OS_CRC(int value, void *block, void *block2, int increment)
     return reg0;
 }
 
-/* OS_CallAfter (SWI &3B): Call a specified address after a delay */
+/* OS_CallAfter (SWI &3B). See PRM 1-443. */
 void OS_CallAfter(int time, void *address, int value)
 {
     register int reg0 __asm("r0") = time;
@@ -96,7 +96,7 @@ void OS_CallAfter(int time, void *address, int value)
     __asm__ volatile("swi 0x3B" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_CallBack (SWI &15): Set up the CallBack handler */
+/* OS_CallBack (SWI &15). See PRM 1-309. */
 void OS_CallBack(void *block, void *handle)
 {
     register void * reg0 __asm("r0") = block;
@@ -104,7 +104,7 @@ void OS_CallBack(void *block, void *handle)
     __asm__ volatile("swi 0x15" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_CallEvery (SWI &3C): Call a specified address every time a delay elapses */
+/* OS_CallEvery (SWI &3C). See PRM 1-445. */
 void OS_CallEvery(int delay, void *address, int value)
 {
     register int reg0 __asm("r0") = delay;
@@ -113,7 +113,7 @@ void OS_CallEvery(int delay, void *address, int value)
     __asm__ volatile("swi 0x3C" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ChangeDynamicArea (SWI &2A): Alter the space allocation of a dynamic area */
+/* OS_ChangeDynamicArea (SWI &2A). See PRM 1-386. */
 int OS_ChangeDynamicArea(int area, int amount)
 {
     register int reg0 __asm("r0") = area;
@@ -122,7 +122,7 @@ int OS_ChangeDynamicArea(int area, int amount)
     return reg1;
 }
 
-/* OS_ChangeEnvironment (SWI &40): Install a handler */
+/* OS_ChangeEnvironment (SWI &40). See PRM 1-322. */
 int OS_ChangeEnvironment(int handle, void *handle2, int handle3, void *buffer)
 {
     register int reg0 __asm("r0") = handle;
@@ -133,7 +133,7 @@ int OS_ChangeEnvironment(int handle, void *handle2, int handle3, void *buffer)
     return reg2;
 }
 
-/* OS_ChangeRedirection (SWI &5E): *GOS starts the RISC OS Supervisor application from the current environment. The */
+/* OS_ChangeRedirection (SWI &5E). See PRM 1-966. */
 int OS_ChangeRedirection(int arg0, int string)
 {
     register int reg0 __asm("r0") = arg0;
@@ -142,7 +142,7 @@ int OS_ChangeRedirection(int arg0, int string)
     return reg1;
 }
 
-/* OS_ChangedBox (SWI &5A): Determine which area of the screen has changed */
+/* OS_ChangedBox (SWI &5A). See PRM 1-754. */
 int OS_ChangedBox(int arg0, int *out_block)
 {
     register int reg0 __asm("r0") = arg0;
@@ -152,7 +152,7 @@ int OS_ChangedBox(int arg0, int *out_block)
     return reg0;
 }
 
-/* OS_CheckModeValid (SWI &3F): Check if it is possible to change to a specified mode */
+/* OS_CheckModeValid (SWI &3F). See PRM 1-744. */
 int OS_CheckModeValid(int mode)
 {
     register int reg0 __asm("r0") = mode;
@@ -161,7 +161,7 @@ int OS_CheckModeValid(int mode)
     return reg1;
 }
 
-/* OS_Claim (SWI &1F): Adds a routine to the list of those that claim a vector */
+/* OS_Claim (SWI &1F). See PRM 1-66. */
 void OS_Claim(int vector, void *address, int value)
 {
     register int reg0 __asm("r0") = vector;
@@ -170,7 +170,7 @@ void OS_Claim(int vector, void *address, int value)
     __asm__ volatile("swi 0x1F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ClaimScreenMemory (SWI &41): Use spare screen memory */
+/* OS_ClaimScreenMemory (SWI &41). See PRM 1-390. */
 int OS_ClaimScreenMemory(int arg0, int length, int *out_address)
 {
     register int reg0 __asm("r0") = arg0;
@@ -181,7 +181,7 @@ int OS_ClaimScreenMemory(int arg0, int length, int *out_address)
     return reg1;
 }
 
-/* OS_Confirm (SWI &59): Get a yes or no answer */
+/* OS_Confirm (SWI &59). See PRM 1-975. */
 int OS_Confirm(void)
 {
     register int reg0 __asm("r0");
@@ -189,7 +189,7 @@ int OS_Confirm(void)
     return reg0;
 }
 
-/* OS_Control (SWI &F): Read/write handler addresses */
+/* OS_Control (SWI &F). See PRM 1-301. */
 void OS_Control(void *handle, void *buffer, void *handle2, void *handle3)
 {
     register void * reg0 __asm("r0") = handle;
@@ -199,7 +199,7 @@ void OS_Control(void *handle, void *buffer, void *handle2, void *handle3)
     __asm__ volatile("swi 0xF" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* OS_ConvertDateAndTime (SWI &C1): Convert 5-byte time into a string using a supplied format string */
+/* OS_ConvertDateAndTime (SWI &C1). See PRM 1-451. */
 void OS_ConvertDateAndTime(void *block, void *string, void *size, void *string2)
 {
     register void * reg0 __asm("r0") = block;
@@ -209,7 +209,7 @@ void OS_ConvertDateAndTime(void *block, void *string, void *size, void *string2)
     __asm__ volatile("swi 0xC1" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* OS_ConvertFileSize (SWI &EC): Convert an integer into a filesize string */
+/* OS_ConvertFileSize (SWI &EC). See PRM 1-494. */
 int OS_ConvertFileSize(int size, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = size;
@@ -219,7 +219,7 @@ int OS_ConvertFileSize(int size, void *buffer, void *length)
     return reg0;
 }
 
-/* OS_ConvertFixedFileSize (SWI &EB): Convert an integer into a filesize string of a fixed length */
+/* OS_ConvertFixedFileSize (SWI &EB). See PRM 1-492. */
 int OS_ConvertFixedFileSize(int size, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = size;
@@ -229,7 +229,7 @@ int OS_ConvertFixedFileSize(int size, void *buffer, void *length)
     return reg0;
 }
 
-/* OS_ConvertFixedNetStation (SWI &E9): Convert from an Econet station/network number pair to a string */
+/* OS_ConvertFixedNetStation (SWI &E9). See PRM 1-488. */
 void OS_ConvertFixedNetStation(void *block, void *string, void *size)
 {
     register void * reg0 __asm("r0") = block;
@@ -238,7 +238,7 @@ void OS_ConvertFixedNetStation(void *block, void *string, void *size)
     __asm__ volatile("swi 0xE9" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ConvertNetStation (SWI &EA): Convert from an Econet station/network number pair to a string */
+/* OS_ConvertNetStation (SWI &EA). See PRM 1-490. */
 void OS_ConvertNetStation(void *block, void *string, void *size)
 {
     register void * reg0 __asm("r0") = block;
@@ -247,7 +247,7 @@ void OS_ConvertNetStation(void *block, void *string, void *size)
     __asm__ volatile("swi 0xEA" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ConvertStandardDateAndTime (SWI &C0): Converts a 5-byte time into a string */
+/* OS_ConvertStandardDateAndTime (SWI &C0). See PRM 1-449. */
 void OS_ConvertStandardDateAndTime(void *block, void *string, void *size)
 {
     register void * reg0 __asm("r0") = block;
@@ -256,7 +256,7 @@ void OS_ConvertStandardDateAndTime(void *block, void *string, void *size)
     __asm__ volatile("swi 0xC0" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_DelinkApplication (SWI &4D): Remove any vectors that an application is using */
+/* OS_DelinkApplication (SWI &4D). See PRM 1-74. */
 void OS_DelinkApplication(void *buffer, void *size)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -264,7 +264,7 @@ void OS_DelinkApplication(void *buffer, void *size)
     __asm__ volatile("swi 0x4D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_EnterOS (SWI &16): Sets the processor to SVC mode */
+/* OS_EnterOS (SWI &16). See PRM 1-141. */
 int OS_EnterOS(int arg0, int event)
 {
     register int reg0 __asm("r0") = arg0;
@@ -273,7 +273,7 @@ int OS_EnterOS(int arg0, int event)
     return reg1;
 }
 
-/* OS_EvaluateExpression (SWI &2D): Evaluate a string expression and return an integer or string result */
+/* OS_EvaluateExpression (SWI &2D). See PRM 1-472. */
 void OS_EvaluateExpression(void *string, void *buffer, void *length)
 {
     register void * reg0 __asm("r0") = string;
@@ -282,7 +282,7 @@ void OS_EvaluateExpression(void *string, void *buffer, void *length)
     __asm__ volatile("swi 0x2D" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_Exit (SWI &11): Pass control to the most recent exit handler */
+/* OS_Exit (SWI &11). See PRM 1-305. */
 void OS_Exit(void *buffer, int abex, int return_)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -291,7 +291,7 @@ void OS_Exit(void *buffer, int abex, int return_)
     __asm__ volatile("swi 0x11" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ExitAndDie (SWI &50): Kill a module and pass control to the most recent exit handler */
+/* OS_ExitAndDie (SWI &50). See PRM 1-325. */
 void OS_ExitAndDie(void *buffer, int abex, int return_, void *module)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -301,7 +301,7 @@ void OS_ExitAndDie(void *buffer, int abex, int return_, void *module)
     __asm__ volatile("swi 0x50" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* OS_GSInit (SWI &25): Initialises registers for use by OS_GSRead */
+/* OS_GSInit (SWI &25). See PRM 1-464. */
 int OS_GSInit(void *string, int flags, int *out_value)
 {
     register void * reg0 __asm("r0") = string;
@@ -312,7 +312,7 @@ int OS_GSInit(void *string, int flags, int *out_value)
     return reg1;
 }
 
-/* OS_GSRead (SWI &26): Returns a character from a string which has been initialised by OS_GSInit */
+/* OS_GSRead (SWI &26). See PRM 1-466. */
 int OS_GSRead(int arg0, int arg2, int *out_next, int *out_string)
 {
     register int reg0 __asm("r0") = arg0;
@@ -324,7 +324,7 @@ int OS_GSRead(int arg0, int arg2, int *out_next, int *out_string)
     return reg0;
 }
 
-/* OS_GSTrans (SWI &27): Equivalent to a call to OS_GSInit and repeated calls to OS_GSRead */
+/* OS_GSTrans (SWI &27). See PRM 1-468. */
 void OS_GSTrans(void *string, void *buffer, void *size)
 {
     register void * reg0 __asm("r0") = string;
@@ -333,14 +333,14 @@ void OS_GSTrans(void *string, void *buffer, void *size)
     __asm__ volatile("swi 0x27" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_GenerateError (SWI &2B): Generates an error and invokes the error handler */
+/* OS_GenerateError (SWI &2B). See PRM 1-45. */
 void OS_GenerateError(void *block)
 {
     register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x2B" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_GetEnv (SWI &10): Read environment parameters */
+/* OS_GetEnv (SWI &10). See PRM 1-303. */
 int OS_GetEnv(int *out_address, int *out_ptr)
 {
     register int reg0 __asm("r0");
@@ -352,25 +352,25 @@ int OS_GetEnv(int *out_address, int *out_ptr)
     return reg0;
 }
 
-/* OS_InstallKeyHandler (SWI &3E): *Configure Caps sets the configured value for Caps Lock to ON, so that when you */
+/* OS_InstallKeyHandler (SWI &3E). See PRM 1-948. */
 void OS_InstallKeyHandler(void)
 {
     __asm__ volatile("swi 0x3E" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_IntOff (SWI &14): Disables interrupts */
+/* OS_IntOff (SWI &14). See PRM 1-140. */
 void OS_IntOff(void)
 {
     __asm__ volatile("swi 0x14" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_IntOn (SWI &13): Enables interrupts */
+/* OS_IntOn (SWI &13). See PRM 1-139. */
 void OS_IntOn(void)
 {
     __asm__ volatile("swi 0x13" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_Mouse (SWI &1C): Read a mouse state from the buffer */
+/* OS_Mouse (SWI &1C). See PRM 1-728. */
 int OS_Mouse(int *out_y, int *out_mouse, int *out_time)
 {
     register int reg0 __asm("r0");
@@ -384,7 +384,7 @@ int OS_Mouse(int *out_y, int *out_mouse, int *out_time)
     return reg0;
 }
 
-/* OS_Plot (SWI &45): Direct VDU call */
+/* OS_Plot (SWI &45). See PRM 1-746. */
 void OS_Plot(int plot, int x, int y)
 {
     register int reg0 __asm("r0") = plot;
@@ -393,7 +393,7 @@ void OS_Plot(int plot, int x, int y)
     __asm__ volatile("swi 0x45" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_PrettyPrint (SWI &44): Write an indirect string with some formatting to all of the active output streams */
+/* OS_PrettyPrint (SWI &44). See PRM 1-538. */
 void OS_PrettyPrint(void *string, void *ptr, void *string2)
 {
     register void * reg0 __asm("r0") = string;
@@ -402,14 +402,14 @@ void OS_PrettyPrint(void *string, void *ptr, void *string2)
     __asm__ volatile("swi 0x44" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_PrintChar (SWI &5D): Send a character to the printer stream */
+/* OS_PrintChar (SWI &5D). See PRM 1-541. */
 void OS_PrintChar(int character)
 {
     register int reg0 __asm("r0") = character;
     __asm__ volatile("swi 0x5D" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_ReadArgs (SWI &49): This range of SWIs use a common form and can convert a number into a string in a */
+/* OS_ReadArgs (SWI &49). See PRM 1-482. */
 int OS_ReadArgs(int value, void *string, void *size)
 {
     register int reg0 __asm("r0") = value;
@@ -419,7 +419,7 @@ int OS_ReadArgs(int value, void *string, void *size)
     return reg0;
 }
 
-/* OS_ReadDynamicArea (SWI &5C): Read the space allocation of a dynamic area */
+/* OS_ReadDynamicArea (SWI &5C). See PRM 1-398. */
 int OS_ReadDynamicArea(int area, int *out_count)
 {
     register int reg0 __asm("r0") = area;
@@ -429,20 +429,20 @@ int OS_ReadDynamicArea(int area, int *out_count)
     return reg0;
 }
 
-/* OS_ReadEscapeState (SWI &2C): Check whether an escape condition has occurred */
+/* OS_ReadEscapeState (SWI &2C). See PRM 1-945. */
 void OS_ReadEscapeState(void)
 {
     __asm__ volatile("swi 0x2C" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_ReadMemMapEntries (SWI &52): Read by page number the logical to physical memory mapping used by MEMC */
+/* OS_ReadMemMapEntries (SWI &52). See PRM 1-394. */
 void OS_ReadMemMapEntries(void *buffer)
 {
     register void * reg0 __asm("r0") = buffer;
     __asm__ volatile("swi 0x52" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_ReadMemMapInfo (SWI &51): Read the page size and count */
+/* OS_ReadMemMapInfo (SWI &51). See PRM 1-393. */
 int OS_ReadMemMapInfo(int *out_count)
 {
     register int reg0 __asm("r0");
@@ -452,7 +452,7 @@ int OS_ReadMemMapInfo(int *out_count)
     return reg0;
 }
 
-/* OS_ReadModeVariable (SWI &35): Read information about a screen mode */
+/* OS_ReadModeVariable (SWI &35). See PRM 1-738. */
 int OS_ReadModeVariable(int mode, int variable)
 {
     register int reg0 __asm("r0") = mode;
@@ -462,7 +462,7 @@ int OS_ReadModeVariable(int mode, int variable)
     return reg2;
 }
 
-/* OS_ReadMonotonicTime (SWI &42): Number of centiseconds since the last hard reset */
+/* OS_ReadMonotonicTime (SWI &42). See PRM 1-448. */
 int OS_ReadMonotonicTime(void)
 {
     register int reg0 __asm("r0");
@@ -470,7 +470,7 @@ int OS_ReadMonotonicTime(void)
     return reg0;
 }
 
-/* OS_ReadPalette (SWI &2F): Read the palette setting of a colour */
+/* OS_ReadPalette (SWI &2F). See PRM 1-730. */
 int OS_ReadPalette(int colour, int colour2, int *out_colour)
 {
     register int reg0 __asm("r0") = colour;
@@ -482,7 +482,7 @@ int OS_ReadPalette(int colour, int colour2, int *out_colour)
     return reg2;
 }
 
-/* OS_ReadPoint (SWI &32): Read the colour of a point */
+/* OS_ReadPoint (SWI &32). See PRM 1-736. */
 int OS_ReadPoint(int x, int y, int *out_tint, int *out_flags)
 {
     register int reg0 __asm("r0") = x;
@@ -496,7 +496,7 @@ int OS_ReadPoint(int x, int y, int *out_tint, int *out_flags)
     return reg2;
 }
 
-/* OS_ReadRAMFsLimits (SWI &4A): Get the current limits of the RAM filing system */
+/* OS_ReadRAMFsLimits (SWI &4A). See PRM 1-392. */
 int OS_ReadRAMFsLimits(int *out_address)
 {
     register int reg0 __asm("r0");
@@ -506,7 +506,7 @@ int OS_ReadRAMFsLimits(int *out_address)
     return reg0;
 }
 
-/* OS_ReadUnsigned (SWI &21): Convert a string to an unsigned number */
+/* OS_ReadUnsigned (SWI &21). See PRM 1-462. */
 int OS_ReadUnsigned(int flags, void *string, int value)
 {
     register int reg0 __asm("r0") = flags;
@@ -516,7 +516,7 @@ int OS_ReadUnsigned(int flags, void *string, int value)
     return reg2;
 }
 
-/* OS_ReadVduVariables (SWI &31): Read a series of VDU variables */
+/* OS_ReadVduVariables (SWI &31). See PRM 1-732. */
 void OS_ReadVduVariables(void *block, void *block2)
 {
     register void * reg0 __asm("r0") = block;
@@ -524,7 +524,7 @@ void OS_ReadVduVariables(void *block, void *block2)
     __asm__ volatile("swi 0x31" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_Release (SWI &20): Removes a routine from the list of those that claim a vector */
+/* OS_Release (SWI &20). See PRM 1-68. */
 void OS_Release(int vector, void *address, int value)
 {
     register int reg0 __asm("r0") = vector;
@@ -533,19 +533,19 @@ void OS_Release(int vector, void *address, int value)
     __asm__ volatile("swi 0x20" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_RemoveCallBack (SWI &5F): *Go calls machine code at the given address, passing it an optional environment string */
+/* OS_RemoveCallBack (SWI &5F). See PRM 1-330. */
 void OS_RemoveCallBack(void)
 {
     __asm__ volatile("swi 0x5F" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_RemoveCursors (SWI &36): Remove the cursors from the screen */
+/* OS_RemoveCursors (SWI &36). See PRM 1-741. */
 void OS_RemoveCursors(void)
 {
     __asm__ volatile("swi 0x36" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_RemoveTickerEvent (SWI &3D): Remove a given call address and R12 value from the ticker event list */
+/* OS_RemoveTickerEvent (SWI &3D). See PRM 1-447. */
 void OS_RemoveTickerEvent(void *address, int value)
 {
     register void * reg0 __asm("r0") = address;
@@ -553,13 +553,13 @@ void OS_RemoveTickerEvent(void *address, int value)
     __asm__ volatile("swi 0x3D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_RestoreCursors (SWI &37): Restore the cursors to the screen */
+/* OS_RestoreCursors (SWI &37). See PRM 1-743. */
 void OS_RestoreCursors(void)
 {
     __asm__ volatile("swi 0x37" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_SWINumberFromString (SWI &39): Convert a string to a SWI number if valid */
+/* OS_SWINumberFromString (SWI &39). See PRM 1-476. */
 int OS_SWINumberFromString(void *name)
 {
     register void * reg1 __asm("r1") = name;
@@ -568,7 +568,7 @@ int OS_SWINumberFromString(void *name)
     return reg0;
 }
 
-/* OS_SWINumberToString (SWI &38): Convert a SWI number to a string containing its name */
+/* OS_SWINumberToString (SWI &38). See PRM 1-474. */
 void OS_SWINumberToString(int swi, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = swi;
@@ -577,20 +577,20 @@ void OS_SWINumberToString(int swi, void *buffer, void *length)
     __asm__ volatile("swi 0x38" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* OS_ServiceCall (SWI &30): Issue a service call to a module */
+/* OS_ServiceCall (SWI &30). See PRM 1-256. */
 void OS_ServiceCall(int service)
 {
     register int reg1 __asm("r1") = service;
     __asm__ volatile("swi 0x30" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_SetCallBack (SWI &1B): Cause a call to the CallBack handler */
+/* OS_SetCallBack (SWI &1B). See PRM 1-315. */
 void OS_SetCallBack(void)
 {
     __asm__ volatile("swi 0x1B" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_SetColour (SWI &61): Sets the foreground or background graphics colours */
+/* OS_SetColour (SWI &61). See PRM 1-756. */
 void OS_SetColour(int colour, void *colour2)
 {
     register int reg0 __asm("r0") = colour;
@@ -598,7 +598,7 @@ void OS_SetColour(int colour, void *colour2)
     __asm__ volatile("swi 0x61" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_SetECFOrigin (SWI &56): Set the origin of the ECF patterns */
+/* OS_SetECFOrigin (SWI &56). See PRM 1-747. */
 void OS_SetECFOrigin(int x, int y)
 {
     register int reg0 __asm("r0") = x;
@@ -606,21 +606,21 @@ void OS_SetECFOrigin(int x, int y)
     __asm__ volatile("swi 0x56" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_SetMemMapEntries (SWI &53): Write the logical to physical memory mapping used by MEMC */
+/* OS_SetMemMapEntries (SWI &53). See PRM 1-396. */
 void OS_SetMemMapEntries(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
     __asm__ volatile("swi 0x53" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_UnusedSWI (SWI &19): Set up the handler for unused SWIs */
+/* OS_UnusedSWI (SWI &19). See PRM 1-314. */
 void OS_UnusedSWI(void *handle)
 {
     register void * reg0 __asm("r0") = handle;
     __asm__ volatile("swi 0x19" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_UpdateMEMC (SWI &1A): Read or alter the contents of the MEMC control register */
+/* OS_UpdateMEMC (SWI &1A). See PRM 1-375. */
 int OS_UpdateMEMC(int new, int mask, int *out_mask)
 {
     register int reg0 __asm("r0") = new;
@@ -630,7 +630,7 @@ int OS_UpdateMEMC(int new, int mask, int *out_mask)
     return reg0;
 }
 
-/* OS_ValidateAddress (SWI &3A): Check that a range of addresses are in logical RAM */
+/* OS_ValidateAddress (SWI &3A). See PRM 1-388. */
 void OS_ValidateAddress(void *address, void *address2)
 {
     register void * reg0 __asm("r0") = address;
@@ -638,21 +638,21 @@ void OS_ValidateAddress(void *address, void *address2)
     __asm__ volatile("swi 0x3A" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_Write0 (SWI &2): Writes an indirect string to all of the active output streams */
+/* OS_Write0 (SWI &2). See PRM 1-30. */
 void OS_Write0(void *string)
 {
     register void * reg0 __asm("r0") = string;
     __asm__ volatile("swi 0x2" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_WriteC (SWI &0): Writes a character to all of the active output streams */
+/* OS_WriteC (SWI &0). See PRM 1-517. */
 void OS_WriteC(int character)
 {
     register int reg0 __asm("r0") = character;
     __asm__ volatile("swi 0x0" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_WriteEnv (SWI &48): Set the program environment command string and start time */
+/* OS_WriteEnv (SWI &48). See PRM 1-324. */
 void OS_WriteEnv(void *string, void *ptr)
 {
     register void * reg0 __asm("r0") = string;
@@ -660,7 +660,7 @@ void OS_WriteEnv(void *string, void *ptr)
     __asm__ volatile("swi 0x48" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_WriteN (SWI &46): Write a counted string to the VDU */
+/* OS_WriteN (SWI &46). See PRM 1-542. */
 void OS_WriteN(void *string, int count)
 {
     register void * reg0 __asm("r0") = string;
@@ -668,7 +668,7 @@ void OS_WriteN(void *string, int count)
     __asm__ volatile("swi 0x46" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* OS_WriteS (SWI &1): Writes the following string to all of the active output streams */
+/* OS_WriteS (SWI &1). See PRM 1-519. */
 void OS_WriteS(void)
 {
     __asm__ volatile("swi 0x1" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

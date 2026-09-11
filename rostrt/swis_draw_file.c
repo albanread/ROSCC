@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DrawFile_DeclareFonts (SWI &45542): *Render displays the contents of a Draw file. You can optionally transform the output */
+/* DrawFile_DeclareFonts (SWI &45542). See PRM 5a-530. */
 void DrawFile_DeclareFonts(void)
 {
     __asm__ volatile("swi 0x45542" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

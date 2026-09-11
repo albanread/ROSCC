@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Territory_Alphabet (SWI &43052): Returns the alphabet number that should be selected for the given territory */
+/* Territory_Alphabet (SWI &43052). See PRM 3-829. */
 int Territory_Alphabet(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -10,7 +10,7 @@ int Territory_Alphabet(int territory)
     return reg0;
 }
 
-/* Territory_AlphabetIdentifier (SWI &43053): Returns an identifier string for the alphabet that should be used for the given territory */
+/* Territory_AlphabetIdentifier (SWI &43053). See PRM 3-830. */
 int Territory_AlphabetIdentifier(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -18,7 +18,7 @@ int Territory_AlphabetIdentifier(int territory)
     return reg0;
 }
 
-/* Territory_AlphabetNumberToName (SWI &43045): Returns the name of the given alphabet */
+/* Territory_AlphabetNumberToName (SWI &43045). See PRM 3-806. */
 void Territory_AlphabetNumberToName(int alphabet, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = alphabet;
@@ -27,7 +27,7 @@ void Territory_AlphabetNumberToName(int alphabet, void *buffer, void *length)
     __asm__ volatile("swi 0x43045" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_CharacterPropertyTable (SWI &43056): Returns a pointer to a character property table */
+/* Territory_CharacterPropertyTable (SWI &43056). See PRM 3-834. */
 int Territory_CharacterPropertyTable(int territory, void *code)
 {
     register int reg0 __asm("r0") = territory;
@@ -36,7 +36,7 @@ int Territory_CharacterPropertyTable(int territory, void *code)
     return reg0;
 }
 
-/* Territory_Collate (SWI &4305D): Compares two strings in the given territory’s alphabet */
+/* Territory_Collate (SWI &4305D). See PRM 3-842. */
 int Territory_Collate(int territory, void *string, void *string2, int flags)
 {
     register int reg0 __asm("r0") = territory;
@@ -47,7 +47,7 @@ int Territory_Collate(int territory, void *string, void *string2, int flags)
     return reg0;
 }
 
-/* Territory_ControlTable (SWI &43059): Returns a pointer to a control character table */
+/* Territory_ControlTable (SWI &43059). See PRM 3-838. */
 int Territory_ControlTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -55,7 +55,7 @@ int Territory_ControlTable(int territory)
     return reg0;
 }
 
-/* Territory_ConvertOrdinalsToTime (SWI &43051): Converts local time ordinals for the given territory to a 5 byte UTC time */
+/* Territory_ConvertOrdinalsToTime (SWI &43051). See PRM 3-827. */
 void Territory_ConvertOrdinalsToTime(int territory, void *block, void *block2)
 {
     register int reg0 __asm("r0") = territory;
@@ -64,7 +64,7 @@ void Territory_ConvertOrdinalsToTime(int territory, void *block, void *block2)
     __asm__ volatile("swi 0x43051" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_ConvertStandardDate (SWI &4304D): Converts a 5 byte UTC time into a string, giving the date only */
+/* Territory_ConvertStandardDate (SWI &4304D). See PRM 3-819. */
 int Territory_ConvertStandardDate(int territory, void *ptr, void *string, void *size)
 {
     register int reg0 __asm("r0") = territory;
@@ -75,7 +75,7 @@ int Territory_ConvertStandardDate(int territory, void *ptr, void *string, void *
     return reg0;
 }
 
-/* Territory_ConvertStandardDateAndTime (SWI &4304C): Converts a 5 byte UTC time into a string, giving the time and date */
+/* Territory_ConvertStandardDateAndTime (SWI &4304C). See PRM 3-817. */
 int Territory_ConvertStandardDateAndTime(int territory, void *ptr, void *string, void *size)
 {
     register int reg0 __asm("r0") = territory;
@@ -86,7 +86,7 @@ int Territory_ConvertStandardDateAndTime(int territory, void *ptr, void *string,
     return reg0;
 }
 
-/* Territory_ConvertStandardTime (SWI &4304E): Converts a 5 byte UTC time into a string, giving the time only */
+/* Territory_ConvertStandardTime (SWI &4304E). See PRM 3-821. */
 int Territory_ConvertStandardTime(int territory, void *ptr, void *string, void *size)
 {
     register int reg0 __asm("r0") = territory;
@@ -97,13 +97,13 @@ int Territory_ConvertStandardTime(int territory, void *ptr, void *string, void *
     return reg0;
 }
 
-/* Territory_ConvertTextToString (SWI &43075): Not yet implemented */
+/* Territory_ConvertTextToString (SWI &43075). See PRM 3-812. */
 void Territory_ConvertTextToString(void)
 {
     __asm__ volatile("swi 0x43075" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_ConvertTimeToOrdinals (SWI &4304F): Converts a 5 byte UTC time to local time ordinals for the given territory */
+/* Territory_ConvertTimeToOrdinals (SWI &4304F). See PRM 3-823. */
 void Territory_ConvertTimeToOrdinals(int territory, void *ptr, void *buffer)
 {
     register int reg0 __asm("r0") = territory;
@@ -112,7 +112,7 @@ void Territory_ConvertTimeToOrdinals(int territory, void *ptr, void *buffer)
     __asm__ volatile("swi 0x4304F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_ConvertTimeToUTCOrdinals (SWI &43049): Converts a 5 byte UTC time to UTC time ordinals */
+/* Territory_ConvertTimeToUTCOrdinals (SWI &43049). See PRM 3-810. */
 void Territory_ConvertTimeToUTCOrdinals(void *ptr, void *buffer)
 {
     register void * reg1 __asm("r1") = ptr;
@@ -120,21 +120,21 @@ void Territory_ConvertTimeToUTCOrdinals(void *ptr, void *buffer)
     __asm__ volatile("swi 0x43049" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_Deregister (SWI &43042): Removes the given territory from the list of active territories */
+/* Territory_Deregister (SWI &43042). See PRM 3-803. */
 void Territory_Deregister(int territory)
 {
     register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43042" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_Exists (SWI &43044): Checks if the given territory is currently present in the machine */
+/* Territory_Exists (SWI &43044). See PRM 3-805. */
 void Territory_Exists(int territory)
 {
     register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43044" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_LowerCaseTable (SWI &43057): Returns a pointer to a lower case table */
+/* Territory_LowerCaseTable (SWI &43057). See PRM 3-836. */
 int Territory_LowerCaseTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -142,7 +142,7 @@ int Territory_LowerCaseTable(int territory)
     return reg0;
 }
 
-/* Territory_NameToNumber (SWI &43060): Returns the number of the given territory */
+/* Territory_NameToNumber (SWI &43060). See PRM 3-849. */
 int Territory_NameToNumber(int territory, void *territory2)
 {
     register int reg0 __asm("r0") = territory;
@@ -151,7 +151,7 @@ int Territory_NameToNumber(int territory, void *territory2)
     return reg0;
 }
 
-/* Territory_Number (SWI &43040): Returns the territory number of the current territory */
+/* Territory_Number (SWI &43040). See PRM 3-800. */
 int Territory_Number(void)
 {
     register int reg0 __asm("r0");
@@ -159,7 +159,7 @@ int Territory_Number(void)
     return reg0;
 }
 
-/* Territory_NumberToName (SWI &43043): Returns the name of the given territory */
+/* Territory_NumberToName (SWI &43043). See PRM 3-804. */
 void Territory_NumberToName(int territory, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = territory;
@@ -168,7 +168,7 @@ void Territory_NumberToName(int territory, void *buffer, void *length)
     __asm__ volatile("swi 0x43043" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_PlainTable (SWI &4305A): Returns a pointer to an unaccented character table */
+/* Territory_PlainTable (SWI &4305A). See PRM 3-839. */
 int Territory_PlainTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -176,7 +176,7 @@ int Territory_PlainTable(int territory)
     return reg0;
 }
 
-/* Territory_ReadCalendarInformation (SWI &4305F): Returns various information about the given territory’s calendar */
+/* Territory_ReadCalendarInformation (SWI &4305F). See PRM 3-847. */
 void Territory_ReadCalendarInformation(int territory, void *ptr, void *buffer)
 {
     register int reg0 __asm("r0") = territory;
@@ -185,7 +185,7 @@ void Territory_ReadCalendarInformation(int territory, void *ptr, void *buffer)
     __asm__ volatile("swi 0x4305F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_ReadCurrentTimeZone (SWI &43048): Returns information on the current time zone */
+/* Territory_ReadCurrentTimeZone (SWI &43048). See PRM 3-809. */
 int Territory_ReadCurrentTimeZone(int *out_offset)
 {
     register int reg0 __asm("r0");
@@ -195,7 +195,7 @@ int Territory_ReadCurrentTimeZone(int *out_offset)
     return reg0;
 }
 
-/* Territory_ReadTimeZones (SWI &4304A): Returns information on the time zones for the given territory */
+/* Territory_ReadTimeZones (SWI &4304A). See PRM 3-814. */
 int Territory_ReadTimeZones(int territory, int *out_name, int *out_offset, int *out_offset2)
 {
     register int reg0 __asm("r0") = territory;
@@ -209,7 +209,7 @@ int Territory_ReadTimeZones(int territory, int *out_name, int *out_offset, int *
     return reg0;
 }
 
-/* Territory_Register (SWI &43041): Adds the given territory to the list of active territories */
+/* Territory_Register (SWI &43041). See PRM 3-801. */
 void Territory_Register(int territory, void *ptr, int territory2)
 {
     register int reg0 __asm("r0") = territory;
@@ -218,7 +218,7 @@ void Territory_Register(int territory, void *ptr, int territory2)
     __asm__ volatile("swi 0x43041" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Territory_RepresentationTable (SWI &4305C): Returns a pointer to a numeric representation table */
+/* Territory_RepresentationTable (SWI &4305C). See PRM 3-841. */
 int Territory_RepresentationTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -226,28 +226,28 @@ int Territory_RepresentationTable(int territory)
     return reg0;
 }
 
-/* Territory_SelectAlphabet (SWI &43046): Selects the correct alphabet for the given territory */
+/* Territory_SelectAlphabet (SWI &43046). See PRM 3-807. */
 void Territory_SelectAlphabet(int territory)
 {
     register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43046" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_SelectKeyboardHandler (SWI &43054): Selects the keyboard handler for the given territory */
+/* Territory_SelectKeyboardHandler (SWI &43054). See PRM 3-831. */
 void Territory_SelectKeyboardHandler(int territory)
 {
     register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43054" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_SetTime (SWI &43047): Sets the clock to a given 5 byte UTC time */
+/* Territory_SetTime (SWI &43047). See PRM 3-808. */
 void Territory_SetTime(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
     __asm__ volatile("swi 0x43047" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Territory_TransformString (SWI &43061): Transforms a string to allow direct territory independent string comparison */
+/* Territory_TransformString (SWI &43061). See PRM 3-850. */
 int Territory_TransformString(int territory, void *string, void *string2, void *length)
 {
     register int reg0 __asm("r0") = territory;
@@ -258,7 +258,7 @@ int Territory_TransformString(int territory, void *string, void *string2, void *
     return reg0;
 }
 
-/* Territory_UpperCaseTable (SWI &43058): Returns a pointer to an upper case table */
+/* Territory_UpperCaseTable (SWI &43058). See PRM 3-837. */
 int Territory_UpperCaseTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -266,7 +266,7 @@ int Territory_UpperCaseTable(int territory)
     return reg0;
 }
 
-/* Territory_ValueTable (SWI &4305B): Returns a pointer to a numeric value table */
+/* Territory_ValueTable (SWI &4305B). See PRM 3-840. */
 int Territory_ValueTable(int territory)
 {
     register int reg0 __asm("r0") = territory;
@@ -274,7 +274,7 @@ int Territory_ValueTable(int territory)
     return reg0;
 }
 
-/* Territory_WriteDirection (SWI &43055): Returns the direction of writing used in the given territory */
+/* Territory_WriteDirection (SWI &43055). See PRM 3-832. */
 int Territory_WriteDirection(int territory)
 {
     register int reg0 __asm("r0") = territory;

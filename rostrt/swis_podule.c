@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Podule_CallLoader (SWI &40286): Calls an expansion card’s Loader */
+/* Podule_CallLoader (SWI &40286). See PRM 4-149. */
 int Podule_CallLoader(int user, int expansion)
 {
     register int reg0 __asm("r0") = user;
@@ -11,7 +11,7 @@ int Podule_CallLoader(int user, int expansion)
     return reg0;
 }
 
-/* Podule_EnumerateChunks (SWI &40282): Reads information about a chunk from the Chunk Directory */
+/* Podule_EnumerateChunks (SWI &40282). See PRM 4-142. */
 int Podule_EnumerateChunks(int chunk, int section, int *out_size, int *out_operating)
 {
     register int reg0 __asm("r0") = chunk;
@@ -24,7 +24,7 @@ int Podule_EnumerateChunks(int chunk, int section, int *out_size, int *out_opera
     return reg0;
 }
 
-/* Podule_EnumerateChunksWithInfo (SWI &4028A): Reads information about a chunk from the Chunk Directory */
+/* Podule_EnumerateChunksWithInfo (SWI &4028A). See PRM 4-157. */
 int Podule_EnumerateChunksWithInfo(int chunk, int section, int *out_size, int *out_operating)
 {
     register int reg0 __asm("r0") = chunk;
@@ -37,14 +37,14 @@ int Podule_EnumerateChunksWithInfo(int chunk, int section, int *out_size, int *o
     return reg0;
 }
 
-/* Podule_HardwareAddress (SWI &40289): Returns an expansion card or extension ROM’s base address, and the address of an */
+/* Podule_HardwareAddress (SWI &40289). See PRM 4-155. */
 void Podule_HardwareAddress(void *section)
 {
     register void * reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x40289" : : "r"(reg3) : "r0", "r1", "r2", "r12", "lr", "memory");
 }
 
-/* Podule_HardwareAddresses (SWI &4028B): Returns an expansion card or extension ROM’s base address, and the address of an */
+/* Podule_HardwareAddresses (SWI &4028B). See PRM 4-159. */
 int Podule_HardwareAddresses(int section, int *out_address)
 {
     register int reg3 __asm("r3") = section;
@@ -55,7 +55,7 @@ int Podule_HardwareAddresses(int section, int *out_address)
     return reg0;
 }
 
-/* Podule_RawRead (SWI &40287): Reads bytes directly within an expansion card or extension ROM’s address space */
+/* Podule_RawRead (SWI &40287). See PRM 4-151. */
 void Podule_RawRead(void *offset, int count, void *buffer, int section)
 {
     register void * reg0 __asm("r0") = offset;
@@ -65,7 +65,7 @@ void Podule_RawRead(void *offset, int count, void *buffer, int section)
     __asm__ volatile("swi 0x40287" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Podule_RawWrite (SWI &40288): Writes bytes directly within an expansion card’s address space */
+/* Podule_RawWrite (SWI &40288). See PRM 4-153. */
 void Podule_RawWrite(void *offset, int count, void *buffer, int expansion)
 {
     register void * reg0 __asm("r0") = offset;
@@ -75,7 +75,7 @@ void Podule_RawWrite(void *offset, int count, void *buffer, int expansion)
     __asm__ volatile("swi 0x40288" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Podule_ReadBytes (SWI &40284): Reads bytes from within an expansion card’s code space */
+/* Podule_ReadBytes (SWI &40284). See PRM 4-145. */
 void Podule_ReadBytes(int offset, int count, void *buffer, int expansion)
 {
     register int reg0 __asm("r0") = offset;
@@ -85,7 +85,7 @@ void Podule_ReadBytes(int offset, int count, void *buffer, int expansion)
     __asm__ volatile("swi 0x40284" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Podule_ReadChunk (SWI &40283): Reads a chunk from an expansion card or extension ROM */
+/* Podule_ReadChunk (SWI &40283). See PRM 4-144. */
 void Podule_ReadChunk(int chunk, void *buffer, int section)
 {
     register int reg0 __asm("r0") = chunk;
@@ -94,7 +94,7 @@ void Podule_ReadChunk(int chunk, void *buffer, int section)
     __asm__ volatile("swi 0x40283" : : "r"(reg0), "r"(reg2), "r"(reg3) : "r1", "r12", "lr", "memory");
 }
 
-/* Podule_ReadHeader (SWI &40281): Reads an expansion card or extension ROM’s header */
+/* Podule_ReadHeader (SWI &40281). See PRM 4-140. */
 void Podule_ReadHeader(void *buffer, int section)
 {
     register void * reg2 __asm("r2") = buffer;
@@ -102,7 +102,7 @@ void Podule_ReadHeader(void *buffer, int section)
     __asm__ volatile("swi 0x40281" : : "r"(reg2), "r"(reg3) : "r0", "r1", "r12", "lr", "memory");
 }
 
-/* Podule_ReadID (SWI &40280): Reads an expansion card or extension ROM’s identity byte */
+/* Podule_ReadID (SWI &40280). See PRM 4-139. */
 int Podule_ReadID(int section)
 {
     register int reg3 __asm("r3") = section;
@@ -111,7 +111,7 @@ int Podule_ReadID(int section)
     return reg0;
 }
 
-/* Podule_ReadInfo (SWI &4028D): This call returns a selection of data specific to a given expansion card */
+/* Podule_ReadInfo (SWI &4028D). See PRM 5a-631. */
 void Podule_ReadInfo(int mask, void *buffer, void *length, int section)
 {
     register int reg0 __asm("r0") = mask;
@@ -121,7 +121,7 @@ void Podule_ReadInfo(int mask, void *buffer, void *length, int section)
     __asm__ volatile("swi 0x4028D" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Podule_ReturnNumber (SWI &4028C): Returns the number of expansion cards and extension ROMs */
+/* Podule_ReturnNumber (SWI &4028C). See PRM 4-161. */
 int Podule_ReturnNumber(int *out_count)
 {
     register int reg0 __asm("r0");
@@ -131,7 +131,7 @@ int Podule_ReturnNumber(int *out_count)
     return reg0;
 }
 
-/* Podule_WriteBytes (SWI &40285): Writes bytes to within an expansion card’s code space */
+/* Podule_WriteBytes (SWI &40285). See PRM 4-147. */
 void Podule_WriteBytes(int offset, int count, void *buffer, int expansion)
 {
     register int reg0 __asm("r0") = offset;

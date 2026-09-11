@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Debugger_Disassemble (SWI &40380): *BreakClr removes the breakpoint at the specified address or register value, putting the */
+/* Debugger_Disassemble (SWI &40380). See PRM 4-226. */
 void Debugger_Disassemble(void)
 {
     __asm__ volatile("swi 0x40380" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

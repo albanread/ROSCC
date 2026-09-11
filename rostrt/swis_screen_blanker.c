@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* ScreenBlanker_Control (SWI &43100): This SWI is for internal use by the Portable module. You must not use it in your own */
+/* ScreenBlanker_Control (SWI &43100). See PRM 4-112. */
 void ScreenBlanker_Control(void)
 {
     __asm__ volatile("swi 0x43100" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

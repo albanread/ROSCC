@@ -2,13 +2,13 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* SharedCLibrary_LibInitAPCS_A (SWI &80680): This SWI interfaces an application which uses the old ‘A’ variant (SP=R12) of the */
+/* SharedCLibrary_LibInitAPCS_A (SWI &80680). See PRM 4-262. */
 void SharedCLibrary_LibInitAPCS_A(void)
 {
     __asm__ volatile("swi 0x80680" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* SharedCLibrary_LibInitAPCS_R (SWI &80681): This SWI allows you to interface an application with the shared C library without using */
+/* SharedCLibrary_LibInitAPCS_R (SWI &80681). See PRM 4-264. */
 void SharedCLibrary_LibInitAPCS_R(void)
 {
     __asm__ volatile("swi 0x80681" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

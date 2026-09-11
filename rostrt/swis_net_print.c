@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* NetPrint_BindPSName (SWI &40206): Converts a printer server’s name to its address, providing it is free */
+/* NetPrint_BindPSName (SWI &40206). See PRM 2-404. */
 int NetPrint_BindPSName(void *buffer)
 {
     register void * reg0 __asm("r0") = buffer;
@@ -11,13 +11,13 @@ int NetPrint_BindPSName(void *buffer)
     return reg1;
 }
 
-/* NetPrint_ConvertStatusToString (SWI &40208): *Configure PS sets the configured default network printer server */
+/* NetPrint_ConvertStatusToString (SWI &40208). See PRM 2-408. */
 void NetPrint_ConvertStatusToString(void)
 {
     __asm__ volatile("swi 0x40208" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetPrint_ListServers (SWI &40207): Returns the names of all printer servers */
+/* NetPrint_ListServers (SWI &40207). See PRM 2-405. */
 int NetPrint_ListServers(int format, void *buffer, void *length, int time, int *out_buffer)
 {
     register int reg0 __asm("r0") = format;
@@ -29,7 +29,7 @@ int NetPrint_ListServers(int format, void *buffer, void *length, int time, int *
     return reg0;
 }
 
-/* NetPrint_ReadPSName (SWI &40202): Reads the name of your current printer server */
+/* NetPrint_ReadPSName (SWI &40202). See PRM 2-399. */
 int NetPrint_ReadPSName(void *buffer, void *size)
 {
     register void * reg1 __asm("r1") = buffer;
@@ -39,7 +39,7 @@ int NetPrint_ReadPSName(void *buffer, void *size)
     return reg0;
 }
 
-/* NetPrint_ReadPSNumber (SWI &40200): Returns the full station number of your current printer server */
+/* NetPrint_ReadPSNumber (SWI &40200). See PRM 2-397. */
 int NetPrint_ReadPSNumber(int *out_net)
 {
     register int reg0 __asm("r0");
@@ -49,7 +49,7 @@ int NetPrint_ReadPSNumber(int *out_net)
     return reg0;
 }
 
-/* NetPrint_ReadPSTimeouts (SWI &40204): Reads the current values for timeouts used by NetPrint */
+/* NetPrint_ReadPSTimeouts (SWI &40204). See PRM 2-402. */
 int NetPrint_ReadPSTimeouts(int *out_transmit, int *out_machine, int *out_machine2, int *out_receive, int *out_broadcast)
 {
     register int reg0 __asm("r0");
@@ -67,14 +67,14 @@ int NetPrint_ReadPSTimeouts(int *out_transmit, int *out_machine, int *out_machin
     return reg0;
 }
 
-/* NetPrint_SetPSName (SWI &40203): Sets by name the printer server used as your current one */
+/* NetPrint_SetPSName (SWI &40203). See PRM 2-401. */
 void NetPrint_SetPSName(void *buffer)
 {
     register void * reg0 __asm("r0") = buffer;
     __asm__ volatile("swi 0x40203" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* NetPrint_SetPSNumber (SWI &40201): Sets the full station number used as the current printer server */
+/* NetPrint_SetPSNumber (SWI &40201). See PRM 2-398. */
 void NetPrint_SetPSNumber(int station, int net)
 {
     register int reg0 __asm("r0") = station;

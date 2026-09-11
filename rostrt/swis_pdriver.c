@@ -2,21 +2,21 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* PDriver_AbortJob (SWI &80149): End a print job without any further output */
+/* PDriver_AbortJob (SWI &80149). See PRM 3-628. */
 void PDriver_AbortJob(int file)
 {
     register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x80149" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_CancelJob (SWI &8014E): Stops the print job associated with a file handle from printing */
+/* PDriver_CancelJob (SWI &8014E). See PRM 3-638. */
 void PDriver_CancelJob(int file)
 {
     register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x8014E" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_CancelJobWithError (SWI &80152): Cancels a print job – future attempts to output to it generate an error */
+/* PDriver_CancelJobWithError (SWI &80152). See PRM 3-642. */
 void PDriver_CancelJobWithError(int file, void *block)
 {
     register int reg0 __asm("r0") = file;
@@ -24,7 +24,7 @@ void PDriver_CancelJobWithError(int file, void *block)
     __asm__ volatile("swi 0x80152" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_CheckFeatures (SWI &80142): Check the features of a printer */
+/* PDriver_CheckFeatures (SWI &80142). See PRM 3-617. */
 void PDriver_CheckFeatures(int mask, int value)
 {
     register int reg0 __asm("r0") = mask;
@@ -32,7 +32,7 @@ void PDriver_CheckFeatures(int mask, int value)
     __asm__ volatile("swi 0x80142" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_CurrentJob (SWI &80146): Get the file handle of the current job */
+/* PDriver_CurrentJob (SWI &80146). See PRM 3-624. */
 int PDriver_CurrentJob(void)
 {
     register int reg0 __asm("r0");
@@ -40,7 +40,7 @@ int PDriver_CurrentJob(void)
     return reg0;
 }
 
-/* PDriver_DeclareFont (SWI &80155): Declares the fonts that will be used in a document */
+/* PDriver_DeclareFont (SWI &80155). See PRM 3-648. */
 void PDriver_DeclareFont(int handle, void *name, int flags)
 {
     register int reg0 __asm("r0") = handle;
@@ -49,7 +49,7 @@ void PDriver_DeclareFont(int handle, void *name, int flags)
     __asm__ volatile("swi 0x80155" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_DrawPage (SWI &8014C): Called to draw the page after all rectangles specified */
+/* PDriver_DrawPage (SWI &8014C). See PRM 3-635. */
 int PDriver_DrawPage(int count, void *block, int page, void *string, int *out_identification)
 {
     register int reg0 __asm("r0") = count;
@@ -61,14 +61,14 @@ int PDriver_DrawPage(int count, void *block, int page, void *string, int *out_id
     return reg0;
 }
 
-/* PDriver_EndJob (SWI &80148): End a print job normally */
+/* PDriver_EndJob (SWI &80148). See PRM 3-626. */
 void PDriver_EndJob(int file)
 {
     register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x80148" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_EnumerateDrivers (SWI &80159): Enumerates all drivers within the system */
+/* PDriver_EnumerateDrivers (SWI &80159). See PRM 3-655. */
 int PDriver_EnumerateDrivers(int handle, int *out_printer)
 {
     register int reg0 __asm("r0") = handle;
@@ -78,7 +78,7 @@ int PDriver_EnumerateDrivers(int handle, int *out_printer)
     return reg0;
 }
 
-/* PDriver_EnumerateJobs (SWI &80150): List existing print jobs */
+/* PDriver_EnumerateJobs (SWI &80150). See PRM 3-640. */
 int PDriver_EnumerateJobs(int handle)
 {
     register int reg0 __asm("r0") = handle;
@@ -86,13 +86,13 @@ int PDriver_EnumerateJobs(int handle)
     return reg0;
 }
 
-/* PDriver_FontSWI (SWI &80147): This call is part of the internal interface between the font system and printer drivers */
+/* PDriver_FontSWI (SWI &80147). See PRM 3-625. */
 void PDriver_FontSWI(void)
 {
     __asm__ volatile("swi 0x80147" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_GetRectangle (SWI &8014D): Get the next print rectangle */
+/* PDriver_GetRectangle (SWI &8014D). See PRM 3-637. */
 int PDriver_GetRectangle(void *block, int *out_identification)
 {
     register void * reg1 __asm("r1") = block;
@@ -103,7 +103,7 @@ int PDriver_GetRectangle(void *block, int *out_identification)
     return reg0;
 }
 
-/* PDriver_Info (SWI &80140): Get information on the printer driver */
+/* PDriver_Info (SWI &80140). See PRM 3-611. */
 int PDriver_Info(int *out_value, int *out_value2, int *out_features, int *out_ptr, int *out_value3, int *out_value4, int *out_printer)
 {
     register int reg0 __asm("r0");
@@ -125,7 +125,7 @@ int PDriver_Info(int *out_value, int *out_value2, int *out_features, int *out_pt
     return reg0;
 }
 
-/* PDriver_PageSize (SWI &80143): Find how large the paper and print area is */
+/* PDriver_PageSize (SWI &80143). See PRM 3-618. */
 int PDriver_PageSize(int *out_size, int *out_left, int *out_bottom, int *out_right, int *out_top)
 {
     register int reg1 __asm("r1");
@@ -143,27 +143,27 @@ int PDriver_PageSize(int *out_size, int *out_left, int *out_bottom, int *out_rig
     return reg1;
 }
 
-/* PDriver_RemoveDriver (SWI &80157): Deregisters a printer driver with the PDriver sharer module */
+/* PDriver_RemoveDriver (SWI &80157). See PRM 3-652. */
 void PDriver_RemoveDriver(int printer)
 {
     register int reg0 __asm("r0") = printer;
     __asm__ volatile("swi 0x80157" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_Reset (SWI &8014A): Abort all print jobs */
+/* PDriver_Reset (SWI &8014A). See PRM 3-630. */
 void PDriver_Reset(void)
 {
     __asm__ volatile("swi 0x8014A" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_ScreenDump (SWI &8014F): Output a screen dump to the printer */
+/* PDriver_ScreenDump (SWI &8014F). See PRM 3-639. */
 void PDriver_ScreenDump(int file)
 {
     register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x8014F" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* PDriver_SelectDriver (SWI &80158): Selects the specified driver */
+/* PDriver_SelectDriver (SWI &80158). See PRM 3-653. */
 int PDriver_SelectDriver(int printer)
 {
     register int reg0 __asm("r0") = printer;
@@ -171,7 +171,7 @@ int PDriver_SelectDriver(int printer)
     return reg0;
 }
 
-/* PDriver_SelectIllustration (SWI &80153): Makes the given print job the current one, and treats it as an illustration */
+/* PDriver_SelectIllustration (SWI &80153). See PRM 3-644. */
 int PDriver_SelectIllustration(int file, void *string)
 {
     register int reg0 __asm("r0") = file;
@@ -180,7 +180,7 @@ int PDriver_SelectIllustration(int file, void *string)
     return reg0;
 }
 
-/* PDriver_SelectJob (SWI &80145): Make a given print job the current one */
+/* PDriver_SelectJob (SWI &80145). See PRM 3-622. */
 int PDriver_SelectJob(int file, void *string)
 {
     register int reg0 __asm("r0") = file;
@@ -189,7 +189,7 @@ int PDriver_SelectJob(int file, void *string)
     return reg0;
 }
 
-/* PDriver_SetPrinter (SWI &80151): This call is used to set options specific to a particular printer driver. It is a private */
+/* PDriver_SetPrinter (SWI &80151). See PRM 3-641. */
 void PDriver_SetPrinter(void)
 {
     __asm__ volatile("swi 0x80151" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

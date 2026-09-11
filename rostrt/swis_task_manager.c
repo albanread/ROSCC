@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* TaskManager_EnumerateTasks (SWI &42681): Enumerates all the currently active tasks */
+/* TaskManager_EnumerateTasks (SWI &42681). See PRM 3-313. */
 int TaskManager_EnumerateTasks(int value, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = value;
@@ -12,14 +12,14 @@ int TaskManager_EnumerateTasks(int value, void *buffer, void *length)
     return reg0;
 }
 
-/* TaskManager_Shutdown (SWI &42682): Initiates a desktop shutdown */
+/* TaskManager_Shutdown (SWI &42682). See PRM 3-315. */
 void TaskManager_Shutdown(int flags)
 {
     register int reg0 __asm("r0") = flags;
     __asm__ volatile("swi 0x42682" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* TaskManager_TaskNameFromHandle (SWI &42680): Finds the name of a task */
+/* TaskManager_TaskNameFromHandle (SWI &42680). See PRM 3-312. */
 int TaskManager_TaskNameFromHandle(int task)
 {
     register int reg0 __asm("r0") = task;

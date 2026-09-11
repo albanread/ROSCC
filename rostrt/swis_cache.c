@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Cache_Cacheable (SWI &281): Controls which areas of memory may be cached */
+/* Cache_Cacheable (SWI &281). See PRM 4-194. */
 int Cache_Cacheable(int mask, int mask2)
 {
     register int reg0 __asm("r0") = mask;
@@ -11,7 +11,7 @@ int Cache_Cacheable(int mask, int mask2)
     return reg0;
 }
 
-/* Cache_Control (SWI &280): Turns the cache on or off */
+/* Cache_Control (SWI &280). See PRM 4-192. */
 int Cache_Control(int mask, int mask2)
 {
     register int reg0 __asm("r0") = mask;
@@ -20,7 +20,7 @@ int Cache_Control(int mask, int mask2)
     return reg0;
 }
 
-/* Cache_Disruptive (SWI &283): Controls which areas of memory cause automatic flushing of the cache on a write */
+/* Cache_Disruptive (SWI &283). See PRM 4-198. */
 int Cache_Disruptive(int mask, int mask2)
 {
     register int reg0 __asm("r0") = mask;
@@ -29,13 +29,13 @@ int Cache_Disruptive(int mask, int mask2)
     return reg0;
 }
 
-/* Cache_Flush (SWI &284): Flushes the cache */
+/* Cache_Flush (SWI &284). See PRM 4-200. */
 void Cache_Flush(void)
 {
     __asm__ volatile("swi 0x284" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Cache_Updateable (SWI &282): Controls which areas of memory will be automatically updated in the cache */
+/* Cache_Updateable (SWI &282). See PRM 4-196. */
 int Cache_Updateable(int mask, int mask2)
 {
     register int reg0 __asm("r0") = mask;

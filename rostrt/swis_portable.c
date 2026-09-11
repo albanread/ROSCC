@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Portable_Control (SWI &42FC1): Controls various power control and miscellaneous bits */
+/* Portable_Control (SWI &42FC1). See PRM 4-210. */
 int Portable_Control(int mask, int mask2, int *out_new)
 {
     register int reg0 __asm("r0") = mask;
@@ -12,7 +12,7 @@ int Portable_Control(int mask, int mask2, int *out_new)
     return reg0;
 }
 
-/* Portable_ReadBMUVariable (SWI &42FC2): Reads Battery Management Unit variables */
+/* Portable_ReadBMUVariable (SWI &42FC2). See PRM 4-212. */
 int Portable_ReadBMUVariable(int bmu)
 {
     register int reg0 __asm("r0") = bmu;
@@ -21,7 +21,7 @@ int Portable_ReadBMUVariable(int bmu)
     return reg1;
 }
 
-/* Portable_Speed (SWI &42FC0): Controls the processor speed */
+/* Portable_Speed (SWI &42FC0). See PRM 4-208. */
 int Portable_Speed(int mask, int mask2, int *out_new)
 {
     register int reg0 __asm("r0") = mask;
@@ -31,7 +31,7 @@ int Portable_Speed(int mask, int mask2, int *out_new)
     return reg0;
 }
 
-/* Portable_WriteBMUVariable (SWI &42FC3): Writes Battery Management Unit variables */
+/* Portable_WriteBMUVariable (SWI &42FC3). See PRM 4-214. */
 void Portable_WriteBMUVariable(int bmu, int value)
 {
     register int reg0 __asm("r0") = bmu;

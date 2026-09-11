@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Filter_DeRegisterPreFilter (SWI &42642): Removes a pre-filter from the list of pre-filters */
+/* Filter_DeRegisterPreFilter (SWI &42642). See PRM 3-308. */
 void Filter_DeRegisterPreFilter(void *ptr, void *ptr2, int value, int task)
 {
     register void * reg0 __asm("r0") = ptr;

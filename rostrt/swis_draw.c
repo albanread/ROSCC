@@ -2,13 +2,13 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DrawFile_DeclareFonts (SWI &45542): *Render displays the contents of a Draw file. You can optionally transform the output */
+/* DrawFile_DeclareFonts (SWI &45542). See PRM 5a-530. */
 void DrawFile_DeclareFonts(void)
 {
     __asm__ volatile("swi 0x45542" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Draw_Fill (SWI &40702): Process a path and send to VDU, filling the interior portion */
+/* Draw_Fill (SWI &40702). See PRM 3-548. */
 void Draw_Fill(void *ptr, int fill, void *ptr2, int flatness)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -18,7 +18,7 @@ void Draw_Fill(void *ptr, int fill, void *ptr2, int flatness)
     __asm__ volatile("swi 0x40702" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
-/* Draw_FlattenPath (SWI &40708): Converts an input path into a flattened output path */
+/* Draw_FlattenPath (SWI &40708). See PRM 3-554. */
 void Draw_FlattenPath(void *ptr, void *size, int flatness)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -27,13 +27,13 @@ void Draw_FlattenPath(void *ptr, void *size, int flatness)
     __asm__ volatile("swi 0x40708" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* Draw_ProcessPath (SWI &40700): All the other SWIs in the Draw module are converted into calls to this SWI. They are */
+/* Draw_ProcessPath (SWI &40700). See PRM 3-546. */
 void Draw_ProcessPath(void)
 {
     __asm__ volatile("swi 0x40700" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Draw_TransformPath (SWI &4070A): Converts an input path into a transformed output path */
+/* Draw_TransformPath (SWI &4070A). See PRM 3-556. */
 void Draw_TransformPath(void *ptr, void *ptr2, void *ptr3, int arg3)
 {
     register void * reg0 __asm("r0") = ptr;

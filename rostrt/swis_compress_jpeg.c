@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* CompressJPEG_Finish (SWI &4A502): Finishes the JPEG compression process, returning the size of the complete image */
+/* CompressJPEG_Finish (SWI &4A502). See PRM 5a-622. */
 int CompressJPEG_Finish(int jpeg)
 {
     register int reg0 __asm("r0") = jpeg;
@@ -10,7 +10,7 @@ int CompressJPEG_Finish(int jpeg)
     return reg0;
 }
 
-/* CompressJPEG_WriteLine (SWI &4A501): Compresses one row of source pixels into the JPEG buffer */
+/* CompressJPEG_WriteLine (SWI &4A501). See PRM 5a-621. */
 void CompressJPEG_WriteLine(int jpeg, void *buffer)
 {
     register int reg0 __asm("r0") = jpeg;

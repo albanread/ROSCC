@@ -2,14 +2,14 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DeviceFS_Deregister (SWI &42741): Deregisters all devices and their device driver from DeviceFS */
+/* DeviceFS_Deregister (SWI &42741). See PRM 2-438. */
 void DeviceFS_Deregister(int handle)
 {
     register int reg0 __asm("r0") = handle;
     __asm__ volatile("swi 0x42741" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DeviceFS_DeregisterObjects (SWI &42743): Deregisters a device related to a particular device driver */
+/* DeviceFS_DeregisterObjects (SWI &42743). See PRM 2-440. */
 void DeviceFS_DeregisterObjects(int handle, void *ptr)
 {
     register int reg0 __asm("r0") = handle;
@@ -17,7 +17,7 @@ void DeviceFS_DeregisterObjects(int handle, void *ptr)
     __asm__ volatile("swi 0x42743" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DeviceFS_ReceivedCharacter (SWI &42746): Informs DeviceFS that a device driver has received a character */
+/* DeviceFS_ReceivedCharacter (SWI &42746). See PRM 2-443. */
 void DeviceFS_ReceivedCharacter(int byte, int handle)
 {
     register int reg0 __asm("r0") = byte;
@@ -25,7 +25,7 @@ void DeviceFS_ReceivedCharacter(int byte, int handle)
     __asm__ volatile("swi 0x42746" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DeviceFS_RegisterObjects (SWI &42742): Registers a list of additional devices with a device driver */
+/* DeviceFS_RegisterObjects (SWI &42742). See PRM 2-439. */
 void DeviceFS_RegisterObjects(int handle, void *ptr)
 {
     register int reg0 __asm("r0") = handle;
@@ -33,7 +33,7 @@ void DeviceFS_RegisterObjects(int handle, void *ptr)
     __asm__ volatile("swi 0x42742" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
-/* DeviceFS_Threshold (SWI &42745): Informs DeviceFS of the threshold value to use on buffered devices */
+/* DeviceFS_Threshold (SWI &42745). See PRM 2-442. */
 void DeviceFS_Threshold(int handle, int value)
 {
     register int reg1 __asm("r1") = handle;

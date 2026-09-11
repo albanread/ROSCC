@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Shell_Create (SWI &405C0): This SWI call is for use by the ShellCLI module only. You must not use it in your own */
+/* Shell_Create (SWI &405C0). See PRM 3-328. */
 void Shell_Create(void)
 {
     __asm__ volatile("swi 0x405C0" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");

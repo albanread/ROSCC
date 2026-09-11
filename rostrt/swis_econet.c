@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* Econet_AbandonAndReadReceive (SWI &40018): Abandons a reception and returns information about it, including the size of data */
+/* Econet_AbandonAndReadReceive (SWI &40018). See PRM 2-695. */
 int Econet_AbandonAndReadReceive(int handle, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;
@@ -22,7 +22,7 @@ int Econet_AbandonAndReadReceive(int handle, int *out_flags, int *out_port, int 
     return reg0;
 }
 
-/* Econet_AbandonReceive (SWI &40003): Abandons an RxCB */
+/* Econet_AbandonReceive (SWI &40003). See PRM 2-663. */
 int Econet_AbandonReceive(int handle)
 {
     register int reg0 __asm("r0") = handle;
@@ -30,7 +30,7 @@ int Econet_AbandonReceive(int handle)
     return reg0;
 }
 
-/* Econet_AbandonTransmit (SWI &40008): Abandons a TxCB */
+/* Econet_AbandonTransmit (SWI &40008). See PRM 2-671. */
 int Econet_AbandonTransmit(int handle)
 {
     register int reg0 __asm("r0") = handle;
@@ -38,7 +38,7 @@ int Econet_AbandonTransmit(int handle)
     return reg0;
 }
 
-/* Econet_AllocatePort (SWI &40013): Allocates a unique port number */
+/* Econet_AllocatePort (SWI &40013). See PRM 2-688. */
 int Econet_AllocatePort(void)
 {
     register int reg0 __asm("r0");
@@ -46,35 +46,35 @@ int Econet_AllocatePort(void)
     return reg0;
 }
 
-/* Econet_ClaimPort (SWI &40015): Claims a specific port number */
+/* Econet_ClaimPort (SWI &40015). See PRM 2-690. */
 void Econet_ClaimPort(int port)
 {
     register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40015" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_DeAllocatePort (SWI &40014): Deallocates a port number that was previously allocated */
+/* Econet_DeAllocatePort (SWI &40014). See PRM 2-689. */
 void Econet_DeAllocatePort(int port)
 {
     register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40014" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_EnumerateReceive (SWI &40005): Returns the handles of open RxCBs */
+/* Econet_EnumerateReceive (SWI &40005). See PRM 2-666. */
 void Econet_EnumerateReceive(void *block)
 {
     register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x40005" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_EnumerateTransmit (SWI &4001F): Returns the handles of open TxCBs */
+/* Econet_EnumerateTransmit (SWI &4001F). See PRM 5a-274. */
 void Econet_EnumerateTransmit(void *block)
 {
     register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x4001F" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_ExamineReceive (SWI &40001): Reads the status of an RxCB */
+/* Econet_ExamineReceive (SWI &40001). See PRM 2-659. */
 int Econet_ExamineReceive(int handle)
 {
     register int reg0 __asm("r0") = handle;
@@ -82,7 +82,7 @@ int Econet_ExamineReceive(int handle)
     return reg0;
 }
 
-/* Econet_HardwareAddresses (SWI &40020): Returns the addresses of the Econet hardware and interrupt control registers */
+/* Econet_HardwareAddresses (SWI &40020). See PRM 5a-276. */
 int Econet_HardwareAddresses(int *out_address, int *out_mask)
 {
     register int reg0 __asm("r0");
@@ -94,19 +94,19 @@ int Econet_HardwareAddresses(int *out_address, int *out_mask)
     return reg0;
 }
 
-/* Econet_InetRxDirect (SWI &4001D): This call is for internal use only. You must not use it in your own code */
+/* Econet_InetRxDirect (SWI &4001D). See PRM 5a-271. */
 void Econet_InetRxDirect(void)
 {
     __asm__ volatile("swi 0x4001D" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_NetworkParameters (SWI &40021): *Configure BootNet sets the configured state for whether or not the AUN software is to */
+/* Econet_NetworkParameters (SWI &40021). See PRM 5a-278. */
 void Econet_NetworkParameters(void)
 {
     __asm__ volatile("swi 0x40021" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_NetworkState (SWI &4001A): Returns the state of the underlying transport to a given station */
+/* Econet_NetworkState (SWI &4001A). See PRM 2-698. */
 int Econet_NetworkState(int station, int net)
 {
     register int reg0 __asm("r0") = station;
@@ -116,7 +116,7 @@ int Econet_NetworkState(int station, int net)
     return reg2;
 }
 
-/* Econet_PacketSize (SWI &4001B): Returns the maximum packet size recommended on the underlying transport to a given */
+/* Econet_PacketSize (SWI &4001B). See PRM 2-700. */
 int Econet_PacketSize(int station, int net)
 {
     register int reg0 __asm("r0") = station;
@@ -126,7 +126,7 @@ int Econet_PacketSize(int station, int net)
     return reg2;
 }
 
-/* Econet_PollTransmit (SWI &40007): Reads the status of a TxCB */
+/* Econet_PollTransmit (SWI &40007). See PRM 2-669. */
 int Econet_PollTransmit(int handle)
 {
     register int reg0 __asm("r0") = handle;
@@ -134,13 +134,13 @@ int Econet_PollTransmit(int handle)
     return reg0;
 }
 
-/* Econet_PrintBanner (SWI &40010): Prints the string ‘Acorn Econet’ followed by a newline */
+/* Econet_PrintBanner (SWI &40010). See PRM 2-684. */
 void Econet_PrintBanner(void)
 {
     __asm__ volatile("swi 0x40010" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_ReadLocalStationAndNet (SWI &4000A): Returns a computer’s station number and net number */
+/* Econet_ReadLocalStationAndNet (SWI &4000A). See PRM 2-674. */
 int Econet_ReadLocalStationAndNet(int *out_net)
 {
     register int reg0 __asm("r0");
@@ -150,7 +150,7 @@ int Econet_ReadLocalStationAndNet(int *out_net)
     return reg0;
 }
 
-/* Econet_ReadProtection (SWI &4000D): Reads the current protection word for immediate operations */
+/* Econet_ReadProtection (SWI &4000D). See PRM 2-679. */
 int Econet_ReadProtection(void)
 {
     register int reg0 __asm("r0");
@@ -158,7 +158,7 @@ int Econet_ReadProtection(void)
     return reg0;
 }
 
-/* Econet_ReadReceive (SWI &40002): Returns information about a reception, including the size of data */
+/* Econet_ReadReceive (SWI &40002). See PRM 2-661. */
 int Econet_ReadReceive(int handle, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;
@@ -178,7 +178,7 @@ int Econet_ReadReceive(int handle, int *out_flags, int *out_port, int *out_stati
     return reg0;
 }
 
-/* Econet_ReadStationNumber (SWI &4000F): Extracts a station and/or net number from a supplied string */
+/* Econet_ReadStationNumber (SWI &4000F). See PRM 2-683. */
 int Econet_ReadStationNumber(void *string, int *out_net)
 {
     register void * reg1 __asm("r1") = string;
@@ -189,7 +189,7 @@ int Econet_ReadStationNumber(void *string, int *out_net)
     return reg2;
 }
 
-/* Econet_ReadTransportName (SWI &4001C): Returns the name of the underlying transport to a given station */
+/* Econet_ReadTransportName (SWI &4001C). See PRM 2-702. */
 int Econet_ReadTransportName(int station, int net)
 {
     register int reg0 __asm("r0") = station;
@@ -199,7 +199,7 @@ int Econet_ReadTransportName(int station, int net)
     return reg2;
 }
 
-/* Econet_ReadTransportType (SWI &40011): Returns the underlying transport type to a given station */
+/* Econet_ReadTransportType (SWI &40011). See PRM 2-685. */
 int Econet_ReadTransportType(int station, int net, int arg2)
 {
     register int reg0 __asm("r0") = station;
@@ -209,14 +209,14 @@ int Econet_ReadTransportType(int station, int net, int arg2)
     return reg2;
 }
 
-/* Econet_ReleasePort (SWI &40012): Releases a port number that was previously claimed */
+/* Econet_ReleasePort (SWI &40012). See PRM 2-687. */
 void Econet_ReleasePort(int port)
 {
     register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40012" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
-/* Econet_SetProtection (SWI &4000E): Sets or reads the protection word for immediate operations */
+/* Econet_SetProtection (SWI &4000E). See PRM 2-681. */
 int Econet_SetProtection(int mask, int mask2)
 {
     register int reg0 __asm("r0") = mask;
@@ -225,7 +225,7 @@ int Econet_SetProtection(int mask, int mask2)
     return reg0;
 }
 
-/* Econet_Version (SWI &40019): Returns the version of software for the underlying transport to a given station */
+/* Econet_Version (SWI &40019). See PRM 2-697. */
 int Econet_Version(int station, int net)
 {
     register int reg0 __asm("r0") = station;
@@ -235,7 +235,7 @@ int Econet_Version(int station, int net)
     return reg2;
 }
 
-/* Econet_WaitForReception (SWI &40004): Polls an RxCB, reads its status, and abandons it */
+/* Econet_WaitForReception (SWI &40004). See PRM 2-664. */
 int Econet_WaitForReception(int handle, int delay, int arg2, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;

@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* JPEG_FileInfo (SWI &49981): Gives information on a JPEG image held in a file */
+/* JPEG_FileInfo (SWI &49981). See PRM 5a-151. */
 int JPEG_FileInfo(int flags, void *ptr, int *out_width, int *out_height, int *out_value, int *out_value2, int *out_sprite)
 {
     register int reg0 __asm("r0") = flags;
@@ -21,7 +21,7 @@ int JPEG_FileInfo(int flags, void *ptr, int *out_width, int *out_height, int *ou
     return reg0;
 }
 
-/* JPEG_Info (SWI &49980): Gives information on a JPEG image held in a buffer */
+/* JPEG_Info (SWI &49980). See PRM 5a-149. */
 int JPEG_Info(int flags, void *buffer, int length, int *out_width, int *out_height, int *out_value, int *out_value2, int *out_sprite)
 {
     register int reg0 __asm("r0") = flags;
@@ -40,7 +40,7 @@ int JPEG_Info(int flags, void *buffer, int length, int *out_width, int *out_heig
     return reg0;
 }
 
-/* JPEG_PDriverIntercept (SWI &49986): Requests that SpriteExtend passes on all calls to JPEG plotting SWIs */
+/* JPEG_PDriverIntercept (SWI &49986). See PRM 5a-161. */
 int JPEG_PDriverIntercept(int flags)
 {
     register int reg0 __asm("r0") = flags;
@@ -48,7 +48,7 @@ int JPEG_PDriverIntercept(int flags)
     return reg0;
 }
 
-/* JPEG_PlotFileTransformed (SWI &49985): Decompresses, transforms, and plots on the screen a JPEG image held in a file */
+/* JPEG_PlotFileTransformed (SWI &49985). See PRM 5a-159. */
 void JPEG_PlotFileTransformed(void *ptr, void *block, void *block2)
 {
     register void * reg0 __asm("r0") = ptr;
@@ -57,7 +57,7 @@ void JPEG_PlotFileTransformed(void *ptr, void *block, void *block2)
     __asm__ volatile("swi 0x49985" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
-/* JPEG_PlotTransformed (SWI &49984): Decompresses, transforms, and plots on the screen a JPEG image held in a buffer */
+/* JPEG_PlotTransformed (SWI &49984). See PRM 5a-157. */
 void JPEG_PlotTransformed(void *buffer, void *block, void *block2, int length)
 {
     register void * reg0 __asm("r0") = buffer;

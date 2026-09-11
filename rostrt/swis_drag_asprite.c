@@ -2,7 +2,7 @@
  * One C function per SWI, named exactly like the SWI, so the
  * Mojo bindings' external_call names resolve here. */
 
-/* DragASprite_Stop (SWI &42401): Terminates any current drag operation, and releases workspace */
+/* DragASprite_Stop (SWI &42401). See PRM 3-300. */
 void DragASprite_Stop(void)
 {
     __asm__ volatile("swi 0x42401" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
