@@ -3,7 +3,7 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* JPEG_FileInfo (SWI &49981): Gives information on a JPEG image held in a file */
-int JPEG_FileInfo(int flags, void *ptr, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int JPEG_FileInfo(int flags, void *ptr, int *out_width, int *out_height, int *out_value, int *out_value2, int *out_sprite)
 {
     register int reg0 __asm("r0") = flags;
     register void * reg1 __asm("r1") = ptr;
@@ -13,30 +13,30 @@ int JPEG_FileInfo(int flags, void *ptr, int *out_r2, int *out_r3, int *out_r4, i
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x49981" : "+r"(reg0), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : "r"(reg1) : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_sprite) *out_sprite = reg6;
+    if (out_value2) *out_value2 = reg5;
+    if (out_value) *out_value = reg4;
+    if (out_height) *out_height = reg3;
+    if (out_width) *out_width = reg2;
     return reg0;
 }
 
 /* JPEG_Info (SWI &49980): Gives information on a JPEG image held in a buffer */
-int JPEG_Info(int flags, void *buffer, int r2, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int JPEG_Info(int flags, void *buffer, int length, int *out_width, int *out_height, int *out_value, int *out_value2, int *out_sprite)
 {
     register int reg0 __asm("r0") = flags;
     register void * reg1 __asm("r1") = buffer;
-    register int reg2 __asm("r2") = r2;
+    register int reg2 __asm("r2") = length;
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x49980" : "+r"(reg0), "+r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : "r"(reg1) : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_sprite) *out_sprite = reg6;
+    if (out_value2) *out_value2 = reg5;
+    if (out_value) *out_value = reg4;
+    if (out_height) *out_height = reg3;
+    if (out_width) *out_width = reg2;
     return reg0;
 }
 
@@ -49,20 +49,20 @@ int JPEG_PDriverIntercept(int flags)
 }
 
 /* JPEG_PlotFileTransformed (SWI &49985): Decompresses, transforms, and plots on the screen a JPEG image held in a file */
-void JPEG_PlotFileTransformed(void *ptr, void *ptr2, void *ptr3)
+void JPEG_PlotFileTransformed(void *ptr, void *block, void *block2)
 {
     register void * reg0 __asm("r0") = ptr;
-    register void * reg1 __asm("r1") = ptr2;
-    register void * reg2 __asm("r2") = ptr3;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = block2;
     __asm__ volatile("swi 0x49985" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* JPEG_PlotTransformed (SWI &49984): Decompresses, transforms, and plots on the screen a JPEG image held in a buffer */
-void JPEG_PlotTransformed(void *buffer, void *ptr, void *ptr2, int r3)
+void JPEG_PlotTransformed(void *buffer, void *block, void *block2, int length)
 {
     register void * reg0 __asm("r0") = buffer;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = block2;
+    register int reg3 __asm("r3") = length;
     __asm__ volatile("swi 0x49984" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

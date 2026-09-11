@@ -3,24 +3,24 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* PDriver_AbortJob (SWI &80149): End a print job without any further output */
-void PDriver_AbortJob(int handle)
+void PDriver_AbortJob(int file)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x80149" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* PDriver_CancelJob (SWI &8014E): Stops the print job associated with a file handle from printing */
-void PDriver_CancelJob(int handle)
+void PDriver_CancelJob(int file)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x8014E" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* PDriver_CancelJobWithError (SWI &80152): Cancels a print job – future attempts to output to it generate an error */
-void PDriver_CancelJobWithError(int handle, void *ptr)
+void PDriver_CancelJobWithError(int file, void *block)
 {
-    register int reg0 __asm("r0") = handle;
-    register void * reg1 __asm("r1") = ptr;
+    register int reg0 __asm("r0") = file;
+    register void * reg1 __asm("r1") = block;
     __asm__ volatile("swi 0x80152" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -41,40 +41,40 @@ int PDriver_CurrentJob(void)
 }
 
 /* PDriver_DeclareFont (SWI &80155): Declares the fonts that will be used in a document */
-void PDriver_DeclareFont(int handle, void *ptr, int flags)
+void PDriver_DeclareFont(int handle, void *name, int flags)
 {
     register int reg0 __asm("r0") = handle;
-    register void * reg1 __asm("r1") = ptr;
+    register void * reg1 __asm("r1") = name;
     register int reg2 __asm("r2") = flags;
     __asm__ volatile("swi 0x80155" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* PDriver_DrawPage (SWI &8014C): Called to draw the page after all rectangles specified */
-int PDriver_DrawPage(int r0, void *ptr, int r2, void *string, int *out_r2)
+int PDriver_DrawPage(int count, void *block, int page, void *string, int *out_identification)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = count;
+    register void * reg1 __asm("r1") = block;
+    register int reg2 __asm("r2") = page;
     register void * reg3 __asm("r3") = string;
     __asm__ volatile("swi 0x8014C" : "+r"(reg0), "+r"(reg2) : "r"(reg1), "r"(reg3) : "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_identification) *out_identification = reg2;
     return reg0;
 }
 
 /* PDriver_EndJob (SWI &80148): End a print job normally */
-void PDriver_EndJob(int handle)
+void PDriver_EndJob(int file)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x80148" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* PDriver_EnumerateDrivers (SWI &80159): Enumerates all drivers within the system */
-int PDriver_EnumerateDrivers(int handle, int *out_r1)
+int PDriver_EnumerateDrivers(int handle, int *out_printer)
 {
     register int reg0 __asm("r0") = handle;
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x80159" : "+r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_printer) *out_printer = reg1;
     return reg0;
 }
 
@@ -93,18 +93,18 @@ void PDriver_FontSWI(void)
 }
 
 /* PDriver_GetRectangle (SWI &8014D): Get the next print rectangle */
-int PDriver_GetRectangle(void *ptr, int *out_r2)
+int PDriver_GetRectangle(void *block, int *out_identification)
 {
-    register void * reg1 __asm("r1") = ptr;
+    register void * reg1 __asm("r1") = block;
     register int reg0 __asm("r0");
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x8014D" : "=r"(reg0), "=r"(reg2) : "r"(reg1) : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_identification) *out_identification = reg2;
     return reg0;
 }
 
 /* PDriver_Info (SWI &80140): Get information on the printer driver */
-int PDriver_Info(int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6, int *out_r7)
+int PDriver_Info(int *out_value, int *out_value2, int *out_features, int *out_ptr, int *out_value3, int *out_value4, int *out_printer)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
@@ -115,18 +115,18 @@ int PDriver_Info(int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5
     register int reg6 __asm("r6");
     register int reg7 __asm("r7");
     __asm__ volatile("swi 0x80140" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6), "=r"(reg7) : : "r12", "lr", "memory");
-    if (out_r7) *out_r7 = reg7;
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_printer) *out_printer = reg7;
+    if (out_value4) *out_value4 = reg6;
+    if (out_value3) *out_value3 = reg5;
+    if (out_ptr) *out_ptr = reg4;
+    if (out_features) *out_features = reg3;
+    if (out_value2) *out_value2 = reg2;
+    if (out_value) *out_value = reg1;
     return reg0;
 }
 
 /* PDriver_PageSize (SWI &80143): Find how large the paper and print area is */
-int PDriver_PageSize(int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int PDriver_PageSize(int *out_size, int *out_left, int *out_bottom, int *out_right, int *out_top)
 {
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
@@ -135,18 +135,18 @@ int PDriver_PageSize(int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *ou
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x80143" : "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : : "r0", "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_top) *out_top = reg6;
+    if (out_right) *out_right = reg5;
+    if (out_bottom) *out_bottom = reg4;
+    if (out_left) *out_left = reg3;
+    if (out_size) *out_size = reg2;
     return reg1;
 }
 
 /* PDriver_RemoveDriver (SWI &80157): Deregisters a printer driver with the PDriver sharer module */
-void PDriver_RemoveDriver(int r0)
+void PDriver_RemoveDriver(int printer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = printer;
     __asm__ volatile("swi 0x80157" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -157,33 +157,33 @@ void PDriver_Reset(void)
 }
 
 /* PDriver_ScreenDump (SWI &8014F): Output a screen dump to the printer */
-void PDriver_ScreenDump(int handle)
+void PDriver_ScreenDump(int file)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     __asm__ volatile("swi 0x8014F" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* PDriver_SelectDriver (SWI &80158): Selects the specified driver */
-int PDriver_SelectDriver(int r0)
+int PDriver_SelectDriver(int printer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = printer;
     __asm__ volatile("swi 0x80158" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* PDriver_SelectIllustration (SWI &80153): Makes the given print job the current one, and treats it as an illustration */
-int PDriver_SelectIllustration(int handle, void *string)
+int PDriver_SelectIllustration(int file, void *string)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     register void * reg1 __asm("r1") = string;
     __asm__ volatile("swi 0x80153" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* PDriver_SelectJob (SWI &80145): Make a given print job the current one */
-int PDriver_SelectJob(int handle, void *string)
+int PDriver_SelectJob(int file, void *string)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = file;
     register void * reg1 __asm("r1") = string;
     __asm__ volatile("swi 0x80145" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;

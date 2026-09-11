@@ -10,25 +10,25 @@ void DMA_DeregisterChannel(int handle)
 }
 
 /* DMA_ResumeTransfer (SWI &46145): Resume a previously suspended DMA transfer */
-void DMA_ResumeTransfer(int flags, int r1)
+void DMA_ResumeTransfer(int flags, int dma)
 {
     register int reg0 __asm("r0") = flags;
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = dma;
     __asm__ volatile("swi 0x46145" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* DMA_SuspendTransfer (SWI &46144): Suspends the given active DMA transfer */
-void DMA_SuspendTransfer(int flags, int r1)
+void DMA_SuspendTransfer(int flags, int dma)
 {
     register int reg0 __asm("r0") = flags;
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = dma;
     __asm__ volatile("swi 0x46144" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* DMA_TerminateTransfer (SWI &46143): Terminates a DMA transfer */
-void DMA_TerminateTransfer(void *ptr, int r1)
+void DMA_TerminateTransfer(void *block, int dma)
 {
-    register void * reg0 __asm("r0") = ptr;
-    register int reg1 __asm("r1") = r1;
+    register void * reg0 __asm("r0") = block;
+    register int reg1 __asm("r1") = dma;
     __asm__ volatile("swi 0x46143" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

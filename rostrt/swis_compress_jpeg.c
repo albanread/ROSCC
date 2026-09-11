@@ -3,17 +3,17 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* CompressJPEG_Finish (SWI &4A502): Finishes the JPEG compression process, returning the size of the complete image */
-int CompressJPEG_Finish(int r0)
+int CompressJPEG_Finish(int jpeg)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = jpeg;
     __asm__ volatile("swi 0x4A502" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* CompressJPEG_WriteLine (SWI &4A501): Compresses one row of source pixels into the JPEG buffer */
-void CompressJPEG_WriteLine(int r0, void *buffer)
+void CompressJPEG_WriteLine(int jpeg, void *buffer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = jpeg;
     register void * reg1 __asm("r1") = buffer;
     __asm__ volatile("swi 0x4A501" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

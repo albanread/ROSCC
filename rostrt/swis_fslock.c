@@ -3,21 +3,21 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* FSLock_Status (SWI &44781): Returns the current lock status, and the locked filing system’s number */
-int FSLock_Status(int *out_r1)
+int FSLock_Status(int *out_locked)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x44781" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_locked) *out_locked = reg1;
     return reg0;
 }
 
 /* FSLock_Version (SWI &44780): Returns information describing the FSLock module */
-int FSLock_Version(int *out_r1)
+int FSLock_Version(int *out_ptr)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x44780" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_ptr) *out_ptr = reg1;
     return reg0;
 }

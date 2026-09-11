@@ -3,53 +3,53 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* PDumper_CopyFilename (SWI &41B09): Copies a specified filename into a buffer */
-void PDumper_CopyFilename(void *string, void *buffer, void *string2)
+void PDumper_CopyFilename(void *string, void *size, void *string2)
 {
     register void * reg0 __asm("r0") = string;
-    register void * reg1 __asm("r1") = buffer;
+    register void * reg1 __asm("r1") = size;
     register void * reg2 __asm("r2") = string2;
     __asm__ volatile("swi 0x41B09" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* PDumper_Find (SWI &41B03): Scans the printer dumper’s chain for a block of memory with the given tag */
-void PDumper_Find(void *ptr, void *r2)
+void PDumper_Find(void *ptr, void *block)
 {
     register void * reg0 __asm("r0") = ptr;
-    register void * reg2 __asm("r2") = r2;
+    register void * reg2 __asm("r2") = block;
     __asm__ volatile("swi 0x41B03" : : "r"(reg0), "r"(reg2) : "r1", "r3", "r12", "lr", "memory");
 }
 
 /* PDumper_Free (SWI &41B02): Attempts to release a block of memory from the printer dumper’s chain */
-void PDumper_Free(void *ptr, void *ptr2)
+void PDumper_Free(void *ptr, void *block)
 {
     register void * reg0 __asm("r0") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
+    register void * reg2 __asm("r2") = block;
     __asm__ volatile("swi 0x41B02" : : "r"(reg0), "r"(reg2) : "r1", "r3", "r12", "lr", "memory");
 }
 
 /* PDumper_Info (SWI &41B00): Returns information about the PDumper support module */
-int PDumper_Info(int *out_r1)
+int PDumper_Info(int *out_colour)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x41B00" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
 /* PDumper_LookupError (SWI &41B08): Accesses the internal error handling routines within the support module */
-void PDumper_LookupError(void *ptr, void *string)
+void PDumper_LookupError(void *block, void *string)
 {
-    register void * reg0 __asm("r0") = ptr;
+    register void * reg0 __asm("r0") = block;
     register void * reg1 __asm("r1") = string;
     __asm__ volatile("swi 0x41B08" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* PDumper_StartJob (SWI &41B04): Sets up any workspace that is required for a job */
-void PDumper_StartJob(void *ptr, int flags, void *ptr2)
+void PDumper_StartJob(void *ptr, int flags, void *filename)
 {
     register void * reg0 __asm("r0") = ptr;
     register int reg1 __asm("r1") = flags;
-    register void * reg2 __asm("r2") = ptr2;
+    register void * reg2 __asm("r2") = filename;
     __asm__ volatile("swi 0x41B04" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }

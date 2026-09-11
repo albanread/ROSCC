@@ -3,12 +3,12 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* FileCore_DiscFormat (SWI &40547): Fills in a disc format structure with parameters for the specified format */
-void FileCore_DiscFormat(void *ptr, int r1, int r2, int r3)
+void FileCore_DiscFormat(void *ptr, int swi, int parameter, int format)
 {
     register void * reg0 __asm("r0") = ptr;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg1 __asm("r1") = swi;
+    register int reg2 __asm("r2") = parameter;
+    register int reg3 __asm("r3") = format;
     __asm__ volatile("swi 0x40547" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
@@ -19,21 +19,21 @@ void FileCore_DiscOp(void)
 }
 
 /* FileCore_FloppyStructure (SWI &40544): Creates a RAM image of a floppy disc map and root directory entry */
-void FileCore_FloppyStructure(void *buffer, void *ptr, int r2, void *ptr2)
+void FileCore_FloppyStructure(void *buffer, void *ptr, int arg2, void *ptr2)
 {
     register void * reg0 __asm("r0") = buffer;
     register void * reg1 __asm("r1") = ptr;
-    register int reg2 __asm("r2") = r2;
+    register int reg2 __asm("r2") = arg2;
     register void * reg3 __asm("r3") = ptr2;
     __asm__ volatile("swi 0x40544" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* FileCore_LayoutStructure (SWI &40548): Lays out into the specified file a set of structures for its format */
-void FileCore_LayoutStructure(int r0, void *ptr, void *ptr2, int handle)
+void FileCore_LayoutStructure(int identifier, void *block, void *ptr, int file)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
-    register int reg3 __asm("r3") = handle;
+    register int reg0 __asm("r0") = identifier;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = ptr;
+    register int reg3 __asm("r3") = file;
     __asm__ volatile("swi 0x40548" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

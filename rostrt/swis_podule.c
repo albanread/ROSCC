@@ -3,140 +3,140 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Podule_CallLoader (SWI &40286): Calls an expansion card’s Loader */
-int Podule_CallLoader(int r0, int r3)
+int Podule_CallLoader(int user, int expansion)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = user;
+    register int reg3 __asm("r3") = expansion;
     __asm__ volatile("swi 0x40286" : "+r"(reg0) : "r"(reg3) : "r1", "r2", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Podule_EnumerateChunks (SWI &40282): Reads information about a chunk from the Chunk Directory */
-int Podule_EnumerateChunks(int r0, int r3, int *out_r1, int *out_r2)
+int Podule_EnumerateChunks(int chunk, int section, int *out_size, int *out_operating)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = chunk;
+    register int reg3 __asm("r3") = section;
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x40282" : "+r"(reg0), "=r"(reg1), "=r"(reg2) : "r"(reg3) : "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_operating) *out_operating = reg2;
+    if (out_size) *out_size = reg1;
     return reg0;
 }
 
 /* Podule_EnumerateChunksWithInfo (SWI &4028A): Reads information about a chunk from the Chunk Directory */
-int Podule_EnumerateChunksWithInfo(int r0, int r3, int *out_r1, int *out_r2)
+int Podule_EnumerateChunksWithInfo(int chunk, int section, int *out_size, int *out_operating)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = chunk;
+    register int reg3 __asm("r3") = section;
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4028A" : "+r"(reg0), "=r"(reg1), "=r"(reg2) : "r"(reg3) : "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_operating) *out_operating = reg2;
+    if (out_size) *out_size = reg1;
     return reg0;
 }
 
 /* Podule_HardwareAddress (SWI &40289): Returns an expansion card or extension ROM’s base address, and the address of an */
-void Podule_HardwareAddress(void *r3)
+void Podule_HardwareAddress(void *section)
 {
-    register void * reg3 __asm("r3") = r3;
+    register void * reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x40289" : : "r"(reg3) : "r0", "r1", "r2", "r12", "lr", "memory");
 }
 
 /* Podule_HardwareAddresses (SWI &4028B): Returns an expansion card or extension ROM’s base address, and the address of an */
-int Podule_HardwareAddresses(int r3, int *out_r1)
+int Podule_HardwareAddresses(int section, int *out_address)
 {
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = section;
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x4028B" : "=r"(reg0), "=r"(reg1) : "r"(reg3) : "r2", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_address) *out_address = reg1;
     return reg0;
 }
 
 /* Podule_RawRead (SWI &40287): Reads bytes directly within an expansion card or extension ROM’s address space */
-void Podule_RawRead(void *r0, int r1, void *buffer, int r3)
+void Podule_RawRead(void *offset, int count, void *buffer, int section)
 {
-    register void * reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register void * reg0 __asm("r0") = offset;
+    register int reg1 __asm("r1") = count;
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x40287" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Podule_RawWrite (SWI &40288): Writes bytes directly within an expansion card’s address space */
-void Podule_RawWrite(void *r0, int r1, void *buffer, int r3)
+void Podule_RawWrite(void *offset, int count, void *buffer, int expansion)
 {
-    register void * reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register void * reg0 __asm("r0") = offset;
+    register int reg1 __asm("r1") = count;
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = expansion;
     __asm__ volatile("swi 0x40288" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Podule_ReadBytes (SWI &40284): Reads bytes from within an expansion card’s code space */
-void Podule_ReadBytes(int r0, int r1, void *buffer, int r3)
+void Podule_ReadBytes(int offset, int count, void *buffer, int expansion)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = offset;
+    register int reg1 __asm("r1") = count;
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = expansion;
     __asm__ volatile("swi 0x40284" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Podule_ReadChunk (SWI &40283): Reads a chunk from an expansion card or extension ROM */
-void Podule_ReadChunk(int r0, void *buffer, int r3)
+void Podule_ReadChunk(int chunk, void *buffer, int section)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = chunk;
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x40283" : : "r"(reg0), "r"(reg2), "r"(reg3) : "r1", "r12", "lr", "memory");
 }
 
 /* Podule_ReadHeader (SWI &40281): Reads an expansion card or extension ROM’s header */
-void Podule_ReadHeader(void *buffer, int r3)
+void Podule_ReadHeader(void *buffer, int section)
 {
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x40281" : : "r"(reg2), "r"(reg3) : "r0", "r1", "r12", "lr", "memory");
 }
 
 /* Podule_ReadID (SWI &40280): Reads an expansion card or extension ROM’s identity byte */
-int Podule_ReadID(int r3)
+int Podule_ReadID(int section)
 {
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = section;
     register int reg0 __asm("r0");
     __asm__ volatile("swi 0x40280" : "=r"(reg0) : "r"(reg3) : "r1", "r2", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Podule_ReadInfo (SWI &4028D): This call returns a selection of data specific to a given expansion card */
-void Podule_ReadInfo(int mask, void *buffer, void *buffer2, int r3)
+void Podule_ReadInfo(int mask, void *buffer, void *length, int section)
 {
     register int reg0 __asm("r0") = mask;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg2 __asm("r2") = length;
+    register int reg3 __asm("r3") = section;
     __asm__ volatile("swi 0x4028D" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Podule_ReturnNumber (SWI &4028C): Returns the number of expansion cards and extension ROMs */
-int Podule_ReturnNumber(int *out_r1)
+int Podule_ReturnNumber(int *out_count)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x4028C" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_count) *out_count = reg1;
     return reg0;
 }
 
 /* Podule_WriteBytes (SWI &40285): Writes bytes to within an expansion card’s code space */
-void Podule_WriteBytes(int r0, int r1, void *buffer, int r3)
+void Podule_WriteBytes(int offset, int count, void *buffer, int expansion)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = offset;
+    register int reg1 __asm("r1") = count;
     register void * reg2 __asm("r2") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = expansion;
     __asm__ volatile("swi 0x40285" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

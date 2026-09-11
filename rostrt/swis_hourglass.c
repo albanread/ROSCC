@@ -3,12 +3,12 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Hourglass_Colours (SWI &406C6): Sets the colours used to display the hourglass */
-int Hourglass_Colours(int r0, int r1, int *out_r1)
+int Hourglass_Colours(int colour, int colour2, int *out_colour)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = colour;
+    register int reg1 __asm("r1") = colour2;
     __asm__ volatile("swi 0x406C6" : "+r"(reg0), "+r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
@@ -33,9 +33,9 @@ void Hourglass_On(void)
 }
 
 /* Hourglass_Percentage (SWI &406C4): Displays a percentage below the hourglass */
-void Hourglass_Percentage(int r0)
+void Hourglass_Percentage(int percentage)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = percentage;
     __asm__ volatile("swi 0x406C4" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -46,8 +46,8 @@ void Hourglass_Smash(void)
 }
 
 /* Hourglass_Start (SWI &406C3): Turns on the hourglass after a given delay */
-void Hourglass_Start(int r0)
+void Hourglass_Start(int delay)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = delay;
     __asm__ volatile("swi 0x406C3" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }

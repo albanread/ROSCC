@@ -25,6 +25,8 @@ import os
 import re
 import sqlite3
 
+import argnames
+
 CAMEL = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
 
 # SWIs implemented by hand (magic constants) — never generate.
@@ -46,24 +48,16 @@ def is_ptr(text: str) -> bool:
 
 
 def arg_name(reg: str, text: str) -> str:
-    low = text.lower()
-    for kw, name in [
-        ("mask", "mask"),
-        ("window block", "window_block"),
-        ("icon block", "icon_block"),
-        ("state block", "state_block"),
-        ("task handle", "task_handle"),
-        ("window handle", "window_handle"),
-        ("handle", "handle"),
-        ("string", "string"),
-        ("buffer", "buffer"),
-        ("value", "value"),
-        ("pointer to", "ptr"),
-        ("flag", "flags"),
-    ]:
-        if kw in low:
-            return name
-    return f"r{reg_num(reg)}"
+    """A name for an argument, never the register it happens to arrive in.
+
+    A parameter called `r2` names a register, and a register is the call
+    mechanism - the one thing this library exists to keep out of user code.
+    Where the PRM does not describe the argument well enough to name it (a
+    good number are documented as bare constants, because they select a
+    reason code rather than carry a value) it gets a positional name, which
+    is at least not a register.
+    """
+    return argnames.from_text(text) or f"arg{reg_num(reg)}"
 
 
 def classify(rows, chunk, shim_lines, mojo_lines, stats):
@@ -128,8 +122,17 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
                 cparams.append(f"int {nm}")
             cargs.append((rn, nm, is_ptr(text)))
         ret_outs = outs[1:]  # after the return register
+        out_names = {}
         for rn, text in ret_outs:
-            cparams.append(f"int *out_r{rn}")
+            nm = "out_" + (argnames.from_text(text) or "value")
+            base = nm
+            k = 2
+            while nm in seen_names:
+                nm = f"{base}{k}"
+                k += 1
+            seen_names.add(nm)
+            out_names[rn] = nm
+            cparams.append(f"int *{nm}")
 
         retreg = outs[0][0] if outs else None
         cret = "int" if retreg is not None else "void"
@@ -177,7 +180,8 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
         if retreg is not None:
             body_ret = f"    return reg{retreg};\n"
         for rn, _t in ret_outs:
-            body_ret = f"    if (out_r{rn}) *out_r{rn} = reg{rn};\n" + body_ret
+            body_ret = (f"    if ({out_names[rn]}) *{out_names[rn]} = reg{rn};\n"
+                        + body_ret)
 
         shim_lines.append(f"/* {name} (SWI &{num:X}): {(r['one_line'] or '').strip().rstrip('.')} */")
         shim_lines.append(
@@ -200,8 +204,9 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
                 params.append(f"{nm}: Int32")
             call_args.append(nm)
         for rn, text in ret_outs:
-            params.append(f"out_r{rn}: UnsafePointer[Int32, MutUntrackedOrigin]")
-            call_args.append(f"out_r{rn}")
+            params.append(
+                f"{out_names[rn]}: UnsafePointer[Int32, MutUntrackedOrigin]")
+            call_args.append(out_names[rn])
         mret = "Int32" if retreg is not None else "None"
         doc = (r["one_line"] or "").strip().rstrip(".")
         pr = f"(PRM {r['page_ref']})" if r["page_ref"] else ""

@@ -3,11 +3,11 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* TaskManager_EnumerateTasks (SWI &42681): Enumerates all the currently active tasks */
-int TaskManager_EnumerateTasks(int value, void *buffer, void *buffer2)
+int TaskManager_EnumerateTasks(int value, void *buffer, void *length)
 {
     register int reg0 __asm("r0") = value;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = length;
     __asm__ volatile("swi 0x42681" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -20,9 +20,9 @@ void TaskManager_Shutdown(int flags)
 }
 
 /* TaskManager_TaskNameFromHandle (SWI &42680): Finds the name of a task */
-int TaskManager_TaskNameFromHandle(int task_handle)
+int TaskManager_TaskNameFromHandle(int task)
 {
-    register int reg0 __asm("r0") = task_handle;
+    register int reg0 __asm("r0") = task;
     __asm__ volatile("swi 0x42680" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }

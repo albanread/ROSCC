@@ -18,39 +18,39 @@ void NetPrint_ConvertStatusToString(void)
 }
 
 /* NetPrint_ListServers (SWI &40207): Returns the names of all printer servers */
-int NetPrint_ListServers(int r0, void *buffer, void *buffer2, int r3, int *out_r3)
+int NetPrint_ListServers(int format, void *buffer, void *length, int time, int *out_buffer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = format;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg2 __asm("r2") = length;
+    register int reg3 __asm("r3") = time;
     __asm__ volatile("swi 0x40207" : "+r"(reg0), "+r"(reg3) : "r"(reg1), "r"(reg2) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_buffer) *out_buffer = reg3;
     return reg0;
 }
 
 /* NetPrint_ReadPSName (SWI &40202): Reads the name of your current printer server */
-int NetPrint_ReadPSName(void *buffer, void *buffer2)
+int NetPrint_ReadPSName(void *buffer, void *size)
 {
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = size;
     register int reg0 __asm("r0");
     __asm__ volatile("swi 0x40202" : "=r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* NetPrint_ReadPSNumber (SWI &40200): Returns the full station number of your current printer server */
-int NetPrint_ReadPSNumber(int *out_r1)
+int NetPrint_ReadPSNumber(int *out_net)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x40200" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_net) *out_net = reg1;
     return reg0;
 }
 
 /* NetPrint_ReadPSTimeouts (SWI &40204): Reads the current values for timeouts used by NetPrint */
-int NetPrint_ReadPSTimeouts(int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5)
+int NetPrint_ReadPSTimeouts(int *out_transmit, int *out_machine, int *out_machine2, int *out_receive, int *out_broadcast)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
@@ -59,11 +59,11 @@ int NetPrint_ReadPSTimeouts(int *out_r1, int *out_r2, int *out_r3, int *out_r4, 
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     __asm__ volatile("swi 0x40204" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5) : : "r12", "lr", "memory");
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_broadcast) *out_broadcast = reg5;
+    if (out_receive) *out_receive = reg4;
+    if (out_machine2) *out_machine2 = reg3;
+    if (out_machine) *out_machine = reg2;
+    if (out_transmit) *out_transmit = reg1;
     return reg0;
 }
 
@@ -75,9 +75,9 @@ void NetPrint_SetPSName(void *buffer)
 }
 
 /* NetPrint_SetPSNumber (SWI &40201): Sets the full station number used as the current printer server */
-void NetPrint_SetPSNumber(int r0, int r1)
+void NetPrint_SetPSNumber(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     __asm__ volatile("swi 0x40201" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

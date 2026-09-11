@@ -3,17 +3,17 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* FilerAction_SendSelectedDirectory (SWI &40F80): Sends message specifying the selected directory */
-void FilerAction_SendSelectedDirectory(int task_handle, void *ptr)
+void FilerAction_SendSelectedDirectory(int task, void *ptr)
 {
-    register int reg0 __asm("r0") = task_handle;
+    register int reg0 __asm("r0") = task;
     register void * reg1 __asm("r1") = ptr;
     __asm__ volatile("swi 0x40F80" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* FilerAction_SendSelectedFile (SWI &40F81): Sends message specifying the selected files within a directory */
-void FilerAction_SendSelectedFile(int task_handle, void *ptr)
+void FilerAction_SendSelectedFile(int task, void *ptr)
 {
-    register int reg0 __asm("r0") = task_handle;
+    register int reg0 __asm("r0") = task;
     register void * reg1 __asm("r1") = ptr;
     __asm__ volatile("swi 0x40F81" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

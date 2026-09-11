@@ -3,42 +3,42 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* ColourTrans_ColourNumberToGCOL (SWI &4074D): Translates a colour number to a GCOL */
-int ColourTrans_ColourNumberToGCOL(int r0)
+int ColourTrans_ColourNumberToGCOL(int colour)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = colour;
     __asm__ volatile("swi 0x4074D" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ConvertCIEToRGB (SWI &40756): Converts industry standard CIE colours to RISC OS RGB colours */
-int ColourTrans_ConvertCIEToRGB(int value, int value2, int value3, int *out_r1, int *out_r2)
+int ColourTrans_ConvertCIEToRGB(int value, int value2, int value3, int *out_green, int *out_blue)
 {
     register int reg0 __asm("r0") = value;
     register int reg1 __asm("r1") = value2;
     register int reg2 __asm("r2") = value3;
     __asm__ volatile("swi 0x40756" : "+r"(reg0), "+r"(reg1), "+r"(reg2) : : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_blue) *out_blue = reg2;
+    if (out_green) *out_green = reg1;
     return reg0;
 }
 
 /* ColourTrans_ConvertCMYKToRGB (SWI &4075B): Converts from the CMYK model to RISC OS RGB colours */
-int ColourTrans_ConvertCMYKToRGB(int r0, int r1, int r2, int r3, int *out_r1, int *out_r2)
+int ColourTrans_ConvertCMYKToRGB(int cyan, int magenta, int yellow, int key, int *out_green, int *out_blue)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = cyan;
+    register int reg1 __asm("r1") = magenta;
+    register int reg2 __asm("r2") = yellow;
+    register int reg3 __asm("r3") = key;
     __asm__ volatile("swi 0x4075B" : "+r"(reg0), "+r"(reg1), "+r"(reg2) : "r"(reg3) : "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_blue) *out_blue = reg2;
+    if (out_green) *out_green = reg1;
     return reg0;
 }
 
 /* ColourTrans_ConvertDeviceColour (SWI &40753): Converts a device colour to a standard colour */
-int ColourTrans_ConvertDeviceColour(int r1, void *ptr)
+int ColourTrans_ConvertDeviceColour(int colour, void *ptr)
 {
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = colour;
     register void * reg3 __asm("r3") = ptr;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x40753" : "=r"(reg2) : "r"(reg1), "r"(reg3) : "r0", "r12", "lr", "memory");
@@ -46,69 +46,69 @@ int ColourTrans_ConvertDeviceColour(int r1, void *ptr)
 }
 
 /* ColourTrans_ConvertDevicePalette (SWI &40754): Converts a device palette to standard colours */
-void ColourTrans_ConvertDevicePalette(int r0, void *ptr, void *ptr2, void *ptr3)
+void ColourTrans_ConvertDevicePalette(int count, void *colour, void *colour2, void *ptr)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
-    register void * reg3 __asm("r3") = ptr3;
+    register int reg0 __asm("r0") = count;
+    register void * reg1 __asm("r1") = colour;
+    register void * reg2 __asm("r2") = colour2;
+    register void * reg3 __asm("r3") = ptr;
     __asm__ volatile("swi 0x40754" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* ColourTrans_ConvertHSVToRGB (SWI &40759): Converts hue, saturation and value into corresponding RISC OS RGB colours */
-int ColourTrans_ConvertHSVToRGB(int r0, int r1, int value, int *out_r1, int *out_r2)
+int ColourTrans_ConvertHSVToRGB(int hue, int saturation, int value, int *out_green, int *out_blue)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = hue;
+    register int reg1 __asm("r1") = saturation;
     register int reg2 __asm("r2") = value;
     __asm__ volatile("swi 0x40759" : "+r"(reg0), "+r"(reg1), "+r"(reg2) : : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_blue) *out_blue = reg2;
+    if (out_green) *out_green = reg1;
     return reg0;
 }
 
 /* ColourTrans_ConvertRGBToCIE (SWI &40755): Converts RISC OS RGB colours to industry standard CIE colours */
-int ColourTrans_ConvertRGBToCIE(int r0, int r1, int r2, int *out_r1, int *out_r2)
+int ColourTrans_ConvertRGBToCIE(int red, int green, int blue, int *out_value, int *out_value2)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = red;
+    register int reg1 __asm("r1") = green;
+    register int reg2 __asm("r2") = blue;
     __asm__ volatile("swi 0x40755" : "+r"(reg0), "+r"(reg1), "+r"(reg2) : : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_value2) *out_value2 = reg2;
+    if (out_value) *out_value = reg1;
     return reg0;
 }
 
 /* ColourTrans_ConvertRGBToCMYK (SWI &4075A): Converts RISC OS RGB colours into the CMYK model */
-int ColourTrans_ConvertRGBToCMYK(int r0, int r1, int r2, int *out_r1, int *out_r2, int *out_r3)
+int ColourTrans_ConvertRGBToCMYK(int red, int green, int blue, int *out_magenta, int *out_yellow, int *out_key)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = red;
+    register int reg1 __asm("r1") = green;
+    register int reg2 __asm("r2") = blue;
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x4075A" : "+r"(reg0), "+r"(reg1), "+r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_key) *out_key = reg3;
+    if (out_yellow) *out_yellow = reg2;
+    if (out_magenta) *out_magenta = reg1;
     return reg0;
 }
 
 /* ColourTrans_ConvertRGBToHSV (SWI &40758): Converts RISC OS RGB colours into corresponding hue, saturation and value */
-int ColourTrans_ConvertRGBToHSV(int r0, int r1, int r2, int *out_r1, int *out_r2)
+int ColourTrans_ConvertRGBToHSV(int red, int green, int blue, int *out_saturation, int *out_value)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = red;
+    register int reg1 __asm("r1") = green;
+    register int reg2 __asm("r2") = blue;
     __asm__ volatile("swi 0x40758" : "+r"(reg0), "+r"(reg1), "+r"(reg2) : : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_value) *out_value = reg2;
+    if (out_saturation) *out_saturation = reg1;
     return reg0;
 }
 
 /* ColourTrans_GCOLToColourNumber (SWI &4074C): Translates a GCOL to a colour number */
-int ColourTrans_GCOLToColourNumber(int r0)
+int ColourTrans_GCOLToColourNumber(int gcol)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = gcol;
     __asm__ volatile("swi 0x4074C" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -132,94 +132,94 @@ void ColourTrans_MiscOp(void)
 }
 
 /* ColourTrans_ReadCalibration (SWI &40752): Reads the calibration table for the screen */
-int ColourTrans_ReadCalibration(void *buffer)
+int ColourTrans_ReadCalibration(void *size)
 {
-    register void * reg0 __asm("r0") = buffer;
+    register void * reg0 __asm("r0") = size;
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x40752" : "=r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
 /* ColourTrans_ReturnColourNumber (SWI &40744): Gets the closest colour for a palette entry */
-int ColourTrans_ReturnColourNumber(int r0)
+int ColourTrans_ReturnColourNumber(int palette_entry)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = palette_entry;
     __asm__ volatile("swi 0x40744" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnColourNumberForMode (SWI &40746): Gets the closest colour for a palette entry */
-int ColourTrans_ReturnColourNumberForMode(int r0, int r1, void *r2)
+int ColourTrans_ReturnColourNumberForMode(int palette_entry, int mode, void *palette)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register void * reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg1 __asm("r1") = mode;
+    register void * reg2 __asm("r2") = palette;
     __asm__ volatile("swi 0x40746" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnFontColours (SWI &4074E): Finds the best range of anti-alias colours to match a pair of palette entries */
-int ColourTrans_ReturnFontColours(int handle, int r1, int r2, int r3, int *out_r3)
+int ColourTrans_ReturnFontColours(int font, int palette_entry, int palette_entry2, int offset, int *out_offset)
 {
-    register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = font;
+    register int reg1 __asm("r1") = palette_entry;
+    register int reg2 __asm("r2") = palette_entry2;
+    register int reg3 __asm("r3") = offset;
     __asm__ volatile("swi 0x4074E" : "+r"(reg2), "+r"(reg3) : "r"(reg0), "r"(reg1) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_offset) *out_offset = reg3;
     return reg2;
 }
 
 /* ColourTrans_ReturnGCOL (SWI &40742): Gets the closest GCOL for a palette entry */
-int ColourTrans_ReturnGCOL(int r0)
+int ColourTrans_ReturnGCOL(int palette_entry)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = palette_entry;
     __asm__ volatile("swi 0x40742" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnGCOLForMode (SWI &40745): Gets the closest GCOL for a palette entry */
-int ColourTrans_ReturnGCOLForMode(int r0, int r1, void *r2)
+int ColourTrans_ReturnGCOLForMode(int palette_entry, int mode, void *palette)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register void * reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg1 __asm("r1") = mode;
+    register void * reg2 __asm("r2") = palette;
     __asm__ volatile("swi 0x40745" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnOppColourNumber (SWI &40749): Gets the furthest colour for a palette entry */
-int ColourTrans_ReturnOppColourNumber(int r0)
+int ColourTrans_ReturnOppColourNumber(int palette_entry)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = palette_entry;
     __asm__ volatile("swi 0x40749" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnOppColourNumberForMode (SWI &4074B): Gets the furthest colour for a palette entry */
-int ColourTrans_ReturnOppColourNumberForMode(int r0, int r1, void *r2)
+int ColourTrans_ReturnOppColourNumberForMode(int palette_entry, int mode, void *palette)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register void * reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg1 __asm("r1") = mode;
+    register void * reg2 __asm("r2") = palette;
     __asm__ volatile("swi 0x4074B" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnOppGCOL (SWI &40747): Gets the furthest GCOL for a palette entry */
-int ColourTrans_ReturnOppGCOL(int r0)
+int ColourTrans_ReturnOppGCOL(int palette_entry)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = palette_entry;
     __asm__ volatile("swi 0x40747" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_ReturnOppGCOLForMode (SWI &4074A): Gets the furthest GCOL for a palette entry */
-int ColourTrans_ReturnOppGCOLForMode(int r0, int r1, void *r2)
+int ColourTrans_ReturnOppGCOLForMode(int palette_entry, int mode, void *palette)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register void * reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg1 __asm("r1") = mode;
+    register void * reg2 __asm("r2") = palette;
     __asm__ volatile("swi 0x4074A" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -232,46 +232,46 @@ void ColourTrans_SetCalibration(void *ptr)
 }
 
 /* ColourTrans_SetFontColours (SWI &4074F): Sets the best range of anti-alias colours to match a pair of palette entries */
-int ColourTrans_SetFontColours(int handle, int r1, int r2, int r3, int *out_r3)
+int ColourTrans_SetFontColours(int font, int palette_entry, int palette_entry2, int offset, int *out_offset)
 {
-    register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = font;
+    register int reg1 __asm("r1") = palette_entry;
+    register int reg2 __asm("r2") = palette_entry2;
+    register int reg3 __asm("r3") = offset;
     __asm__ volatile("swi 0x4074F" : "+r"(reg2), "+r"(reg3) : "r"(reg0), "r"(reg1) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_offset) *out_offset = reg3;
     return reg2;
 }
 
 /* ColourTrans_SetOppTextColour (SWI &40762): Changes the text foreground or background colour to a GCOL number */
-int ColourTrans_SetOppTextColour(int r0, int flags)
+int ColourTrans_SetOppTextColour(int palette_entry, int colour)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg3 __asm("r3") = flags;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg3 __asm("r3") = colour;
     __asm__ volatile("swi 0x40762" : "+r"(reg0) : "r"(reg3) : "r1", "r2", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_SetTextColour (SWI &40761): Changes the text foreground or background colour to a GCOL number */
-int ColourTrans_SetTextColour(int r0, int flags)
+int ColourTrans_SetTextColour(int palette_entry, int colour)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg3 __asm("r3") = flags;
+    register int reg0 __asm("r0") = palette_entry;
+    register int reg3 __asm("r3") = colour;
     __asm__ volatile("swi 0x40761" : "+r"(reg0) : "r"(reg3) : "r1", "r2", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourTrans_WriteCalibrationToFile (SWI &40757): Saves the current calibration to a file */
-void ColourTrans_WriteCalibrationToFile(int flags, int handle)
+void ColourTrans_WriteCalibrationToFile(int flags, int file)
 {
     register int reg0 __asm("r0") = flags;
-    register int reg1 __asm("r1") = handle;
+    register int reg1 __asm("r1") = file;
     __asm__ volatile("swi 0x40757" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* ColourTrans_WriteLoadingsToFile (SWI &40760): Writes a * Command to a file that will set the ColourTrans error loadings */
-void ColourTrans_WriteLoadingsToFile(int handle)
+void ColourTrans_WriteLoadingsToFile(int file)
 {
-    register int reg1 __asm("r1") = handle;
+    register int reg1 __asm("r1") = file;
     __asm__ volatile("swi 0x40760" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }

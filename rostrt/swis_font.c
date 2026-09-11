@@ -3,155 +3,155 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Font_ApplyFields (SWI &400A7): Merges a new set of fields with those already in a given font identifier */
-void Font_ApplyFields(void *ptr, void *ptr2, void *buffer, void *buffer2)
+void Font_ApplyFields(void *ptr, void *ptr2, void *size, void *size2)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = ptr2;
-    register void * reg2 __asm("r2") = buffer;
-    register void * reg3 __asm("r3") = buffer2;
+    register void * reg2 __asm("r2") = size;
+    register void * reg3 __asm("r3") = size2;
     __asm__ volatile("swi 0x400A7" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Font_CacheAddr (SWI &40080): Get the version number, font cache size and amount used */
-int Font_CacheAddr(int *out_r2, int *out_r3)
+int Font_CacheAddr(int *out_size, int *out_amount)
 {
     register int reg0 __asm("r0");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x40080" : "=r"(reg0), "=r"(reg2), "=r"(reg3) : : "r1", "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_amount) *out_amount = reg3;
+    if (out_size) *out_size = reg2;
     return reg0;
 }
 
 /* Font_CharBBox (SWI &4008E): Get the bounding box of a character */
-int Font_CharBBox(int handle, int r1, int flags, int *out_r2, int *out_r3, int *out_r4)
+int Font_CharBBox(int font, int ascii, int flags, int *out_bbox, int *out_bbox2, int *out_bbox3)
 {
-    register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = font;
+    register int reg1 __asm("r1") = ascii;
     register int reg2 __asm("r2") = flags;
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
     __asm__ volatile("swi 0x4008E" : "+r"(reg1), "+r"(reg2), "=r"(reg3), "=r"(reg4) : "r"(reg0) : "r12", "lr", "memory");
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_bbox3) *out_bbox3 = reg4;
+    if (out_bbox2) *out_bbox2 = reg3;
+    if (out_bbox) *out_bbox = reg2;
     return reg1;
 }
 
 /* Font_ConverttoOS (SWI &40088): Convert internal coordinates to OS coordinates */
-int Font_ConverttoOS(int r1, int r2, int *out_r2)
+int Font_ConverttoOS(int x, int y, int *out_y)
 {
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg1 __asm("r1") = x;
+    register int reg2 __asm("r2") = y;
     __asm__ volatile("swi 0x40088" : "+r"(reg1), "+r"(reg2) : : "r0", "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_y) *out_y = reg2;
     return reg1;
 }
 
 /* Font_Converttopoints (SWI &40089): Convert OS coordinates to internal coordinates */
-int Font_Converttopoints(int r1, int r2, int *out_r2)
+int Font_Converttopoints(int x, int y, int *out_y)
 {
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg1 __asm("r1") = x;
+    register int reg2 __asm("r2") = y;
     __asm__ volatile("swi 0x40089" : "+r"(reg1), "+r"(reg2) : : "r0", "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_y) *out_y = reg2;
     return reg1;
 }
 
 /* Font_CurrentFont (SWI &4008B): Get current font handle and colours */
-int Font_CurrentFont(int *out_r1, int *out_r2, int *out_r3)
+int Font_CurrentFont(int *out_colour, int *out_colour2, int *out_offset)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x4008B" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset) *out_offset = reg3;
+    if (out_colour2) *out_colour2 = reg2;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
 /* Font_CurrentRGB (SWI &400A3): Reads the settings of colours after calling Font_Paint */
-int Font_CurrentRGB(int *out_r1, int *out_r2, int *out_r3)
+int Font_CurrentRGB(int *out_colour, int *out_colour2, int *out_offset)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x400A3" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset) *out_offset = reg3;
+    if (out_colour2) *out_colour2 = reg2;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
 /* Font_FindCaret (SWI &4008D): Find where the caret is in the string */
-int Font_FindCaret(void *string, int r2, int r3, int *out_r3, int *out_r4, int *out_r5)
+int Font_FindCaret(void *string, int offset, int offset2, int *out_offset, int *out_count, int *out_string)
 {
     register void * reg1 __asm("r1") = string;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg2 __asm("r2") = offset;
+    register int reg3 __asm("r3") = offset2;
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     __asm__ volatile("swi 0x4008D" : "+r"(reg2), "+r"(reg3), "=r"(reg4), "=r"(reg5) : "r"(reg1) : "r0", "r12", "lr", "memory");
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
+    if (out_string) *out_string = reg5;
+    if (out_count) *out_count = reg4;
+    if (out_offset) *out_offset = reg3;
     return reg2;
 }
 
 /* Font_FindField (SWI &400A6): Returns a pointer to a specified field within a font identifier */
-void Font_FindField(void *ptr, int r2)
+void Font_FindField(void *ptr, int character)
 {
     register void * reg1 __asm("r1") = ptr;
-    register int reg2 __asm("r2") = r2;
+    register int reg2 __asm("r2") = character;
     __asm__ volatile("swi 0x400A6" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
 /* Font_FutureFont (SWI &4008C): Check font characteristics after Font_StringWidth */
-int Font_FutureFont(int *out_r1, int *out_r2, int *out_r3)
+int Font_FutureFont(int *out_colour, int *out_colour2, int *out_offset)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x4008C" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset) *out_offset = reg3;
+    if (out_colour2) *out_colour2 = reg2;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
 /* Font_FutureRGB (SWI &400A4): Reads the settings of colours after calling various Font… SWIs */
-int Font_FutureRGB(int *out_r1, int *out_r2, int *out_r3)
+int Font_FutureRGB(int *out_colour, int *out_colour2, int *out_offset)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x400A4" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset) *out_offset = reg3;
+    if (out_colour2) *out_colour2 = reg2;
+    if (out_colour) *out_colour = reg1;
     return reg0;
 }
 
 /* Font_LookupFont (SWI &400A8): Returns information about a particular font */
-int Font_LookupFont(int handle, int r1, int r2)
+int Font_LookupFont(int font, int arg1, int arg2)
 {
-    register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = font;
+    register int reg1 __asm("r1") = arg1;
+    register int reg2 __asm("r2") = arg2;
     __asm__ volatile("swi 0x400A8" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Font_LoseFont (SWI &40082): Finish use of a font */
-void Font_LoseFont(int handle)
+void Font_LoseFont(int font)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = font;
     __asm__ volatile("swi 0x40082" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -169,76 +169,76 @@ void Font_ReadColourTable(void *ptr)
 }
 
 /* Font_ReadDefn (SWI &40083): Read details about a font */
-int Font_ReadDefn(int handle, void *buffer, int r3, int *out_r3, int *out_r4, int *out_r5, int *out_r6, int *out_r7)
+int Font_ReadDefn(int font, void *size, int arg3, int *out_size, int *out_value, int *out_value2, int *out_age, int *out_usage)
 {
-    register int reg0 __asm("r0") = handle;
-    register void * reg1 __asm("r1") = buffer;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = font;
+    register void * reg1 __asm("r1") = size;
+    register int reg3 __asm("r3") = arg3;
     register int reg2 __asm("r2");
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     register int reg7 __asm("r7");
     __asm__ volatile("swi 0x40083" : "+r"(reg3), "=r"(reg2), "=r"(reg4), "=r"(reg5), "=r"(reg6), "=r"(reg7) : "r"(reg0), "r"(reg1) : "r12", "lr", "memory");
-    if (out_r7) *out_r7 = reg7;
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
+    if (out_usage) *out_usage = reg7;
+    if (out_age) *out_age = reg6;
+    if (out_value2) *out_value2 = reg5;
+    if (out_value) *out_value = reg4;
+    if (out_size) *out_size = reg3;
     return reg2;
 }
 
 /* Font_ReadEncodingFilename (SWI &400A5): Returns the filename of the encoding file used for a given font handle */
-int Font_ReadEncodingFilename(int handle, void *buffer, void *buffer2)
+int Font_ReadEncodingFilename(int font, void *buffer, void *length)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = font;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = length;
     __asm__ volatile("swi 0x400A5" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Font_ReadFontMax (SWI &4009C): Read the FontMax values */
-int Font_ReadFontMax(int *out_r1)
+int Font_ReadFontMax(int *out_value)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x4009C" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_value) *out_value = reg1;
     return reg0;
 }
 
 /* Font_ReadFontPrefix (SWI &4009D): Find the directory prefix for a given font handle */
-void Font_ReadFontPrefix(int handle, void *buffer, void *buffer2)
+void Font_ReadFontPrefix(int font, void *buffer, void *length)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = font;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = length;
     __asm__ volatile("swi 0x4009D" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Font_ReadInfo (SWI &40084): Get the font bounding box */
-int Font_ReadInfo(int handle, int *out_r2, int *out_r3, int *out_r4)
+int Font_ReadInfo(int font, int *out_y, int *out_x, int *out_y2)
 {
-    register int reg0 __asm("r0") = handle;
+    register int reg0 __asm("r0") = font;
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
     __asm__ volatile("swi 0x40084" : "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4) : "r"(reg0) : "r12", "lr", "memory");
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_y2) *out_y2 = reg4;
+    if (out_x) *out_x = reg3;
+    if (out_y) *out_y = reg2;
     return reg1;
 }
 
 /* Font_ReadScaleFactor (SWI &4008F): Read the internal to OS conversion factor */
-int Font_ReadScaleFactor(int *out_r2)
+int Font_ReadScaleFactor(int *out_value)
 {
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4008F" : "=r"(reg1), "=r"(reg2) : : "r0", "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_value) *out_value = reg2;
     return reg1;
 }
 
@@ -263,20 +263,20 @@ void Font_SetFont(int handle)
 }
 
 /* Font_SetFontColours (SWI &40092): Change the current colours and (optionally) the current font */
-void Font_SetFontColours(int handle, int r1, int r2, int r3)
+void Font_SetFontColours(int font, int colour, int colour2, int offset)
 {
-    register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = font;
+    register int reg1 __asm("r1") = colour;
+    register int reg2 __asm("r2") = colour2;
+    register int reg3 __asm("r3") = offset;
     __asm__ volatile("swi 0x40092" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Font_SetScaleFactor (SWI &40090): Set the internal to OS conversion factor */
-void Font_SetScaleFactor(int r1, int r2)
+void Font_SetScaleFactor(int arg1, int arg2)
 {
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg1 __asm("r1") = arg1;
+    register int reg2 __asm("r2") = arg2;
     __asm__ volatile("swi 0x40090" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
@@ -288,15 +288,15 @@ void Font_SetThresholds(void *ptr)
 }
 
 /* Font_StringBBox (SWI &40097): Measure the size of a string */
-int Font_StringBBox(void *string, int *out_r3, int *out_r4)
+int Font_StringBBox(void *string, int *out_bbox, int *out_bbox2)
 {
     register void * reg1 __asm("r1") = string;
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
     __asm__ volatile("swi 0x40097" : "=r"(reg2), "=r"(reg3), "=r"(reg4) : "r"(reg1) : "r0", "r12", "lr", "memory");
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
+    if (out_bbox2) *out_bbox2 = reg4;
+    if (out_bbox) *out_bbox = reg3;
     return reg2;
 }
 
@@ -310,9 +310,9 @@ int Font_SwitchOutputToBuffer(int flags, void *buffer)
 }
 
 /* Font_UnCacheFile (SWI &4009A): Delete cached font information, or recache it */
-void Font_UnCacheFile(void *ptr, int flags)
+void Font_UnCacheFile(void *filename, int flags)
 {
-    register void * reg1 __asm("r1") = ptr;
+    register void * reg1 __asm("r1") = filename;
     register int reg2 __asm("r2") = flags;
     __asm__ volatile("swi 0x4009A" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }

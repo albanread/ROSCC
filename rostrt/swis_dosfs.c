@@ -3,21 +3,21 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* DOSFS_DiscFormat (SWI &44B00): Fills in a disc format structure with parameters for the specified format */
-void DOSFS_DiscFormat(void *ptr, int r1, int r2, int r3)
+void DOSFS_DiscFormat(void *ptr, int swi, int parameter, int format)
 {
     register void * reg0 __asm("r0") = ptr;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg1 __asm("r1") = swi;
+    register int reg2 __asm("r2") = parameter;
+    register int reg3 __asm("r3") = format;
     __asm__ volatile("swi 0x44B00" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* DOSFS_LayoutStructure (SWI &44B01): Lays out into the specified image a set of structures for its format */
-void DOSFS_LayoutStructure(int r0, void *ptr, void *ptr2, int handle)
+void DOSFS_LayoutStructure(int structure, void *block, void *ptr, int file)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
-    register int reg3 __asm("r3") = handle;
+    register int reg0 __asm("r0") = structure;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = ptr;
+    register int reg3 __asm("r3") = file;
     __asm__ volatile("swi 0x44B01" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

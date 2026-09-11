@@ -11,12 +11,12 @@ void NetFS_ConvertDate(void *ptr, void *buffer)
 }
 
 /* NetFS_DoFSOp (SWI &40048): Commands the current file server to perform an operation */
-int NetFS_DoFSOp(int r0, void *buffer, void *buffer2, void *buffer3)
+int NetFS_DoFSOp(int file, void *buffer, void *count, void *size)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = file;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register void * reg3 __asm("r3") = buffer3;
+    register void * reg2 __asm("r2") = count;
+    register void * reg3 __asm("r3") = size;
     __asm__ volatile("swi 0x40048" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
@@ -28,38 +28,38 @@ void NetFS_EnableCache(void)
 }
 
 /* NetFS_EnumerateFS (SWI &4004A): Lists all file servers to which the NetFS software is currently logged on */
-int NetFS_EnumerateFS(int r0, void *buffer, void *buffer2, int r3, int *out_r3)
+int NetFS_EnumerateFS(int offset, void *buffer, void *size, int count, int *out_count)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = offset;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg2 __asm("r2") = size;
+    register int reg3 __asm("r3") = count;
     __asm__ volatile("swi 0x4004A" : "+r"(reg0), "+r"(reg3) : "r"(reg1), "r"(reg2) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_count) *out_count = reg3;
     return reg0;
 }
 
 /* NetFS_EnumerateFSContexts (SWI &4004E): Lists all the entries in the list of file servers to which NetFS is currently logged on */
-int NetFS_EnumerateFSContexts(int r0, void *buffer, void *buffer2, int r3, int *out_r3)
+int NetFS_EnumerateFSContexts(int entry, void *buffer, void *count, int count2, int *out_count)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = entry;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg2 __asm("r2") = count;
+    register int reg3 __asm("r3") = count2;
     __asm__ volatile("swi 0x4004E" : "+r"(reg0), "+r"(reg3) : "r"(reg1), "r"(reg2) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_count) *out_count = reg3;
     return reg0;
 }
 
 /* NetFS_EnumerateFSList (SWI &40049): Lists all file servers of which the NetFS software currently knows */
-int NetFS_EnumerateFSList(int r0, void *buffer, void *buffer2, int r3, int *out_r3)
+int NetFS_EnumerateFSList(int offset, void *buffer, void *size, int count, int *out_count)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = offset;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
-    register int reg3 __asm("r3") = r3;
+    register void * reg2 __asm("r2") = size;
+    register int reg3 __asm("r3") = count;
     __asm__ volatile("swi 0x40049" : "+r"(reg0), "+r"(reg3) : "r"(reg1), "r"(reg2) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_count) *out_count = reg3;
     return reg0;
 }
 
@@ -70,27 +70,27 @@ void NetFS_ReadCurrentContext(void)
 }
 
 /* NetFS_ReadFSName (SWI &40042): Reads the name of the your current file server */
-int NetFS_ReadFSName(void *buffer, void *buffer2)
+int NetFS_ReadFSName(void *buffer, void *size)
 {
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = size;
     register int reg0 __asm("r0");
     __asm__ volatile("swi 0x40042" : "=r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* NetFS_ReadFSNumber (SWI &40040): Returns the full station number of your current file server */
-int NetFS_ReadFSNumber(int *out_r1)
+int NetFS_ReadFSNumber(int *out_net)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x40040" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_net) *out_net = reg1;
     return reg0;
 }
 
 /* NetFS_ReadFSTimeouts (SWI &40046): Reads the current values for timeouts used by NetFS */
-int NetFS_ReadFSTimeouts(int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5)
+int NetFS_ReadFSTimeouts(int *out_transmit, int *out_machine, int *out_machine2, int *out_receive, int *out_broadcast)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
@@ -99,19 +99,19 @@ int NetFS_ReadFSTimeouts(int *out_r1, int *out_r2, int *out_r3, int *out_r4, int
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     __asm__ volatile("swi 0x40046" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5) : : "r12", "lr", "memory");
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_broadcast) *out_broadcast = reg5;
+    if (out_receive) *out_receive = reg4;
+    if (out_machine2) *out_machine2 = reg3;
+    if (out_machine) *out_machine = reg2;
+    if (out_transmit) *out_transmit = reg1;
     return reg0;
 }
 
 /* NetFS_ReadUserId (SWI &4004F): Returns the current user ID if logged on to the current file server */
-void NetFS_ReadUserId(void *buffer, void *buffer2)
+void NetFS_ReadUserId(void *buffer, void *count)
 {
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = count;
     __asm__ volatile("swi 0x4004F" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
@@ -129,17 +129,17 @@ void NetFS_SetFSName(void *buffer)
 }
 
 /* NetFS_SetFSNumber (SWI &40041): Sets the full station number used as the current file server */
-void NetFS_SetFSNumber(int r0, int r1)
+void NetFS_SetFSNumber(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     __asm__ volatile("swi 0x40041" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* NetFS_UpdateFSList (SWI &4004D): Adds names of discs to the list of names held by NetFS */
-void NetFS_UpdateFSList(int r0, int r1)
+void NetFS_UpdateFSList(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     __asm__ volatile("swi 0x4004D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

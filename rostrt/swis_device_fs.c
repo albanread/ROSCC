@@ -18,9 +18,9 @@ void DeviceFS_DeregisterObjects(int handle, void *ptr)
 }
 
 /* DeviceFS_ReceivedCharacter (SWI &42746): Informs DeviceFS that a device driver has received a character */
-void DeviceFS_ReceivedCharacter(int r0, int handle)
+void DeviceFS_ReceivedCharacter(int byte, int handle)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = byte;
     register int reg1 __asm("r1") = handle;
     __asm__ volatile("swi 0x42746" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

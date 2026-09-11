@@ -3,43 +3,43 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Territory_Alphabet (SWI &43052): Returns the alphabet number that should be selected for the given territory */
-int Territory_Alphabet(int r0)
+int Territory_Alphabet(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43052" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_AlphabetIdentifier (SWI &43053): Returns an identifier string for the alphabet that should be used for the given territory */
-int Territory_AlphabetIdentifier(int r0)
+int Territory_AlphabetIdentifier(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43053" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_AlphabetNumberToName (SWI &43045): Returns the name of the given alphabet */
-void Territory_AlphabetNumberToName(int r0, void *buffer, void *buffer2)
+void Territory_AlphabetNumberToName(int alphabet, void *buffer, void *length)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = alphabet;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = length;
     __asm__ volatile("swi 0x43045" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Territory_CharacterPropertyTable (SWI &43056): Returns a pointer to a character property table */
-int Territory_CharacterPropertyTable(int r0, void *r1)
+int Territory_CharacterPropertyTable(int territory, void *code)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = territory;
+    register void * reg1 __asm("r1") = code;
     __asm__ volatile("swi 0x43056" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_Collate (SWI &4305D): Compares two strings in the given territory’s alphabet */
-int Territory_Collate(int r0, void *string, void *string2, int flags)
+int Territory_Collate(int territory, void *string, void *string2, int flags)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = string2;
     register int reg3 __asm("r3") = flags;
@@ -48,51 +48,51 @@ int Territory_Collate(int r0, void *string, void *string2, int flags)
 }
 
 /* Territory_ControlTable (SWI &43059): Returns a pointer to a control character table */
-int Territory_ControlTable(int r0)
+int Territory_ControlTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43059" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_ConvertOrdinalsToTime (SWI &43051): Converts local time ordinals for the given territory to a 5 byte UTC time */
-void Territory_ConvertOrdinalsToTime(int r0, void *ptr, void *ptr2)
+void Territory_ConvertOrdinalsToTime(int territory, void *block, void *block2)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = ptr2;
+    register int reg0 __asm("r0") = territory;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = block2;
     __asm__ volatile("swi 0x43051" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Territory_ConvertStandardDate (SWI &4304D): Converts a 5 byte UTC time into a string, giving the date only */
-int Territory_ConvertStandardDate(int r0, void *ptr, void *string, void *buffer)
+int Territory_ConvertStandardDate(int territory, void *ptr, void *string, void *size)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = string;
-    register void * reg3 __asm("r3") = buffer;
+    register void * reg3 __asm("r3") = size;
     __asm__ volatile("swi 0x4304D" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_ConvertStandardDateAndTime (SWI &4304C): Converts a 5 byte UTC time into a string, giving the time and date */
-int Territory_ConvertStandardDateAndTime(int r0, void *ptr, void *string, void *buffer)
+int Territory_ConvertStandardDateAndTime(int territory, void *ptr, void *string, void *size)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = string;
-    register void * reg3 __asm("r3") = buffer;
+    register void * reg3 __asm("r3") = size;
     __asm__ volatile("swi 0x4304C" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_ConvertStandardTime (SWI &4304E): Converts a 5 byte UTC time into a string, giving the time only */
-int Territory_ConvertStandardTime(int r0, void *ptr, void *string, void *buffer)
+int Territory_ConvertStandardTime(int territory, void *ptr, void *string, void *size)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = string;
-    register void * reg3 __asm("r3") = buffer;
+    register void * reg3 __asm("r3") = size;
     __asm__ volatile("swi 0x4304E" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
@@ -104,9 +104,9 @@ void Territory_ConvertTextToString(void)
 }
 
 /* Territory_ConvertTimeToOrdinals (SWI &4304F): Converts a 5 byte UTC time to local time ordinals for the given territory */
-void Territory_ConvertTimeToOrdinals(int r0, void *ptr, void *buffer)
+void Territory_ConvertTimeToOrdinals(int territory, void *ptr, void *buffer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = buffer;
     __asm__ volatile("swi 0x4304F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
@@ -121,32 +121,32 @@ void Territory_ConvertTimeToUTCOrdinals(void *ptr, void *buffer)
 }
 
 /* Territory_Deregister (SWI &43042): Removes the given territory from the list of active territories */
-void Territory_Deregister(int r0)
+void Territory_Deregister(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43042" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Territory_Exists (SWI &43044): Checks if the given territory is currently present in the machine */
-void Territory_Exists(int r0)
+void Territory_Exists(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43044" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Territory_LowerCaseTable (SWI &43057): Returns a pointer to a lower case table */
-int Territory_LowerCaseTable(int r0)
+int Territory_LowerCaseTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43057" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_NameToNumber (SWI &43060): Returns the number of the given territory */
-int Territory_NameToNumber(int r0, void *ptr)
+int Territory_NameToNumber(int territory, void *territory2)
 {
-    register int reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
+    register int reg0 __asm("r0") = territory;
+    register void * reg1 __asm("r1") = territory2;
     __asm__ volatile("swi 0x43060" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -160,83 +160,83 @@ int Territory_Number(void)
 }
 
 /* Territory_NumberToName (SWI &43043): Returns the name of the given territory */
-void Territory_NumberToName(int r0, void *buffer, void *buffer2)
+void Territory_NumberToName(int territory, void *buffer, void *length)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = buffer;
-    register void * reg2 __asm("r2") = buffer2;
+    register void * reg2 __asm("r2") = length;
     __asm__ volatile("swi 0x43043" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Territory_PlainTable (SWI &4305A): Returns a pointer to an unaccented character table */
-int Territory_PlainTable(int r0)
+int Territory_PlainTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x4305A" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_ReadCalendarInformation (SWI &4305F): Returns various information about the given territory’s calendar */
-void Territory_ReadCalendarInformation(int r0, void *ptr, void *buffer)
+void Territory_ReadCalendarInformation(int territory, void *ptr, void *buffer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = buffer;
     __asm__ volatile("swi 0x4305F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Territory_ReadCurrentTimeZone (SWI &43048): Returns information on the current time zone */
-int Territory_ReadCurrentTimeZone(int *out_r1)
+int Territory_ReadCurrentTimeZone(int *out_offset)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x43048" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset) *out_offset = reg1;
     return reg0;
 }
 
 /* Territory_ReadTimeZones (SWI &4304A): Returns information on the time zones for the given territory */
-int Territory_ReadTimeZones(int r0, int *out_r1, int *out_r2, int *out_r3)
+int Territory_ReadTimeZones(int territory, int *out_name, int *out_offset, int *out_offset2)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x4304A" : "+r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_offset2) *out_offset2 = reg3;
+    if (out_offset) *out_offset = reg2;
+    if (out_name) *out_name = reg1;
     return reg0;
 }
 
 /* Territory_Register (SWI &43041): Adds the given territory to the list of active territories */
-void Territory_Register(int r0, void *ptr, int value)
+void Territory_Register(int territory, void *ptr, int territory2)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = ptr;
-    register int reg2 __asm("r2") = value;
+    register int reg2 __asm("r2") = territory2;
     __asm__ volatile("swi 0x43041" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* Territory_RepresentationTable (SWI &4305C): Returns a pointer to a numeric representation table */
-int Territory_RepresentationTable(int r0)
+int Territory_RepresentationTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x4305C" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_SelectAlphabet (SWI &43046): Selects the correct alphabet for the given territory */
-void Territory_SelectAlphabet(int r0)
+void Territory_SelectAlphabet(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43046" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Territory_SelectKeyboardHandler (SWI &43054): Selects the keyboard handler for the given territory */
-void Territory_SelectKeyboardHandler(int r0)
+void Territory_SelectKeyboardHandler(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43054" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -248,36 +248,36 @@ void Territory_SetTime(void *ptr)
 }
 
 /* Territory_TransformString (SWI &43061): Transforms a string to allow direct territory independent string comparison */
-int Territory_TransformString(int r0, void *string, void *string2, void *string3)
+int Territory_TransformString(int territory, void *string, void *string2, void *length)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = string2;
-    register void * reg3 __asm("r3") = string3;
+    register void * reg3 __asm("r3") = length;
     __asm__ volatile("swi 0x43061" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_UpperCaseTable (SWI &43058): Returns a pointer to an upper case table */
-int Territory_UpperCaseTable(int r0)
+int Territory_UpperCaseTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43058" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_ValueTable (SWI &4305B): Returns a pointer to a numeric value table */
-int Territory_ValueTable(int r0)
+int Territory_ValueTable(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x4305B" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Territory_WriteDirection (SWI &43055): Returns the direction of writing used in the given territory */
-int Territory_WriteDirection(int r0)
+int Territory_WriteDirection(int territory)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = territory;
     __asm__ volatile("swi 0x43055" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }

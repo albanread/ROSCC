@@ -9,21 +9,21 @@ void DrawFile_DeclareFonts(void)
 }
 
 /* Draw_Fill (SWI &40702): Process a path and send to VDU, filling the interior portion */
-void Draw_Fill(void *ptr, int r1, void *ptr2, int r3)
+void Draw_Fill(void *ptr, int fill, void *ptr2, int flatness)
 {
     register void * reg0 __asm("r0") = ptr;
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = fill;
     register void * reg2 __asm("r2") = ptr2;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = flatness;
     __asm__ volatile("swi 0x40702" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Draw_FlattenPath (SWI &40708): Converts an input path into a flattened output path */
-void Draw_FlattenPath(void *ptr, void *buffer, int r2)
+void Draw_FlattenPath(void *ptr, void *size, int flatness)
 {
     register void * reg0 __asm("r0") = ptr;
-    register void * reg1 __asm("r1") = buffer;
-    register int reg2 __asm("r2") = r2;
+    register void * reg1 __asm("r1") = size;
+    register int reg2 __asm("r2") = flatness;
     __asm__ volatile("swi 0x40708" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
@@ -34,11 +34,11 @@ void Draw_ProcessPath(void)
 }
 
 /* Draw_TransformPath (SWI &4070A): Converts an input path into a transformed output path */
-void Draw_TransformPath(void *ptr, void *ptr2, void *ptr3, int r3)
+void Draw_TransformPath(void *ptr, void *ptr2, void *ptr3, int arg3)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = ptr2;
     register void * reg2 __asm("r2") = ptr3;
-    register int reg3 __asm("r3") = r3;
+    register int reg3 __asm("r3") = arg3;
     __asm__ volatile("swi 0x4070A" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

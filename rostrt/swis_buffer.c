@@ -3,10 +3,10 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Buffer_Create (SWI &42940): Claims an area of memory from the RMA and registers it as a buffer */
-void Buffer_Create(void *buffer, void *buffer2, void *handle)
+void Buffer_Create(void *buffer, void *size, void *handle)
 {
     register void * reg0 __asm("r0") = buffer;
-    register void * reg1 __asm("r1") = buffer2;
+    register void * reg1 __asm("r1") = size;
     register void * reg2 __asm("r2") = handle;
     __asm__ volatile("swi 0x42940" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
@@ -19,7 +19,7 @@ void Buffer_Deregister(void *handle)
 }
 
 /* Buffer_GetInfo (SWI &42947): Returns data about the buffer */
-int Buffer_GetInfo(void *handle, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int Buffer_GetInfo(void *handle, int *out_buffer, int *out_offset, int *out_offset2, int *out_buffer2, int *out_count)
 {
     register void * reg0 __asm("r0") = handle;
     register int reg1 __asm("r1");
@@ -29,22 +29,22 @@ int Buffer_GetInfo(void *handle, int *out_r2, int *out_r3, int *out_r4, int *out
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x42947" : "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : "r"(reg0) : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_count) *out_count = reg6;
+    if (out_buffer2) *out_buffer2 = reg5;
+    if (out_offset2) *out_offset2 = reg4;
+    if (out_offset) *out_offset = reg3;
+    if (out_buffer) *out_buffer = reg2;
     return reg1;
 }
 
 /* Buffer_ModifyFlags (SWI &42944): Modifies a buffer’s flags word */
-int Buffer_ModifyFlags(void *handle, int mask, int mask2, int *out_r2)
+int Buffer_ModifyFlags(void *handle, int mask, int mask2, int *out_value)
 {
     register void * reg0 __asm("r0") = handle;
     register int reg1 __asm("r1") = mask;
     register int reg2 __asm("r2") = mask2;
     __asm__ volatile("swi 0x42944" : "+r"(reg1), "+r"(reg2) : "r"(reg0) : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
+    if (out_value) *out_value = reg2;
     return reg1;
 }
 
@@ -66,10 +66,10 @@ void Buffer_Remove(void *handle)
 }
 
 /* Buffer_Threshold (SWI &42948): Sets or reads the warning threshold of the buffer */
-int Buffer_Threshold(void *handle, int r1)
+int Buffer_Threshold(void *handle, int threshold)
 {
     register void * reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = threshold;
     __asm__ volatile("swi 0x42948" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }

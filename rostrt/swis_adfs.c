@@ -3,9 +3,9 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* ADFS_ControllerType (SWI &40248): Returns the controller type of a drive */
-void ADFS_ControllerType(int r0)
+void ADFS_ControllerType(int drive)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = drive;
     __asm__ volatile("swi 0x40248" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -65,15 +65,15 @@ void ADFS_MiscOp(void)
 }
 
 /* ADFS_Retries (SWI &40244): Sets the number of retries used for various operations */
-int ADFS_Retries(int mask, int value, int *out_r2, int *out_r3)
+int ADFS_Retries(int mask, int value, int *out_value, int *out_value2)
 {
     register int reg0 __asm("r0") = mask;
     register int reg1 __asm("r1") = value;
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x40244" : "+r"(reg1), "=r"(reg2), "=r"(reg3) : "r"(reg0) : "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
+    if (out_value2) *out_value2 = reg3;
+    if (out_value) *out_value = reg2;
     return reg1;
 }
 
@@ -84,9 +84,9 @@ void ADFS_SectorDiscOp(void)
 }
 
 /* ADFS_VetFormat (SWI &40246): Vets a disc format structure for achievability with the available hardware */
-void ADFS_VetFormat(void *ptr, int r1)
+void ADFS_VetFormat(void *ptr, int parameter)
 {
     register void * reg0 __asm("r0") = ptr;
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = parameter;
     __asm__ volatile("swi 0x40246" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

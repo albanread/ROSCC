@@ -17,10 +17,10 @@ void ColourPicker_DeregisterModel(void)
 }
 
 /* ColourPicker_HelpReply (SWI &47707): Makes the colour picker respond to a Message_HelpRequest with its own help text */
-void ColourPicker_HelpReply(int flags, void *ptr)
+void ColourPicker_HelpReply(int flags, void *block)
 {
     register int reg0 __asm("r0") = flags;
-    register void * reg1 __asm("r1") = ptr;
+    register void * reg1 __asm("r1") = block;
     __asm__ volatile("swi 0x47707" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -31,20 +31,20 @@ void ColourPicker_ModelSWI(void)
 }
 
 /* ColourPicker_OpenDialogue (SWI &47702): Creates and opens a colour picker dialogue for a client */
-int ColourPicker_OpenDialogue(int flags, void *ptr)
+int ColourPicker_OpenDialogue(int flags, void *block)
 {
     register int reg0 __asm("r0") = flags;
-    register void * reg1 __asm("r1") = ptr;
+    register void * reg1 __asm("r1") = block;
     __asm__ volatile("swi 0x47702" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* ColourPicker_ReadDialogue (SWI &47705): Reads the current state of a colour picker dialogue without changing it */
-int ColourPicker_ReadDialogue(int flags, int handle, void *buffer)
+int ColourPicker_ReadDialogue(int flags, int handle, void *block)
 {
     register int reg0 __asm("r0") = flags;
     register int reg1 __asm("r1") = handle;
-    register void * reg2 __asm("r2") = buffer;
+    register void * reg2 __asm("r2") = block;
     __asm__ volatile("swi 0x47705" : "+r"(reg1) : "r"(reg0), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg1;
 }

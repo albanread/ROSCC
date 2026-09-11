@@ -3,10 +3,10 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* IIC_Control (SWI &240): Control IIC devices */
-void IIC_Control(void *r0, void *ptr, void *r2)
+void IIC_Control(void *address, void *block, void *block2)
 {
-    register void * reg0 __asm("r0") = r0;
-    register void * reg1 __asm("r1") = ptr;
-    register void * reg2 __asm("r2") = r2;
+    register void * reg0 __asm("r0") = address;
+    register void * reg1 __asm("r1") = block;
+    register void * reg2 __asm("r2") = block2;
     __asm__ volatile("swi 0x240" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }

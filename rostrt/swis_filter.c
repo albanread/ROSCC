@@ -3,11 +3,11 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Filter_DeRegisterPreFilter (SWI &42642): Removes a pre-filter from the list of pre-filters */
-void Filter_DeRegisterPreFilter(void *ptr, void *ptr2, int value, int task_handle)
+void Filter_DeRegisterPreFilter(void *ptr, void *ptr2, int value, int task)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = ptr2;
     register int reg2 __asm("r2") = value;
-    register int reg3 __asm("r3") = task_handle;
+    register int reg3 __asm("r3") = task;
     __asm__ volatile("swi 0x42642" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }

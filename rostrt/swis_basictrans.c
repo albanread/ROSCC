@@ -3,9 +3,9 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* BASICTrans_Error (SWI &42C81): Copy translated error string to buffer */
-void BASICTrans_Error(int r0, void *buffer)
+void BASICTrans_Error(int unique, void *buffer)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = unique;
     register void * reg1 __asm("r1") = buffer;
     __asm__ volatile("swi 0x42C81" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
@@ -20,9 +20,9 @@ void BASICTrans_HELP(void *ptr, void *ptr2, void *ptr3)
 }
 
 /* BASICTrans_Message (SWI &42C82): Translate and print miscellaneous message */
-void BASICTrans_Message(int r0, int value)
+void BASICTrans_Message(int message, int message2)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = value;
+    register int reg0 __asm("r0") = message;
+    register int reg1 __asm("r1") = message2;
     __asm__ volatile("swi 0x42C82" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }

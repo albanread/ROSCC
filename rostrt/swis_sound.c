@@ -3,52 +3,52 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Sound_AttachNamedVoice (SWI &4018A): Attaches a named voice to a channel */
-void Sound_AttachNamedVoice(int r0, void *string)
+void Sound_AttachNamedVoice(int channel, void *string)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = channel;
     register void * reg1 __asm("r1") = string;
     __asm__ volatile("swi 0x4018A" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Sound_AttachVoice (SWI &40185): Attaches a voice to a channel */
-int Sound_AttachVoice(int r0, int r1)
+int Sound_AttachVoice(int channel, int voice)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = channel;
+    register int reg1 __asm("r1") = voice;
     __asm__ volatile("swi 0x40185" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
 /* Sound_Control (SWI &40189): Makes an immediate sound */
-void Sound_Control(int r0, int r1, int r2, int r3)
+void Sound_Control(int channel, int date, int pitch, int time)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = channel;
+    register int reg1 __asm("r1") = date;
+    register int reg2 __asm("r2") = pitch;
+    register int reg3 __asm("r3") = time;
     __asm__ volatile("swi 0x40189" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Sound_ControlPacked (SWI &40186): Makes an immediate sound */
-void Sound_ControlPacked(int r0, int r1)
+void Sound_ControlPacked(int aaaacccc, int ddddpppp)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = aaaacccc;
+    register int reg1 __asm("r1") = ddddpppp;
     __asm__ volatile("swi 0x40186" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Sound_Enable (SWI &40141): Enables or disables the Sound system */
-int Sound_Enable(int r0)
+int Sound_Enable(int new)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = new;
     __asm__ volatile("swi 0x40141" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_LogScale (SWI &40182): Scales a signed logarithm by the current volume setting */
-int Sound_LogScale(int r0)
+int Sound_LogScale(int arg0)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = arg0;
     __asm__ volatile("swi 0x40182" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -61,9 +61,9 @@ void Sound_Pitch(int value)
 }
 
 /* Sound_QBeat (SWI &401C6): Sets or reads the beat counter or bar length */
-int Sound_QBeat(int r0)
+int Sound_QBeat(int length)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = length;
     __asm__ volatile("swi 0x401C6" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
@@ -103,65 +103,65 @@ void Sound_QSDispatch(void)
 }
 
 /* Sound_QSchedule (SWI &401C1): Schedules a sound SWI on the event queue */
-int Sound_QSchedule(int r0, int r1, int r2, int r3)
+int Sound_QSchedule(int schedule, int arg1, int swi, int swi2)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
-    register int reg3 __asm("r3") = r3;
+    register int reg0 __asm("r0") = schedule;
+    register int reg1 __asm("r1") = arg1;
+    register int reg2 __asm("r2") = swi;
+    register int reg3 __asm("r3") = swi2;
     __asm__ volatile("swi 0x401C1" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_QTempo (SWI &401C5): Sets the tempo for the Scheduler */
-int Sound_QTempo(int r0)
+int Sound_QTempo(int new)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = new;
     __asm__ volatile("swi 0x401C5" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_ReadControlBlock (SWI &4018B): Reads a value from the Sound Channel Control Block */
-int Sound_ReadControlBlock(int r0, int r1)
+int Sound_ReadControlBlock(int channel, int offset)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = channel;
+    register int reg1 __asm("r1") = offset;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4018B" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Sound_RemoveVoice (SWI &40184): Removes a voice from the Sound system */
-int Sound_RemoveVoice(int r1, int *out_r1)
+int Sound_RemoveVoice(int voice, int *out_voice)
 {
-    register int reg1 __asm("r1") = r1;
+    register int reg1 __asm("r1") = voice;
     register int reg0 __asm("r0");
     __asm__ volatile("swi 0x40184" : "+r"(reg1), "=r"(reg0) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_voice) *out_voice = reg1;
     return reg0;
 }
 
 /* Sound_SoundLog (SWI &40181): Converts a signed integer to a signed logarithm, scaling it by volume */
-int Sound_SoundLog(int r0)
+int Sound_SoundLog(int arg0)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = arg0;
     __asm__ volatile("swi 0x40181" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_Speaker (SWI &40143): Enables or disables the speaker(s) */
-int Sound_Speaker(int r0)
+int Sound_Speaker(int new)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = new;
     __asm__ volatile("swi 0x40143" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_Stereo (SWI &40142): Sets the stereo position of a channel */
-int Sound_Stereo(int r0, int r1)
+int Sound_Stereo(int channel, int image)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = channel;
+    register int reg1 __asm("r1") = image;
     __asm__ volatile("swi 0x40142" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
@@ -175,19 +175,19 @@ int Sound_Tuning(int value)
 }
 
 /* Sound_Volume (SWI &40180): Sets the overall volume of the Sound system */
-int Sound_Volume(int r0)
+int Sound_Volume(int sound)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = sound;
     __asm__ volatile("swi 0x40180" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Sound_WriteControlBlock (SWI &4018C): Writes a value to the Sound Channel Control Block */
-int Sound_WriteControlBlock(int r0, int r1, int r2)
+int Sound_WriteControlBlock(int channel, int offset, int arg2)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = channel;
+    register int reg1 __asm("r1") = offset;
+    register int reg2 __asm("r2") = arg2;
     __asm__ volatile("swi 0x4018C" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }

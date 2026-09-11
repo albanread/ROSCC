@@ -3,7 +3,7 @@
  * Mojo bindings' external_call names resolve here. */
 
 /* Econet_AbandonAndReadReceive (SWI &40018): Abandons a reception and returns information about it, including the size of data */
-int Econet_AbandonAndReadReceive(int handle, int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int Econet_AbandonAndReadReceive(int handle, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;
     register int reg1 __asm("r1");
@@ -13,12 +13,12 @@ int Econet_AbandonAndReadReceive(int handle, int *out_r1, int *out_r2, int *out_
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x40018" : "+r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_size) *out_size = reg6;
+    if (out_buffer) *out_buffer = reg5;
+    if (out_net) *out_net = reg4;
+    if (out_station) *out_station = reg3;
+    if (out_port) *out_port = reg2;
+    if (out_flags) *out_flags = reg1;
     return reg0;
 }
 
@@ -47,30 +47,30 @@ int Econet_AllocatePort(void)
 }
 
 /* Econet_ClaimPort (SWI &40015): Claims a specific port number */
-void Econet_ClaimPort(int r0)
+void Econet_ClaimPort(int port)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40015" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Econet_DeAllocatePort (SWI &40014): Deallocates a port number that was previously allocated */
-void Econet_DeAllocatePort(int r0)
+void Econet_DeAllocatePort(int port)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40014" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Econet_EnumerateReceive (SWI &40005): Returns the handles of open RxCBs */
-void Econet_EnumerateReceive(void *r0)
+void Econet_EnumerateReceive(void *block)
 {
-    register void * reg0 __asm("r0") = r0;
+    register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x40005" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Econet_EnumerateTransmit (SWI &4001F): Returns the handles of open TxCBs */
-void Econet_EnumerateTransmit(void *r0)
+void Econet_EnumerateTransmit(void *block)
 {
-    register void * reg0 __asm("r0") = r0;
+    register void * reg0 __asm("r0") = block;
     __asm__ volatile("swi 0x4001F" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -83,14 +83,14 @@ int Econet_ExamineReceive(int handle)
 }
 
 /* Econet_HardwareAddresses (SWI &40020): Returns the addresses of the Econet hardware and interrupt control registers */
-int Econet_HardwareAddresses(int *out_r1, int *out_r2)
+int Econet_HardwareAddresses(int *out_address, int *out_mask)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x40020" : "=r"(reg0), "=r"(reg1), "=r"(reg2) : : "r3", "r12", "lr", "memory");
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_mask) *out_mask = reg2;
+    if (out_address) *out_address = reg1;
     return reg0;
 }
 
@@ -107,20 +107,20 @@ void Econet_NetworkParameters(void)
 }
 
 /* Econet_NetworkState (SWI &4001A): Returns the state of the underlying transport to a given station */
-int Econet_NetworkState(int r0, int r1)
+int Econet_NetworkState(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4001A" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Econet_PacketSize (SWI &4001B): Returns the maximum packet size recommended on the underlying transport to a given */
-int Econet_PacketSize(int r0, int r1)
+int Econet_PacketSize(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4001B" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
@@ -141,12 +141,12 @@ void Econet_PrintBanner(void)
 }
 
 /* Econet_ReadLocalStationAndNet (SWI &4000A): Returns a computer’s station number and net number */
-int Econet_ReadLocalStationAndNet(int *out_r1)
+int Econet_ReadLocalStationAndNet(int *out_net)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     __asm__ volatile("swi 0x4000A" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
-    if (out_r1) *out_r1 = reg1;
+    if (out_net) *out_net = reg1;
     return reg0;
 }
 
@@ -159,7 +159,7 @@ int Econet_ReadProtection(void)
 }
 
 /* Econet_ReadReceive (SWI &40002): Returns information about a reception, including the size of data */
-int Econet_ReadReceive(int handle, int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int Econet_ReadReceive(int handle, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;
     register int reg1 __asm("r1");
@@ -169,50 +169,50 @@ int Econet_ReadReceive(int handle, int *out_r1, int *out_r2, int *out_r3, int *o
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x40002" : "+r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_size) *out_size = reg6;
+    if (out_buffer) *out_buffer = reg5;
+    if (out_net) *out_net = reg4;
+    if (out_station) *out_station = reg3;
+    if (out_port) *out_port = reg2;
+    if (out_flags) *out_flags = reg1;
     return reg0;
 }
 
 /* Econet_ReadStationNumber (SWI &4000F): Extracts a station and/or net number from a supplied string */
-int Econet_ReadStationNumber(void *string, int *out_r3)
+int Econet_ReadStationNumber(void *string, int *out_net)
 {
     register void * reg1 __asm("r1") = string;
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     __asm__ volatile("swi 0x4000F" : "=r"(reg2), "=r"(reg3) : "r"(reg1) : "r0", "r12", "lr", "memory");
-    if (out_r3) *out_r3 = reg3;
+    if (out_net) *out_net = reg3;
     return reg2;
 }
 
 /* Econet_ReadTransportName (SWI &4001C): Returns the name of the underlying transport to a given station */
-int Econet_ReadTransportName(int r0, int r1)
+int Econet_ReadTransportName(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x4001C" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Econet_ReadTransportType (SWI &40011): Returns the underlying transport type to a given station */
-int Econet_ReadTransportType(int r0, int r1, int r2)
+int Econet_ReadTransportType(int station, int net, int arg2)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
+    register int reg2 __asm("r2") = arg2;
     __asm__ volatile("swi 0x40011" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Econet_ReleasePort (SWI &40012): Releases a port number that was previously claimed */
-void Econet_ReleasePort(int r0)
+void Econet_ReleasePort(int port)
 {
-    register int reg0 __asm("r0") = r0;
+    register int reg0 __asm("r0") = port;
     __asm__ volatile("swi 0x40012" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
@@ -226,31 +226,31 @@ int Econet_SetProtection(int mask, int mask2)
 }
 
 /* Econet_Version (SWI &40019): Returns the version of software for the underlying transport to a given station */
-int Econet_Version(int r0, int r1)
+int Econet_Version(int station, int net)
 {
-    register int reg0 __asm("r0") = r0;
-    register int reg1 __asm("r1") = r1;
+    register int reg0 __asm("r0") = station;
+    register int reg1 __asm("r1") = net;
     register int reg2 __asm("r2");
     __asm__ volatile("swi 0x40019" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
 /* Econet_WaitForReception (SWI &40004): Polls an RxCB, reads its status, and abandons it */
-int Econet_WaitForReception(int handle, int r1, int r2, int *out_r1, int *out_r2, int *out_r3, int *out_r4, int *out_r5, int *out_r6)
+int Econet_WaitForReception(int handle, int delay, int arg2, int *out_flags, int *out_port, int *out_station, int *out_net, int *out_buffer, int *out_size)
 {
     register int reg0 __asm("r0") = handle;
-    register int reg1 __asm("r1") = r1;
-    register int reg2 __asm("r2") = r2;
+    register int reg1 __asm("r1") = delay;
+    register int reg2 __asm("r2") = arg2;
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
     register int reg5 __asm("r5");
     register int reg6 __asm("r6");
     __asm__ volatile("swi 0x40004" : "+r"(reg0), "+r"(reg1), "+r"(reg2), "=r"(reg3), "=r"(reg4), "=r"(reg5), "=r"(reg6) : : "r12", "lr", "memory");
-    if (out_r6) *out_r6 = reg6;
-    if (out_r5) *out_r5 = reg5;
-    if (out_r4) *out_r4 = reg4;
-    if (out_r3) *out_r3 = reg3;
-    if (out_r2) *out_r2 = reg2;
-    if (out_r1) *out_r1 = reg1;
+    if (out_size) *out_size = reg6;
+    if (out_buffer) *out_buffer = reg5;
+    if (out_net) *out_net = reg4;
+    if (out_station) *out_station = reg3;
+    if (out_port) *out_port = reg2;
+    if (out_flags) *out_flags = reg1;
     return reg0;
 }
