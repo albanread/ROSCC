@@ -7,7 +7,7 @@ void OS_AddCallBack(void *r0, int value)
 {
     register void * reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = value;
-    __asm__ volatile("swi 0x54" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x54" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_AddToVector (SWI &47): Adds a routine to the list of those that claim a vector */
@@ -16,7 +16,7 @@ void OS_AddToVector(int r0, void *r1, int value)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x47" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x47" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_BGet (SWI &A): Reads a byte from an open file */
@@ -24,7 +24,7 @@ int OS_BGet(int handle)
 {
     register int reg1 __asm("r1") = handle;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0xA" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0xA" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -33,7 +33,7 @@ void OS_BPut(int r0, int handle)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = handle;
-    __asm__ volatile("swi 0xB" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0xB" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_BinaryToDecimal (SWI &28): Convert a signed number to a string */
@@ -42,7 +42,7 @@ int OS_BinaryToDecimal(int r0, void *buffer, int r2)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = buffer;
     register int reg2 __asm("r2") = r2;
-    __asm__ volatile("swi 0x28" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x28" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
@@ -51,13 +51,13 @@ void OS_BreakCtrl(void *ptr, void *handle)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = handle;
-    __asm__ volatile("swi 0x18" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x18" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_BreakPt (SWI &17): Cause a break point trap to occur and the BreakPoint handler to be entered */
 void OS_BreakPt(void)
 {
-    __asm__ volatile("swi 0x17" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x17" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_Byte (SWI &6): General purpose call to alter status variables, and perform other actions */
@@ -65,7 +65,7 @@ int OS_Byte(int r0, int r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x6" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x6" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
@@ -73,7 +73,7 @@ int OS_Byte(int r0, int r1)
 void OS_CLI(void *string)
 {
     register void * reg0 __asm("r0") = string;
-    __asm__ volatile("swi 0x5" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_CRC (SWI &5B): Calculate the cyclic-redundancy check for a block of data */
@@ -83,7 +83,7 @@ int OS_CRC(int value, void *ptr, void *ptr2, int r3)
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = ptr2;
     register int reg3 __asm("r3") = r3;
-    __asm__ volatile("swi 0x5B" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x5B" : "+r"(reg0) : "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
     return reg0;
 }
 
@@ -93,7 +93,7 @@ void OS_CallAfter(int r0, void *r1, int value)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x3B" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3B" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_CallBack (SWI &15): Set up the CallBack handler */
@@ -101,7 +101,7 @@ void OS_CallBack(void *ptr, void *handle)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = handle;
-    __asm__ volatile("swi 0x15" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x15" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_CallEvery (SWI &3C): Call a specified address every time a delay elapses */
@@ -110,7 +110,7 @@ void OS_CallEvery(int r0, void *r1, int value)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x3C" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3C" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ChangeDynamicArea (SWI &2A): Alter the space allocation of a dynamic area */
@@ -118,7 +118,7 @@ int OS_ChangeDynamicArea(int r0, int r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x2A" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x2A" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
@@ -129,7 +129,7 @@ int OS_ChangeEnvironment(int handle, void *handle2, int handle3, void *buffer)
     register void * reg1 __asm("r1") = handle2;
     register int reg2 __asm("r2") = handle3;
     register void * reg3 __asm("r3") = buffer;
-    __asm__ volatile("swi 0x40" : "+r"(reg2) : "r"(reg0), "r"(reg1), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x40" : "+r"(reg2) : "r"(reg0), "r"(reg1), "r"(reg3) : "r12", "lr", "memory");
     return reg2;
 }
 
@@ -138,7 +138,7 @@ int OS_ChangeRedirection(int r0, int string)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = string;
-    __asm__ volatile("swi 0x5E" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5E" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
@@ -147,7 +147,7 @@ int OS_ChangedBox(int r0, int *out_r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x5A" : "+r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5A" : "+r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -157,7 +157,7 @@ int OS_CheckModeValid(int r0)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x3F" : "=r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3F" : "=r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
@@ -167,7 +167,7 @@ void OS_Claim(int r0, void *r1, int value)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x1F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x1F" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ClaimScreenMemory (SWI &41): Use spare screen memory */
@@ -176,7 +176,7 @@ int OS_ClaimScreenMemory(int r0, int r1, int *out_r2)
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2");
-    __asm__ volatile("swi 0x41" : "+r"(reg1), "=r"(reg2) : "r"(reg0) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x41" : "+r"(reg1), "=r"(reg2) : "r"(reg0) : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     return reg1;
 }
@@ -185,7 +185,7 @@ int OS_ClaimScreenMemory(int r0, int r1, int *out_r2)
 int OS_Confirm(void)
 {
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x59" : "=r"(reg0) : : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x59" : "=r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -196,7 +196,7 @@ void OS_Control(void *handle, void *buffer, void *handle2, void *handle3)
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = handle2;
     register void * reg3 __asm("r3") = handle3;
-    __asm__ volatile("swi 0xF" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0xF" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* OS_ConvertDateAndTime (SWI &C1): Convert 5-byte time into a string using a supplied format string */
@@ -206,7 +206,7 @@ void OS_ConvertDateAndTime(void *ptr, void *string, void *buffer, void *string2)
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = buffer;
     register void * reg3 __asm("r3") = string2;
-    __asm__ volatile("swi 0xC1" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0xC1" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* OS_ConvertFileSize (SWI &EC): Convert an integer into a filesize string */
@@ -215,7 +215,7 @@ int OS_ConvertFileSize(int r0, void *buffer, void *buffer2)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = buffer2;
-    __asm__ volatile("swi 0xEC" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0xEC" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -225,7 +225,7 @@ int OS_ConvertFixedFileSize(int r0, void *buffer, void *buffer2)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = buffer2;
-    __asm__ volatile("swi 0xEB" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0xEB" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -235,7 +235,7 @@ void OS_ConvertFixedNetStation(void *value, void *string, void *buffer)
     register void * reg0 __asm("r0") = value;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = buffer;
-    __asm__ volatile("swi 0xE9" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0xE9" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ConvertNetStation (SWI &EA): Convert from an Econet station/network number pair to a string */
@@ -244,7 +244,7 @@ void OS_ConvertNetStation(void *value, void *string, void *buffer)
     register void * reg0 __asm("r0") = value;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = buffer;
-    __asm__ volatile("swi 0xEA" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0xEA" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ConvertStandardDateAndTime (SWI &C0): Converts a 5-byte time into a string */
@@ -253,7 +253,7 @@ void OS_ConvertStandardDateAndTime(void *ptr, void *string, void *buffer)
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = buffer;
-    __asm__ volatile("swi 0xC0" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0xC0" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_DelinkApplication (SWI &4D): Remove any vectors that an application is using */
@@ -261,7 +261,7 @@ void OS_DelinkApplication(void *buffer, void *buffer2)
 {
     register void * reg0 __asm("r0") = buffer;
     register void * reg1 __asm("r1") = buffer2;
-    __asm__ volatile("swi 0x4D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x4D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_EnterOS (SWI &16): Sets the processor to SVC mode */
@@ -269,7 +269,7 @@ int OS_EnterOS(int r0, int r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x16" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x16" : "+r"(reg1) : "r"(reg0) : "r2", "r3", "r12", "lr", "memory");
     return reg1;
 }
 
@@ -279,7 +279,7 @@ void OS_EvaluateExpression(void *string, void *buffer, void *buffer2)
     register void * reg0 __asm("r0") = string;
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = buffer2;
-    __asm__ volatile("swi 0x2D" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x2D" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_Exit (SWI &11): Pass control to the most recent exit handler */
@@ -288,7 +288,7 @@ void OS_Exit(void *buffer, int r1, int r2)
     register void * reg0 __asm("r0") = buffer;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = r2;
-    __asm__ volatile("swi 0x11" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x11" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ExitAndDie (SWI &50): Kill a module and pass control to the most recent exit handler */
@@ -298,7 +298,7 @@ void OS_ExitAndDie(void *buffer, int r1, int r2, void *ptr)
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = r2;
     register void * reg3 __asm("r3") = ptr;
-    __asm__ volatile("swi 0x50" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x50" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* OS_GSInit (SWI &25): Initialises registers for use by OS_GSRead */
@@ -307,7 +307,7 @@ int OS_GSInit(void *string, int flags, int *out_r2)
     register void * reg0 __asm("r0") = string;
     register int reg2 __asm("r2") = flags;
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x25" : "+r"(reg2), "=r"(reg1) : "r"(reg0) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x25" : "+r"(reg2), "=r"(reg1) : "r"(reg0) : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     return reg1;
 }
@@ -318,7 +318,7 @@ int OS_GSRead(int r0, int r2, int *out_r1, int *out_r2)
     register int reg0 __asm("r0") = r0;
     register int reg2 __asm("r2") = r2;
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x26" : "+r"(reg0), "+r"(reg2), "=r"(reg1) : : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x26" : "+r"(reg0), "+r"(reg2), "=r"(reg1) : : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     if (out_r1) *out_r1 = reg1;
     return reg0;
@@ -330,14 +330,14 @@ void OS_GSTrans(void *string, void *buffer, void *buffer2)
     register void * reg0 __asm("r0") = string;
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = buffer2;
-    __asm__ volatile("swi 0x27" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x27" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_GenerateError (SWI &2B): Generates an error and invokes the error handler */
 void OS_GenerateError(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
-    __asm__ volatile("swi 0x2B" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x2B" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_GetEnv (SWI &10): Read environment parameters */
@@ -346,7 +346,7 @@ int OS_GetEnv(int *out_r1, int *out_r2)
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
-    __asm__ volatile("swi 0x10" : "=r"(reg0), "=r"(reg1), "=r"(reg2) : : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x10" : "=r"(reg0), "=r"(reg1), "=r"(reg2) : : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     if (out_r1) *out_r1 = reg1;
     return reg0;
@@ -355,19 +355,19 @@ int OS_GetEnv(int *out_r1, int *out_r2)
 /* OS_InstallKeyHandler (SWI &3E): *Configure Caps sets the configured value for Caps Lock to ON, so that when you */
 void OS_InstallKeyHandler(void)
 {
-    __asm__ volatile("swi 0x3E" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3E" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_IntOff (SWI &14): Disables interrupts */
 void OS_IntOff(void)
 {
-    __asm__ volatile("swi 0x14" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x14" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_IntOn (SWI &13): Enables interrupts */
 void OS_IntOn(void)
 {
-    __asm__ volatile("swi 0x13" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x13" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_Mouse (SWI &1C): Read a mouse state from the buffer */
@@ -377,7 +377,7 @@ int OS_Mouse(int *out_r1, int *out_r2, int *out_r3)
     register int reg1 __asm("r1");
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
-    __asm__ volatile("swi 0x1C" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "memory");
+    __asm__ volatile("swi 0x1C" : "=r"(reg0), "=r"(reg1), "=r"(reg2), "=r"(reg3) : : "r12", "lr", "memory");
     if (out_r3) *out_r3 = reg3;
     if (out_r2) *out_r2 = reg2;
     if (out_r1) *out_r1 = reg1;
@@ -390,7 +390,7 @@ void OS_Plot(int r0, int r1, int r2)
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = r2;
-    __asm__ volatile("swi 0x45" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x45" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_PrettyPrint (SWI &44): Write an indirect string with some formatting to all of the active output streams */
@@ -399,14 +399,14 @@ void OS_PrettyPrint(void *string, void *ptr, void *string2)
     register void * reg0 __asm("r0") = string;
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = string2;
-    __asm__ volatile("swi 0x44" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x44" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_PrintChar (SWI &5D): Send a character to the printer stream */
 void OS_PrintChar(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x5D" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5D" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_ReadArgs (SWI &49): This range of SWIs use a common form and can convert a number into a string in a */
@@ -415,7 +415,7 @@ int OS_ReadArgs(int value, void *string, void *buffer)
     register int reg0 __asm("r0") = value;
     register void * reg1 __asm("r1") = string;
     register void * reg2 __asm("r2") = buffer;
-    __asm__ volatile("swi 0x49" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x49" : "+r"(reg0) : "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -424,7 +424,7 @@ int OS_ReadDynamicArea(int r0, int *out_r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x5C" : "+r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5C" : "+r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -432,14 +432,14 @@ int OS_ReadDynamicArea(int r0, int *out_r1)
 /* OS_ReadEscapeState (SWI &2C): Check whether an escape condition has occurred */
 void OS_ReadEscapeState(void)
 {
-    __asm__ volatile("swi 0x2C" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x2C" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_ReadMemMapEntries (SWI &52): Read by page number the logical to physical memory mapping used by MEMC */
 void OS_ReadMemMapEntries(void *buffer)
 {
     register void * reg0 __asm("r0") = buffer;
-    __asm__ volatile("swi 0x52" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x52" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_ReadMemMapInfo (SWI &51): Read the page size and count */
@@ -447,7 +447,7 @@ int OS_ReadMemMapInfo(int *out_r1)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x51" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x51" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -458,7 +458,7 @@ int OS_ReadModeVariable(int r0, int r1)
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2");
-    __asm__ volatile("swi 0x35" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x35" : "=r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
@@ -466,7 +466,7 @@ int OS_ReadModeVariable(int r0, int r1)
 int OS_ReadMonotonicTime(void)
 {
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x42" : "=r"(reg0) : : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x42" : "=r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -477,7 +477,7 @@ int OS_ReadPalette(int r0, int r1, int *out_r3)
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
-    __asm__ volatile("swi 0x2F" : "=r"(reg2), "=r"(reg3) : "r"(reg0), "r"(reg1) : "r12", "memory");
+    __asm__ volatile("swi 0x2F" : "=r"(reg2), "=r"(reg3) : "r"(reg0), "r"(reg1) : "r12", "lr", "memory");
     if (out_r3) *out_r3 = reg3;
     return reg2;
 }
@@ -490,7 +490,7 @@ int OS_ReadPoint(int r0, int r1, int *out_r3, int *out_r4)
     register int reg2 __asm("r2");
     register int reg3 __asm("r3");
     register int reg4 __asm("r4");
-    __asm__ volatile("swi 0x32" : "=r"(reg2), "=r"(reg3), "=r"(reg4) : "r"(reg0), "r"(reg1) : "r12", "memory");
+    __asm__ volatile("swi 0x32" : "=r"(reg2), "=r"(reg3), "=r"(reg4) : "r"(reg0), "r"(reg1) : "r12", "lr", "memory");
     if (out_r4) *out_r4 = reg4;
     if (out_r3) *out_r3 = reg3;
     return reg2;
@@ -501,7 +501,7 @@ int OS_ReadRAMFsLimits(int *out_r1)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x4A" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x4A" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -512,7 +512,7 @@ int OS_ReadUnsigned(int flags, void *string, int value)
     register int reg0 __asm("r0") = flags;
     register void * reg1 __asm("r1") = string;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x21" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x21" : "+r"(reg2) : "r"(reg0), "r"(reg1) : "r3", "r12", "lr", "memory");
     return reg2;
 }
 
@@ -521,7 +521,7 @@ void OS_ReadVduVariables(void *ptr, void *ptr2)
 {
     register void * reg0 __asm("r0") = ptr;
     register void * reg1 __asm("r1") = ptr2;
-    __asm__ volatile("swi 0x31" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x31" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_Release (SWI &20): Removes a routine from the list of those that claim a vector */
@@ -530,19 +530,19 @@ void OS_Release(int r0, void *r1, int value)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = value;
-    __asm__ volatile("swi 0x20" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x20" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_RemoveCallBack (SWI &5F): *Go calls machine code at the given address, passing it an optional environment string */
 void OS_RemoveCallBack(void)
 {
-    __asm__ volatile("swi 0x5F" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x5F" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_RemoveCursors (SWI &36): Remove the cursors from the screen */
 void OS_RemoveCursors(void)
 {
-    __asm__ volatile("swi 0x36" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x36" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_RemoveTickerEvent (SWI &3D): Remove a given call address and R12 value from the ticker event list */
@@ -550,13 +550,13 @@ void OS_RemoveTickerEvent(void *r0, int value)
 {
     register void * reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = value;
-    __asm__ volatile("swi 0x3D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3D" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_RestoreCursors (SWI &37): Restore the cursors to the screen */
 void OS_RestoreCursors(void)
 {
-    __asm__ volatile("swi 0x37" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x37" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_SWINumberFromString (SWI &39): Convert a string to a SWI number if valid */
@@ -564,7 +564,7 @@ int OS_SWINumberFromString(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x39" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x39" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -574,20 +574,20 @@ void OS_SWINumberToString(int r0, void *buffer, void *buffer2)
     register int reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = buffer;
     register void * reg2 __asm("r2") = buffer2;
-    __asm__ volatile("swi 0x38" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x38" : : "r"(reg0), "r"(reg1), "r"(reg2) : "r3", "r12", "lr", "memory");
 }
 
 /* OS_ServiceCall (SWI &30): Issue a service call to a module */
 void OS_ServiceCall(int r1)
 {
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x30" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x30" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_SetCallBack (SWI &1B): Cause a call to the CallBack handler */
 void OS_SetCallBack(void)
 {
-    __asm__ volatile("swi 0x1B" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x1B" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_SetColour (SWI &61): Sets the foreground or background graphics colours */
@@ -595,7 +595,7 @@ void OS_SetColour(int flags, void *ptr)
 {
     register int reg0 __asm("r0") = flags;
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x61" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x61" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_SetECFOrigin (SWI &56): Set the origin of the ECF patterns */
@@ -603,21 +603,21 @@ void OS_SetECFOrigin(int r0, int r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x56" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x56" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_SetMemMapEntries (SWI &53): Write the logical to physical memory mapping used by MEMC */
 void OS_SetMemMapEntries(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
-    __asm__ volatile("swi 0x53" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x53" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_UnusedSWI (SWI &19): Set up the handler for unused SWIs */
 void OS_UnusedSWI(void *handle)
 {
     register void * reg0 __asm("r0") = handle;
-    __asm__ volatile("swi 0x19" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x19" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_UpdateMEMC (SWI &1A): Read or alter the contents of the MEMC control register */
@@ -625,7 +625,7 @@ int OS_UpdateMEMC(int r0, int mask, int *out_r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = mask;
-    __asm__ volatile("swi 0x1A" : "+r"(reg0), "+r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x1A" : "+r"(reg0), "+r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -635,21 +635,21 @@ void OS_ValidateAddress(void *r0, void *r1)
 {
     register void * reg0 __asm("r0") = r0;
     register void * reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x3A" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x3A" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_Write0 (SWI &2): Writes an indirect string to all of the active output streams */
 void OS_Write0(void *string)
 {
     register void * reg0 __asm("r0") = string;
-    __asm__ volatile("swi 0x2" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x2" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_WriteC (SWI &0): Writes a character to all of the active output streams */
 void OS_WriteC(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x0" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x0" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_WriteEnv (SWI &48): Set the program environment command string and start time */
@@ -657,7 +657,7 @@ void OS_WriteEnv(void *string, void *ptr)
 {
     register void * reg0 __asm("r0") = string;
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x48" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x48" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_WriteN (SWI &46): Write a counted string to the VDU */
@@ -665,11 +665,11 @@ void OS_WriteN(void *string, int r1)
 {
     register void * reg0 __asm("r0") = string;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x46" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x46" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* OS_WriteS (SWI &1): Writes the following string to all of the active output streams */
 void OS_WriteS(void)
 {
-    __asm__ volatile("swi 0x1" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x1" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }

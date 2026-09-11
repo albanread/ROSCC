@@ -152,8 +152,16 @@ def classify(rows, chunk, shim_lines, mojo_lines, stats):
         )
         inputs = ", ".join(f'"r"(reg{rn})' for rn in ins_only)
         used = set(ins_only) | set(inouts) | set(out_only)
+        # "lr" is not optional. SWI banks its return address into r14_svc,
+        # so code already running in SVC mode — which is every RISC OS module
+        # entry point — loses its own return address across the SWI. Without
+        # the clobber the compiler leaves a leaf shim's return address in lr
+        # and the `mov pc, lr` at the end jumps back into the shim: a one
+        # instruction infinite loop. Harmless in USR mode, fatal in a module,
+        # so declare it always and let leaf shims push lr.
         clobbers = ", ".join(
-            [f'"r{n}"' for n in (0, 1, 2, 3, 12) if n not in used] + ['"memory"']
+            [f'"r{n}"' for n in (0, 1, 2, 3, 12) if n not in used]
+            + ['"lr"', '"memory"']
         )
         asm = f'"swi 0x{num:X}"'
         full_asm = f"__asm__ volatile({asm}"
@@ -249,6 +257,14 @@ def main():
         stats = {"emitted": 0, "reason": 0, "toomany": 0, "magic": 0, "hand": 0}
         classify(rows, chunk, shim, mojo, stats)
 
+        if stats["emitted"] == 0 and not os.path.exists(
+                os.path.join(a.out, f"appendix_{snake(chunk)}.mojo")):
+            # Nothing bindable and no hand-written appendix: writing the file
+            # would leave a module that has to be opened before you find out
+            # it is empty.
+            print(f"{chunk}: nothing bindable, no module written")
+            continue
+
         mpath = os.path.join(a.out, f"{snake(chunk)}.mojo")
         appendix = os.path.join(a.out, f"appendix_{snake(chunk)}.mojo")
         if os.path.exists(appendix):
@@ -262,6 +278,31 @@ def main():
             f"(skipped: {stats['reason']} reason-mux, {stats['toomany']} >R3, "
             f"{stats['magic']} magic, {stats['hand']} hand)"
         )
+
+    write_index(a.out)
+
+
+def write_index(out_dir):
+    """Rebuild __init__.mojo from the modules actually present."""
+    names = sorted(
+        f[:-5] for f in os.listdir(out_dir)
+        if f.endswith(".mojo") and not f.startswith(("appendix_", "__")))
+
+    lines = [
+        '"""RISC OS bindings for Mojo - generated from the PRM database plus',
+        "hand-written idiomatic layers. Import as:",
+        "",
+        "    from riscos import os, wimp",
+        "",
+        f"Generated modules: {len(names)}.",
+        '"""',
+        "",
+    ]
+    lines += [f"from . import {n}" for n in names]
+
+    path = os.path.join(out_dir, "__init__.mojo")
+    open(path, "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
+    print(f"index: {len(names)} modules")
 
 
 if __name__ == "__main__":

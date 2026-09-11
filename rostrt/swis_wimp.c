@@ -6,7 +6,7 @@
 void Wimp_AddMessages(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
-    __asm__ volatile("swi 0x400F6" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F6" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_BaseOfSprites (SWI &400EA): Finds the addresses of the ROM and RAM resident parts of the Wimp’s sprite pool */
@@ -14,7 +14,7 @@ int Wimp_BaseOfSprites(int *out_r1)
 {
     register int reg0 __asm("r0");
     register int reg1 __asm("r1");
-    __asm__ volatile("swi 0x400EA" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400EA" : "=r"(reg0), "=r"(reg1) : : "r2", "r3", "r12", "lr", "memory");
     if (out_r1) *out_r1 = reg1;
     return reg0;
 }
@@ -25,7 +25,7 @@ int Wimp_ClaimFreeMemory(int r0, int r1, int *out_r2)
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2");
-    __asm__ volatile("swi 0x400EE" : "+r"(reg1), "=r"(reg2) : "r"(reg0) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400EE" : "+r"(reg1), "=r"(reg2) : "r"(reg0) : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     return reg1;
 }
@@ -33,21 +33,21 @@ int Wimp_ClaimFreeMemory(int r0, int r1, int *out_r2)
 /* Wimp_CloseTemplate (SWI &400DA): Closes the currently open template file */
 void Wimp_CloseTemplate(void)
 {
-    __asm__ volatile("swi 0x400DA" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400DA" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_CloseWindow (SWI &400C6): Removes the specified window from the active list */
 void Wimp_CloseWindow(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400C6" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C6" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_CommandWindow (SWI &400EF): Opens a text window in which normal VDU 4-type output can be displayed */
 void Wimp_CommandWindow(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400EF" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400EF" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_CreateIcon (SWI &400C2): Tells the Wimp what the characteristics of an icon are */
@@ -55,7 +55,7 @@ int Wimp_CreateIcon(int handle, void *ptr)
 {
     register int reg0 __asm("r0") = handle;
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400C2" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C2" : "+r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -65,7 +65,7 @@ void Wimp_CreateMenu(void *window_handle, int r2, int r3)
     register void * reg1 __asm("r1") = window_handle;
     register int reg2 __asm("r2") = r2;
     register int reg3 __asm("r3") = r3;
-    __asm__ volatile("swi 0x400D4" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "memory");
+    __asm__ volatile("swi 0x400D4" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "lr", "memory");
 }
 
 /* Wimp_CreateSubMenu (SWI &400E8): Creates a submenu */
@@ -74,7 +74,7 @@ void Wimp_CreateSubMenu(void *ptr, int r2, int r3)
     register void * reg1 __asm("r1") = ptr;
     register int reg2 __asm("r2") = r2;
     register int reg3 __asm("r3") = r3;
-    __asm__ volatile("swi 0x400E8" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "memory");
+    __asm__ volatile("swi 0x400E8" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "lr", "memory");
 }
 
 /* Wimp_CreateWindow (SWI &400C1): Tells the Wimp what the characteristics of a window are */
@@ -82,7 +82,7 @@ int Wimp_CreateWindow(void *window_block)
 {
     register void * reg1 __asm("r1") = window_block;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x400C1" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C1" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -92,48 +92,48 @@ void Wimp_DecodeMenu(void *ptr, void *ptr2, void *buffer)
     register void * reg1 __asm("r1") = ptr;
     register void * reg2 __asm("r2") = ptr2;
     register void * reg3 __asm("r3") = buffer;
-    __asm__ volatile("swi 0x400D5" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "memory");
+    __asm__ volatile("swi 0x400D5" : : "r"(reg1), "r"(reg2), "r"(reg3) : "r0", "r12", "lr", "memory");
 }
 
 /* Wimp_DeleteIcon (SWI &400C4): Removes the definition of a specified icon */
 void Wimp_DeleteIcon(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400C4" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C4" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_DeleteWindow (SWI &400C3): Closes a specified window if it is still open, and then removes its definition */
 void Wimp_DeleteWindow(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400C3" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C3" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_DragBox (SWI &400D0): Initiates a dragging operation */
 void Wimp_DragBox(int r1)
 {
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x400D0" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400D0" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_Extend (SWI &400FB): Wimp_Extend (SWI &400FB) */
 void Wimp_Extend(void)
 {
-    __asm__ volatile("swi 0x400FB" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400FB" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetCaretPosition (SWI &400D3): Returns details of the caret’s state */
 void Wimp_GetCaretPosition(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400D3" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400D3" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetIconState (SWI &400CE): Returns a given icon’s state from its flags word */
 void Wimp_GetIconState(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400CE" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CE" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetMenuState (SWI &400F4): Gets the state of a menu, showing which item is selected */
@@ -143,14 +143,14 @@ void Wimp_GetMenuState(int r0, void *buffer, int window_handle, int handle)
     register void * reg1 __asm("r1") = buffer;
     register int reg2 __asm("r2") = window_handle;
     register int reg3 __asm("r3") = handle;
-    __asm__ volatile("swi 0x400F4" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x400F4" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
 
 /* Wimp_GetPointerInfo (SWI &400CF): Returns the position of the pointer and the state of the mouse buttons */
 void Wimp_GetPointerInfo(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400CF" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CF" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetRectangle (SWI &400CA): Returns the details of the next rectangle of the work area to be drawn */
@@ -158,7 +158,7 @@ int Wimp_GetRectangle(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x400CA" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CA" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -166,41 +166,41 @@ int Wimp_GetRectangle(void *ptr)
 void Wimp_GetWindowInfo(void *buffer)
 {
     register void * reg1 __asm("r1") = buffer;
-    __asm__ volatile("swi 0x400CC" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CC" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetWindowOutline (SWI &400E0): Gets the bounding box for a window */
 void Wimp_GetWindowOutline(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400E0" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E0" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_GetWindowState (SWI &400CB): Wimp_GetWindowState (SWI &400CB) */
 void Wimp_GetWindowState(void)
 {
-    __asm__ volatile("swi 0x400CB" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CB" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_OpenTemplate (SWI &400D9): Opens a specified template file */
 void Wimp_OpenTemplate(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400D9" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400D9" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_OpenWindow (SWI &400C5): Updates the list of active windows (ones that are to be displayed) */
 void Wimp_OpenWindow(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400C5" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C5" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_PlotIcon (SWI &400E2): Plots an icon in a window during a window redraw or update loop */
 void Wimp_PlotIcon(void *icon_block)
 {
     register void * reg1 __asm("r1") = icon_block;
-    __asm__ volatile("swi 0x400E2" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E2" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_Poll (SWI &400C7): Polls the Wimp to see whether certain events have occurred */
@@ -209,7 +209,7 @@ int Wimp_Poll(int mask, void *ptr, void *ptr2)
     register int reg0 __asm("r0") = mask;
     register void * reg1 __asm("r1") = ptr;
     register void * reg3 __asm("r3") = ptr2;
-    __asm__ volatile("swi 0x400C7" : "+r"(reg0) : "r"(reg1), "r"(reg3) : "r2", "r12", "memory");
+    __asm__ volatile("swi 0x400C7" : "+r"(reg0) : "r"(reg1), "r"(reg3) : "r2", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -217,27 +217,27 @@ int Wimp_Poll(int mask, void *ptr, void *ptr2)
 void Wimp_ProcessKey(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400DC" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400DC" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_ReadPalette (SWI &400E5): Reads the palette */
 void Wimp_ReadPalette(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400E5" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E5" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_ReadPixTrans (SWI &400ED): The purpose of this call is to discover, for a given sprite, how the Wimp would plot it if */
 void Wimp_ReadPixTrans(void)
 {
-    __asm__ volatile("swi 0x400ED" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400ED" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_ReadSysInfo (SWI &400F2): Reads system information from the Wimp */
 int Wimp_ReadSysInfo(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400F2" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F2" : "+r"(reg0) : : "r1", "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -246,21 +246,21 @@ int Wimp_RedrawWindow(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x400C8" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C8" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
 /* Wimp_RegisterFilter (SWI &400F5): Used by the Filter Manager to register or deregister a filter with the Wimp */
 void Wimp_RegisterFilter(void)
 {
-    __asm__ volatile("swi 0x400F5" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F5" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_RemoveMessages (SWI &400F7): Removes messages from the list of those known by a certain task */
 void Wimp_RemoveMessages(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
-    __asm__ volatile("swi 0x400F7" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F7" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_ReportError (SWI &400DF): Reports errors */
@@ -269,14 +269,14 @@ int Wimp_ReportError(void *ptr, int flags, void *ptr2)
     register void * reg0 __asm("r0") = ptr;
     register int reg1 __asm("r1") = flags;
     register void * reg2 __asm("r2") = ptr2;
-    __asm__ volatile("swi 0x400DF" : "+r"(reg1) : "r"(reg0), "r"(reg2) : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400DF" : "+r"(reg1) : "r"(reg0), "r"(reg2) : "r3", "r12", "lr", "memory");
     return reg1;
 }
 
 /* Wimp_ResizeIcon (SWI &400FC): *Configure WimpFont sets the configured value for the font to use on the desktop */
 void Wimp_ResizeIcon(void)
 {
-    __asm__ volatile("swi 0x400FC" : : : "r0", "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400FC" : : : "r0", "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SendMessage (SWI &400E7): Sends a message to a task, or broadcasts to all tasks */
@@ -286,7 +286,7 @@ int Wimp_SendMessage(int r0, void *ptr, int task_handle, int handle)
     register void * reg1 __asm("r1") = ptr;
     register int reg2 __asm("r2") = task_handle;
     register int reg3 __asm("r3") = handle;
-    __asm__ volatile("swi 0x400E7" : "+r"(reg2) : "r"(reg0), "r"(reg1), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x400E7" : "+r"(reg2) : "r"(reg0), "r"(reg1), "r"(reg3) : "r12", "lr", "memory");
     return reg2;
 }
 
@@ -294,7 +294,7 @@ int Wimp_SendMessage(int r0, void *ptr, int task_handle, int handle)
 void Wimp_SetColour(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400E6" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E6" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetExtent (SWI &400D7): Sets the work area extent of a specified window */
@@ -302,7 +302,7 @@ void Wimp_SetExtent(int window_handle, void *ptr)
 {
     register int reg0 __asm("r0") = window_handle;
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400D7" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400D7" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetFontColours (SWI &400F3): Sets the anti-aliased font colours from the two (standard Wimp) colours specified */
@@ -310,28 +310,28 @@ void Wimp_SetFontColours(int r1, int r2)
 {
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2") = r2;
-    __asm__ volatile("swi 0x400F3" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F3" : : "r"(reg1), "r"(reg2) : "r0", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetIconState (SWI &400CD): Sets a given icon’s state held in its flags word */
 void Wimp_SetIconState(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400CD" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400CD" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetMode (SWI &400E3): Changes the display mode used by the Wimp */
 void Wimp_SetMode(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400E3" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E3" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetPalette (SWI &400E4): Sets the palette */
 void Wimp_SetPalette(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
-    __asm__ volatile("swi 0x400E4" : : "r"(reg1) : "r0", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400E4" : : "r"(reg1) : "r0", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SetWatchdogState (SWI &400FA): Sets the state of the watchdog */
@@ -339,7 +339,7 @@ void Wimp_SetWatchdogState(int r0, int r1)
 {
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
-    __asm__ volatile("swi 0x400FA" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400FA" : : "r"(reg0), "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_SlotSize (SWI &400EC): Reads or sets the size of the current slot, the next slot, and the Wimp free pool */
@@ -348,7 +348,7 @@ int Wimp_SlotSize(int r0, int r1, int *out_r1, int *out_r2)
     register int reg0 __asm("r0") = r0;
     register int reg1 __asm("r1") = r1;
     register int reg2 __asm("r2");
-    __asm__ volatile("swi 0x400EC" : "+r"(reg0), "+r"(reg1), "=r"(reg2) : : "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400EC" : "+r"(reg0), "+r"(reg1), "=r"(reg2) : : "r3", "r12", "lr", "memory");
     if (out_r2) *out_r2 = reg2;
     if (out_r1) *out_r1 = reg1;
     return reg0;
@@ -358,14 +358,14 @@ int Wimp_SlotSize(int r0, int r1, int *out_r1, int *out_r2)
 void Wimp_StartTask(void *ptr)
 {
     register void * reg0 __asm("r0") = ptr;
-    __asm__ volatile("swi 0x400DE" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400DE" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_TextColour (SWI &400F0): Sets the text foreground or background colour */
 void Wimp_TextColour(int r0)
 {
     register int reg0 __asm("r0") = r0;
-    __asm__ volatile("swi 0x400F0" : : "r"(reg0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400F0" : : "r"(reg0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 /* Wimp_UpdateWindow (SWI &400C9): Starts a redraw of the parts of a window that are not up to date */
@@ -373,7 +373,7 @@ int Wimp_UpdateWindow(void *ptr)
 {
     register void * reg1 __asm("r1") = ptr;
     register int reg0 __asm("r0");
-    __asm__ volatile("swi 0x400C9" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x400C9" : "=r"(reg0) : "r"(reg1) : "r2", "r3", "r12", "lr", "memory");
     return reg0;
 }
 
@@ -384,5 +384,5 @@ void Wimp_WhichIcon(int window_handle, void *handle, int mask, int r3)
     register void * reg1 __asm("r1") = handle;
     register int reg2 __asm("r2") = mask;
     register int reg3 __asm("r3") = r3;
-    __asm__ volatile("swi 0x400D6" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "memory");
+    __asm__ volatile("swi 0x400D6" : : "r"(reg0), "r"(reg1), "r"(reg2), "r"(reg3) : "r12", "lr", "memory");
 }
