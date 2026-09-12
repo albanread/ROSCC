@@ -15,20 +15,20 @@ typedef unsigned long long u64;
 __attribute__((noinline)) void os_writec(int c)
 {
     register int r0 __asm("r0") = c;
-    __asm__ volatile("swi 0x00" : "+r"(r0) : : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x00" : "+r"(r0) : : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 __attribute__((noinline)) void os_write0(const char *s)
 {
     register const char *r0 __asm("r0") = s;
-    __asm__ volatile("swi 0x02" : : "r"(r0) : "r1", "r2", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x02" : : "r"(r0) : "r1", "r2", "r3", "r12", "lr", "memory");
 }
 
 __attribute__((noreturn, noinline)) void os_exit(int code, int reason)
 {
     register int r0 __asm("r0") = reason;
     register int r2 __asm("r2") = code;
-    __asm__ volatile("swi 0x11" : : "r"(r0), "r"(r2) : "r1", "r3", "r12", "memory");
+    __asm__ volatile("swi 0x11" : : "r"(r0), "r"(r2) : "r1", "r3", "r12", "lr", "memory");
     __builtin_unreachable();
 }
 
@@ -41,7 +41,7 @@ __attribute__((noinline)) const char *os_getenv(void)
     __asm__ volatile("swi 0x10"
                      : "=r"(r0), "=r"(r1)
                      :
-                     : "r2", "r3", "r12", "memory");
+                     : "r2", "r3", "r12", "lr", "memory");
     return r0;
 }
 
@@ -138,19 +138,109 @@ u64 KGEN_CompilerRT_AsyncRT_GetCurrentCPUDevice(void)
  * heap is worth having, they are never freed by design, and keeping them out
  * of the heap keeps a long-lived allocation from fragmenting it.
  */
+/* Overridable, because a relocatable module claims its whole static area
+ * from the RMA at initialisation: an application can afford a quarter of a
+ * megabyte of heap sitting in .bss, a module asking the machine for it at
+ * boot cannot. -DHEAP_BYTES=... at build time. */
+#ifndef HEAP_BYTES
 #define HEAP_BYTES 262144
+#endif
 
-static unsigned char heap_area[HEAP_BYTES] __attribute__((aligned(16)));
+#ifndef ARENA_BYTES
+#define ARENA_BYTES 32768
+#endif
+
+/* The heap comes from the application slot, not from .bss.
+ *
+ * RISC OS hands a program everything between the end of its image and the
+ * limit OS_GetEnv returns in R1, and crt0 already has that number - it uses
+ * it to place the stack. Nothing was using the space in between. Reserving
+ * a quarter of a megabyte inside the image instead is what made a hello
+ * world 304 KB: roscc materialises .bss as zeros in the file rather than
+ * declaring it zero-init, so heap_area and global_arena were 299,312 bytes
+ * of nothing written to disc and read back at every load.
+ *
+ * Claiming from the slot is also better behaviour than a fixed array: the
+ * heap becomes as large as the slot allows, so a program given a megabyte
+ * gets a megabyte instead of 256 KB.
+ *
+ * A relocatable module has no application slot and claims its workspace
+ * from the RMA, so the static arrays stay available for that build behind
+ * -DROSTRT_STATIC_HEAP. The slot path also falls back to them if crt0 never
+ * ran, which is the case for anything entered other than as an image. */
+extern unsigned char _end[];       /* defined by roscc: first byte past us */
+
+/* OS_GetEnv again, for R1 alone. os_getenv above fetches it and throws it
+ * away; crt0 fetches it too, to place the stack. Asking a third time costs
+ * a SWI and keeps the answer current, which matters for a Wimp task that
+ * has changed its slot with Wimp_SlotSize since it started. */
+static u32 os_mem_limit(void)
+{
+    register u32 r0 __asm("r0");
+    register u32 r1 __asm("r1");
+    __asm__ volatile("swi 0x10"
+                     : "=r"(r0), "=r"(r1)
+                     :
+                     : "r2", "r3", "r12", "lr", "memory");
+    return r1;
+}
+
+#ifndef STACK_BYTES
+#define STACK_BYTES 65536          /* the stack grows down from the top */
+#endif
+
+#ifdef ROSTRT_STATIC_HEAP
+static unsigned char static_heap[HEAP_BYTES] __attribute__((aligned(16)));
+static unsigned char static_arena[ARENA_BYTES] __attribute__((aligned(16)));
+#endif
+
+static unsigned char *heap_area;
+static u32 heap_bytes;
+static unsigned char *global_arena;
+static u32 arena_bytes;
+static int slot_ready;
 static int heap_ready;
+
+static void slot_init(void)
+{
+    if (slot_ready)
+        return;
+    slot_ready = 1;
+
+#ifndef ROSTRT_STATIC_HEAP
+    u32 base = ((u32)_end + 15) & ~15u;
+    u32 top = os_mem_limit();
+    /* The two grow towards each other: the stack down from the slot top
+     * that crt0 put in sp, the heap up from the end of the image. */
+    if (top > base + STACK_BYTES + ARENA_BYTES + 16384) {
+        top -= STACK_BYTES;
+        global_arena = (unsigned char *)base;
+        arena_bytes = ARENA_BYTES;
+        heap_area = (unsigned char *)(base + ARENA_BYTES);
+        heap_bytes = top - (base + ARENA_BYTES);
+        return;
+    }
+    /* Too small to be worth carving up, and there is no array to fall back
+     * on in an application build - saying so beats a wild pointer. */
+    puts_ro("rostrt: application slot too small for a heap\n");
+    os_exit(1, 0);
+#else
+    global_arena = static_arena;
+    arena_bytes = ARENA_BYTES;
+    heap_area = static_heap;
+    heap_bytes = HEAP_BYTES;
+#endif
+}
 
 static void heap_init(void)
 {
+    slot_init();
     register int r0 __asm("r0") = 0;             /* initialise */
     register void *r1 __asm("r1") = heap_area;
-    register u32 r3 __asm("r3") = HEAP_BYTES;
+    register u32 r3 __asm("r3") = heap_bytes;
     __asm__ volatile("swi 0x2001D"               /* X form: no error trap */
                      : "+r"(r0), "+r"(r1), "+r"(r3)
-                     : : "r2", "r12", "memory");
+                     : : "r2", "r12", "lr", "memory");
     heap_ready = 1;
 }
 
@@ -164,7 +254,7 @@ static void *heap_alloc(u64 size)
     register u32 r3 __asm("r3") = ((u32)size + 3) & ~3u;
     __asm__ volatile("swi 0x2001D"
                      : "+r"(r0), "+r"(r1), "=r"(r2), "+r"(r3)
-                     : : "r12", "memory");
+                     : : "r12", "lr", "memory");
     return r2;
 }
 
@@ -177,17 +267,21 @@ static void heap_free(void *p)
     register void *r2 __asm("r2") = p;
     __asm__ volatile("swi 0x2001D"
                      : "+r"(r0), "+r"(r1), "+r"(r2)
-                     : : "r3", "r12", "memory");
+                     : : "r3", "r12", "lr", "memory");
 }
 
 /* Bump arena, now only for globals and Wimp-lifetime structures. */
-static unsigned char global_arena[32768] __attribute__((aligned(16)));
+#ifndef ARENA_BYTES
+#define ARENA_BYTES 32768
+#endif
+
 static u64 arena_used;
 
 static void *alloc_arena(u64 size)
 {
+    slot_init();
     u64 sz = (size + 15) & ~(u64)15;
-    if (arena_used + sz > sizeof(global_arena)) {
+    if (arena_used + sz > arena_bytes) {
         puts_ro("rostrt: arena exhausted\n");
         os_exit(1, 0);
     }
@@ -196,13 +290,33 @@ static void *alloc_arena(u64 size)
     return p;
 }
 
+/* The hash identifies the global, and the "GetOrCreate" in the name is the
+ * whole contract: ask twice for the same one and you must get the same
+ * block back. Allocating a fresh block each time is invisible in an
+ * application, whose main() asks once — and quietly fatal in a module, whose
+ * entry points are called again and again, each call handing Mojo a new,
+ * re-zeroed copy of state it believed was shared. Formatted output was the
+ * symptom: fragments assembled against a position counter that kept
+ * reappearing at zero. */
+#ifndef GLOBAL_SLOTS
+#define GLOBAL_SLOTS 256
+#endif
+
+static u64 global_hash[GLOBAL_SLOTS];
+static void *global_block[GLOBAL_SLOTS];
+static int globals_known;
+
 void *KGEN_CompilerRT_GetOrCreateGlobal(u64 hash, u64 size, void *ctor,
                                         void *dtor)
 {
-    (void)hash;
     (void)dtor;
+    slot_init();
+    for (int i = 0; i < globals_known; i++)
+        if (global_hash[i] == hash)
+            return global_block[i];
+
     u64 sz = (size + 7) & ~(u64)7;
-    if (arena_used + sz > sizeof(global_arena)) {
+    if (arena_used + sz > arena_bytes) {
         puts_ro("rostrt: global arena exhausted\n");
         os_exit(1, 0);
     }
@@ -210,6 +324,14 @@ void *KGEN_CompilerRT_GetOrCreateGlobal(u64 hash, u64 size, void *ctor,
     for (u64 i = 0; i < size; i++)
         ((unsigned char *)p)[i] = 0;
     arena_used += sz;
+    if (globals_known < GLOBAL_SLOTS) {
+        global_hash[globals_known] = hash;
+        global_block[globals_known] = p;
+        globals_known++;
+    } else {
+        puts_ro("rostrt: too many globals; raise GLOBAL_SLOTS\n");
+        os_exit(1, 0);
+    }
     if (ctor) {
         typedef void (*fn_t)(void *);
         ((fn_t)ctor)(p);

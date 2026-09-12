@@ -15,14 +15,14 @@ const NOP: u32 = 0xE1A0_0000;
 const SWI_EXIT: u32 = 0xEF00_0011; // SWI OS_Exit
 
 // ARM relocation types we handle (ELF for ARM ABI)
-const R_ARM_ABS32: u8 = 2;
+pub const R_ARM_ABS32: u8 = 2;
 const R_ARM_CALL: u8 = 28;
 const R_ARM_JUMP24: u8 = 29;
 const R_ARM_V4BX: u8 = 40;
-const R_ARM_MOVW_ABS_NC: u8 = 43;
-const R_ARM_MOVT_ABS: u8 = 44;
+pub const R_ARM_MOVW_ABS_NC: u8 = 43;
+pub const R_ARM_MOVT_ABS: u8 = 44;
 const R_ARM_REL32: u8 = 3;
-const R_ARM_GOT_PREL: u8 = 96;
+pub const R_ARM_GOT_PREL: u8 = 96;
 
 fn align4(v: u32) -> u32 {
     (v + 3) & !3
@@ -116,7 +116,13 @@ fn build(objs: &[Object], entry_sym: &str) -> Result<LinkResult, String> {
             }
         }
     }
+    // cursor has to move to got_base, not merely past it: the slots are
+    // placed from the aligned address while cursor was advanced from the
+    // unaligned one, so the image buffer came out up to 3 bytes short and
+    // the copy panicked. It only ever aligned by luck - every .bss so far
+    // had happened to be a multiple of 4.
     let got_base = align4(cursor);
+    cursor = got_base;
     let mut got_slots: HashMap<String, u32> = HashMap::new();
     let mut got_vals: HashMap<String, u32> = HashMap::new();
     for (i, name) in got_names.iter().enumerate() {
@@ -139,6 +145,15 @@ fn build(objs: &[Object], entry_sym: &str) -> Result<LinkResult, String> {
         got_slots.insert(name.clone(), got_base + (i as u32) * 4);
         cursor += 4;
     }
+
+    // _end: the first address past the image, defined here because only the
+    // linker knows it. A runtime wanting a heap should claim it from the
+    // application slot - RISC OS hands a program everything from here up to
+    // the limit OS_GetEnv returns in R1 - rather than reserving one inside
+    // the image. Reserving it is what made a hello world 304 KB, of which
+    // 299,312 bytes were rostrt's heap_area and global_arena written out as
+    // zeros because .bss is materialised rather than declared.
+    globals.insert("_end".to_string(), align4(cursor));
 
     // Build the image: copy section data, then apply relocations.
     let img_base = BASE + HDR;
@@ -245,7 +260,7 @@ fn build(objs: &[Object], entry_sym: &str) -> Result<LinkResult, String> {
     Ok(LinkResult { entry, ro_size: ro_end - img_base, rw_size, file })
 }
 
-fn apply(rtype: u8, word: u32, s: u32, p: u32) -> Result<u32, String> {
+pub fn apply(rtype: u8, word: u32, s: u32, p: u32) -> Result<u32, String> {
     Ok(match rtype {
         // S + A, addend in place (REL form)
         R_ARM_ABS32 => s.wrapping_add(word),
