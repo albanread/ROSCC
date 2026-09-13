@@ -13,22 +13,32 @@
 mod aif;
 mod elf;
 
+#[cfg(feature = "llvm")]
 use std::ffi::{c_char, CStr, CString};
 
+#[cfg(feature = "llvm")]
 use llvm_sys::analysis::{LLVMVerifierFailureAction, LLVMVerifyModule};
+#[cfg(feature = "llvm")]
 use llvm_sys::core::*;
+#[cfg(feature = "llvm")]
 use llvm_sys::ir_reader::LLVMParseIRInContext2;
+#[cfg(feature = "llvm")]
 use llvm_sys::prelude::*;
+#[cfg(feature = "llvm")]
 use llvm_sys::target_machine::LLVMTargetMachineRef;
+#[cfg(feature = "llvm")]
 use llvm_sys::target_machine::{
     LLVMCodeModel, LLVMCodeGenFileType, LLVMCodeGenOptLevel, LLVMCreateTargetMachine,
     LLVMDisposeTargetMachine, LLVMGetTargetFromTriple, LLVMRelocMode,
     LLVMTargetMachineEmitToFile, LLVMCreateTargetDataLayout,
 };
 
+#[cfg(feature = "llvm")]
 const TRIPLE_A72: &str = "armv8a-none-eabi";
+#[cfg(feature = "llvm")]
 const TRIPLE_SA: &str = "armv4-none-eabi";
 
+#[cfg(feature = "llvm")]
 extern "C" {
     fn LLVMInitializeARMTargetInfo();
     fn LLVMInitializeARMTarget();
@@ -37,10 +47,12 @@ extern "C" {
     fn LLVMInitializeARMAsmPrinter();
 }
 
+#[cfg(feature = "llvm")]
 fn cstr(s: &str) -> CString {
     CString::new(s).expect("no NUL in string")
 }
 
+#[cfg(feature = "llvm")]
 unsafe fn make_target_machine(cpu: &str) -> (CString, LLVMTargetMachineRef) {
     let triple = cstr(TRIPLE_A72);
     let mut target = std::ptr::null_mut();
@@ -65,6 +77,7 @@ unsafe fn make_target_machine(cpu: &str) -> (CString, LLVMTargetMachineRef) {
     (triple, tm)
 }
 
+#[cfg(feature = "llvm")]
 unsafe fn emit(
     tm: *mut llvm_sys::target_machine::LLVMOpaqueTargetMachine,
     m: LLVMModuleRef,
@@ -94,15 +107,32 @@ fn usage() -> ! {
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     match args.first().map(|s| s.as_str()) {
-        Some("demo") => unsafe { cmd_demo() },
-        Some("ingest") => unsafe { cmd_ingest(&args[1..]) },
+        Some("demo") => {
+            #[cfg(feature = "llvm")]
+            unsafe { cmd_demo() }
+            #[cfg(not(feature = "llvm"))]
+            no_llvm("demo");
+        }
+        Some("ingest") => {
+            #[cfg(feature = "llvm")]
+            unsafe { cmd_ingest(&args[1..]) }
+            #[cfg(not(feature = "llvm"))]
+            no_llvm("ingest");
+        }
         Some("link") => cmd_link(&args[1..]),
         _ => usage(),
     }
 }
 
+#[cfg(not(feature = "llvm"))]
+fn no_llvm(cmd: &str) -> ! {
+    eprintln!("roscc: `{cmd}` needs a linked LLVM; rebuild with --features llvm");
+    std::process::exit(2)
+}
+
 // ---------------- demo ----------------
 
+#[cfg(feature = "llvm")]
 #[allow(deprecated)]
 unsafe fn build_demo_module(ctx: LLVMContextRef) -> LLVMModuleRef {
     let m = LLVMModuleCreateWithNameInContext(cstr("hello").as_ptr(), ctx);
@@ -143,6 +173,7 @@ unsafe fn build_demo_module(ctx: LLVMContextRef) -> LLVMModuleRef {
     m
 }
 
+#[cfg(feature = "llvm")]
 unsafe fn cmd_demo() {
     LLVMInitializeARMTargetInfo();
     LLVMInitializeARMTarget();
@@ -172,8 +203,10 @@ unsafe fn cmd_demo() {
 
 // ---------------- ingest ----------------
 
+#[cfg(feature = "llvm")]
 const ATTR_FN: u32 = u32::MAX; // LLVMAttributeFunctionIndex
 
+#[cfg(feature = "llvm")]
 unsafe fn cmd_ingest(args: &[String]) {
     let mut input: Option<&str> = None;
     let mut output = "a.out.o".to_string();

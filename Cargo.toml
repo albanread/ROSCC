@@ -5,4 +5,9 @@ edition = "2021"
 build = "build.rs"
 
 [dependencies]
-llvm-sys = "221.1.0"
+llvm-sys = { version = "221.1.0", optional = true }
+
+[features]
+default = []
+# `ingest`/`demo` need a linked LLVM (llvm-sys); the linker does not.
+llvm = ["dep:llvm-sys"]
