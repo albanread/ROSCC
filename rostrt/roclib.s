@@ -170,6 +170,9 @@ _kernel_register_slotextend:
 _kernel_raise_error:
     .word 0xE3A0F000
 _k_entries_end:
+    .space 192      @ veneer literal pool slack (found live:
+                        @  the module writes LDR pc,[pc,#imm] literals
+                        @  past the table end)
 
     .global _clib2_start
     .global _clib2_end
@@ -756,6 +759,7 @@ _swi:
 _swix:
     .word 0xE3A0F000 @ unsafe class: slot only
 _clib2_end:
+    .space 740      @ veneer literal pool slack
 
     .global _clib5_start
     .global _clib5_end
@@ -1328,6 +1332,7 @@ sinhf:
 tanhf:
     .word 0xE3A0F000 @ unsafe class: slot only
 _clib5_end:
+    .space 4096        @ sacrificial: the module's veneer literal pool
 
     .section Stub$$Data,"aw",%progbits
     .align 2

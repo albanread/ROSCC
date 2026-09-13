@@ -12,6 +12,7 @@ extern void OS_Write0(const char *);
 /* The binding: slot symbols, declared exactly as the DDE headers spell
  * them (scalar prototypes only). */
 extern unsigned long roclib_init(void);
+extern unsigned long roclib_init_stateful(void);
 extern int strlen(const char *);
 extern int strcmp(const char *, const char *);
 extern void *malloc(unsigned long);
@@ -52,20 +53,47 @@ static void check(const char *what, unsigned long got, unsigned long want)
 
 int main(void)
 {
-    static const char msg[] = "Hello, SharedCLibrary!";
-
-    unsigned long ver = roclib_init();
+    unsigned long ver = roclib_init_stateful();
     if (ver == 0) {
-        OS_Write0("clibtest: LibInitAPCS_32 failed\n");
+        OS_Write0("clibstate: init failed\n");
         return 1;
     }
-    OS_Write0("clibtest: registered, CLib version ");
-    print_hex(ver);
-    OS_Write0("\n");
+    OS_Write0("clibstate: registered, probing stateful CLib\n");
+    /* The stateful half: the _kernel_init step in roclib_init builds the
+     * heap and stdio state.  Probe the allocator first, then stdio. */
+    char *m = malloc(64);
+    OS_Write0("malloc(64): ");
+    print_hex((unsigned long)m);
+    if (m) {
+        for (int i = 0; i < 64; i++)
+            m[i] = (char)i;
+        unsigned long sum = 0;
+        for (int i = 0; i < 64; i++)
+            sum += (unsigned char)m[i];
+        check("malloc r/w", sum, 2016);  /* 0+1+...+63 */
+        free(m);
+    } else {
+        OS_Write0("  (null) FAIL\n");
+        fails++;
+    }
 
-    check("strlen", strlen(msg), sizeof(msg) - 1);
-    check("strcmp(eq)", strcmp(msg, msg), 0);
-    check("strcmp(ne)", strcmp("a", "b") != 0, 1);
+    void *f = fopen("clibtest", "rb");
+    OS_Write0("fopen(clibtest): ");
+    print_hex((unsigned long)f);
+    if (!f) {
+        OS_Write0("  (null) FAIL\n");
+        fails++;
+    } else {
+        OS_Write0("\n");
+        fseek(f, 0, 2 /* SEEK_END */);
+        long size = ftell(f);
+        fclose(f);
+        OS_Write0("size: ");
+        print_hex(size);
+        OS_Write0(size > 100 ? "  ok\n" : "  FAIL\n");
+        if (size <= 100)
+            fails++;
+    }
 
     OS_Write0(fails ? "clibtest: FAILURES\n" : "clibtest: all ok\n");
     return fails ? 1 : 0;
