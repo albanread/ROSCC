@@ -81,6 +81,10 @@ fn build(objs: &[Object], entry_sym: &str) -> Result<LinkResult, String> {
             }
         }
     }
+    // The end of everything linked — the SharedCLibrary handshake wants the
+    // top of the client's statics, and programs need a defensible "heap
+    // starts here" without parsing the AIF header themselves.
+    globals.insert("__image_end".to_string(), cursor);
     let entry = *globals
         .get(entry_sym)
         .ok_or_else(|| format!("entry symbol '{entry_sym}' not found"))?;
