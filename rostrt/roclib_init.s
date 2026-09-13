@@ -69,11 +69,14 @@ roclib_init_stateful:
         bvs     .Lfailed
 
         ldr     r9, =_k_data_start
+        @ cl_stub's post-LibInit protocol, verbatim: r4 takes the word
+        @ LibInit returned in r0, and r1/r2 keep the module's own stack
+        @ bounds — it carves its layout (its bounds ran 0x2C0 below
+        @ ours on the farm) and _kernel_init wants ITS numbers, not
+        @ ours.  Overwriting them is what walked the garbage chain.
+        mov     r4, r0
         ldr     r0, =_k_init_block      @ {RO base, RTSK base, RTSK limit}
-        ldr     r1, =_k_data_start
-        add     r2, r1, #(512 << 10)
         mov     r3, #0
-        mov     r4, r7
         bl      _kernel_init            @ the veneered slot
         @ If the module returns rather than driving the client through
         @ _kernel_init's own path, continue to the caller with r6 intact.
