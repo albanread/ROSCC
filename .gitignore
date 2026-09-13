@@ -2,3 +2,4 @@
 rostrt/build/
 *.o
 *.elf
+test/*.ff8
