@@ -1,0 +1,8268 @@
+[
+ {
+  "name": "isblank",
+  "header": "ctype",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "tolower",
+  "header": "ctype",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "toupper",
+  "header": "ctype",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "imaxabs",
+  "header": "inttypes",
+  "ret": "intmax_t",
+  "params": [
+   "intmax_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "imaxdiv",
+  "header": "inttypes",
+  "ret": "imaxdiv_t",
+  "params": [
+   "intmax_t",
+   "intmax_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strtoimax",
+  "header": "inttypes",
+  "ret": "intmax_t",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strtoumax",
+  "header": "inttypes",
+  "ret": "uintmax_t",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_current_stack_chunk",
+  "header": "kernel",
+  "ret": "_kernel_stack_chunk *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_setreturncode",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "unsigned code"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_exit",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_raise_error",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "_kernel_oserror *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_exittraphandler",
+  "header": "kernel",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_hostos",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_fpavailable",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_swi",
+  "header": "kernel",
+  "ret": "_kernel_oserror *",
+  "params": [
+   "int no",
+   "_kernel_swi_regs *in",
+   "_kernel_swi_regs *out"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_swi_c",
+  "header": "kernel",
+  "ret": "_kernel_oserror *",
+  "params": [
+   "int no",
+   "_kernel_swi_regs *in",
+   "_kernel_swi_regs *out",
+   "int *carry"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_command_string",
+  "header": "kernel",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osbyte",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "int x",
+   "int y"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osrdch",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_oswrch",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int ch"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osbget",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "unsigned handle"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osbput",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int ch",
+   "unsigned handle"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osgbpb",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "unsigned handle",
+   "_kernel_osgbpb_block *inout"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osword",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "int *data"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osfind",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "char *name"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osfile",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "const char *name",
+   "_kernel_osfile_block *inout"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_osargs",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int op",
+   "unsigned handle",
+   "int arg"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_oscli",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "const char *s"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_last_oserror",
+  "header": "kernel",
+  "ret": "_kernel_oserror *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_getenv",
+  "header": "kernel",
+  "ret": "_kernel_oserror *",
+  "params": [
+   "const char *name",
+   "char *buffer",
+   "unsigned size"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_setenv",
+  "header": "kernel",
+  "ret": "_kernel_oserror *",
+  "params": [
+   "const char *name",
+   "const char *value"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_system",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "const char *string",
+   "int chain"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_alloc",
+  "header": "kernel",
+  "ret": "unsigned",
+  "params": [
+   "unsigned minwords",
+   "void **block"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_register_allocs",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "allocproc *malloc",
+   "freeproc *free"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__rt_allocauto",
+  "header": "kernel",
+  "ret": "void *",
+  "params": [
+   "unsigned"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__rt_freeauto",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_register_slotextend",
+  "header": "kernel",
+  "ret": "_kernel_ExtendProc *",
+  "params": [
+   "_kernel_ExtendProc *proc"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_escape_seen",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_unwind",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "_kernel_unwindblock *inout",
+   "char **language"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_procname",
+  "header": "kernel",
+  "ret": "char *",
+  "params": [
+   "int pc"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_language",
+  "header": "kernel",
+  "ret": "char *",
+  "params": [
+   "int pc"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_udiv",
+  "header": "kernel",
+  "ret": "unsigned",
+  "params": [
+   "unsigned divisor",
+   "unsigned dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_urem",
+  "header": "kernel",
+  "ret": "unsigned",
+  "params": [
+   "unsigned divisor",
+   "unsigned dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_udiv10",
+  "header": "kernel",
+  "ret": "unsigned",
+  "params": [
+   "unsigned dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_sdiv",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int divisor",
+   "int dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_srem",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int divisor",
+   "int dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_sdiv10",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int dividend"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_call_client",
+  "header": "kernel",
+  "ret": "int",
+  "params": [
+   "int a1",
+   "int a2",
+   "int a3",
+   "_kernel_ccproc callee"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_client_is_module",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_processor_mode",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_irqs_on",
+  "header": "kernel",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_irqs_off",
+  "header": "kernel",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_irqs_disabled",
+  "header": "kernel",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_RMAalloc",
+  "header": "kernel",
+  "ret": "void *",
+  "params": [
+   "size_t size"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_RMAextend",
+  "header": "kernel",
+  "ret": "void *",
+  "params": [
+   "void *p",
+   "size_t size"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_kernel_RMAfree",
+  "header": "kernel",
+  "ret": "void",
+  "params": [
+   "void *p"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setlocale",
+  "header": "locale",
+  "ret": "char *",
+  "params": [
+   "int",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "localeconv",
+  "header": "locale",
+  "ret": "struct lconv *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__fpclassifyf",
+  "header": "math",
+  "ret": "__caller_narrow int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "__fpclassifyd",
+  "header": "math",
+  "ret": "int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "__signbitf",
+  "header": "math",
+  "ret": "__caller_narrow int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "__signbitd",
+  "header": "math",
+  "ret": "int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "__copysignf",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`; arg `float`"
+ },
+ {
+  "name": "__copysignd",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "acos",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "acosf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "acosl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "asin",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "asinf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "asinl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "atan",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "atanf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "atanl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "atan2",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "atan2f",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "atan2l",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "cos",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "cosf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "cosl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "sin",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "sinf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "sinl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "tan",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "tanf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "tanl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "acosh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "acoshf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "acoshl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "asinh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "asinhf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "asinhl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "atanh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "atanhf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "atanhl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "cosh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "coshf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "coshl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "sinh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "sinhf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "sinhl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "tanh",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "tanhf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "tanhl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "exp",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "expf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "expl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "exp2",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "exp2f",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "exp2l",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "expm1",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "expm1f",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "expm1l",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "frexp",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "frexpf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "frexpl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "ilogb",
+  "header": "math",
+  "ret": "int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "ilogbf",
+  "header": "math",
+  "ret": "int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "ilogbl",
+  "header": "math",
+  "ret": "int",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "arg `long double`"
+ },
+ {
+  "name": "ldexp",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "ldexpf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "ldexpl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "log",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "logf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "logl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "log10",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "log10f",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "log10l",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "log1p",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "log1pf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "log1pl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "log2",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "log2f",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "log2l",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "logb",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "logbf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "logbl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "modf",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double *"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double *`"
+ },
+ {
+  "name": "modff",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float *"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float *`"
+ },
+ {
+  "name": "modfl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double *"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double *`"
+ },
+ {
+  "name": "scalbn",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "scalbnf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "scalbnl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "int"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "scalbln",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "long int"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "scalblnf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "long int"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "scalblnl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long int"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "cbrt",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "cbrtf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "cbrtl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "fabs",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "fabsf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "fabsl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "hypot",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "hypotf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "hypotl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "pow",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "powf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "powl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "sqrt",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "sqrtf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "sqrtl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "erf",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "erff",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "erfl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "erfc",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "erfcf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "erfcl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "lgamma",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "lgammaf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "lgammal",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "tgamma",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "tgammaf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "tgammal",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "ceil",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "ceilf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "ceill",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "floor",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "floorf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "floorl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "nearbyint",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "nearbyintf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "nearbyintl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "rint",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "rintf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "rintl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "lrint",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "lrintf",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "lrintl",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "arg `long double`"
+ },
+ {
+  "name": "llrint",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `double`"
+ },
+ {
+  "name": "llrintf",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `float`"
+ },
+ {
+  "name": "llrintl",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `long double`"
+ },
+ {
+  "name": "round",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "roundf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "roundl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "lround",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "lroundf",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "lroundl",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "arg `long double`"
+ },
+ {
+  "name": "llround",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `double`"
+ },
+ {
+  "name": "llroundf",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `float`"
+ },
+ {
+  "name": "llroundl",
+  "header": "math",
+  "ret": "long long int",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long long int; arg `long double`"
+ },
+ {
+  "name": "trunc",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "truncf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`"
+ },
+ {
+  "name": "truncl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`"
+ },
+ {
+  "name": "fmod",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "fmodf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "fmodl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "remainder",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "remainderf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "remainderl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "remquo",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "remquof",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "remquol",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double",
+   "int *"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "copysign",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "copysignf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "copysignl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "nan",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "const char *"
+  ],
+  "class": "float",
+  "reason": "returns double"
+ },
+ {
+  "name": "nanf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "const char *"
+  ],
+  "class": "float",
+  "reason": "returns float"
+ },
+ {
+  "name": "nanl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "const char *"
+  ],
+  "class": "float",
+  "reason": "returns long double"
+ },
+ {
+  "name": "nextafter",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "nextafterf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "nextafterl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "nexttoward",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `long double`"
+ },
+ {
+  "name": "nexttowardf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `long double`"
+ },
+ {
+  "name": "nexttowardl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "fdim",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "fdimf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "fdiml",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "fmax",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "fmaxf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "fmaxl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "fmin",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "fminf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`"
+ },
+ {
+  "name": "fminl",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "fma",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`; arg `double`"
+ },
+ {
+  "name": "fmaf",
+  "header": "math",
+  "ret": "float",
+  "params": [
+   "float",
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns float; arg `float`; arg `float`; arg `float`"
+ },
+ {
+  "name": "fmal",
+  "header": "math",
+  "ret": "long double",
+  "params": [
+   "long double",
+   "long double",
+   "long double"
+  ],
+  "class": "float",
+  "reason": "returns long double; arg `long double`; arg `long double`; arg `long double`"
+ },
+ {
+  "name": "__d_acos",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_asin",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_atan",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_cos",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_sin",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_tan",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_log",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_lg10",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_exp",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_abs",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_sqrt",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_floor",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_ceil",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_trunc",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_rint",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`"
+ },
+ {
+  "name": "__d_lrint",
+  "header": "math",
+  "ret": "long int",
+  "params": [
+   "double"
+  ],
+  "class": "float",
+  "reason": "arg `double`"
+ },
+ {
+  "name": "__d_rem",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`"
+ },
+ {
+  "name": "__d_fma",
+  "header": "math",
+  "ret": "double",
+  "params": [
+   "double",
+   "double",
+   "double"
+  ],
+  "class": "float",
+  "reason": "returns double; arg `double`; arg `double`; arg `double`"
+ },
+ {
+  "name": "__r_acos",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_asin",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_atan",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_sin",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_cos",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_tan",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_log",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_lg10",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_exp",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_abs",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_sqrt",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_floor",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_ceil",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_trunc",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_rint",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`"
+ },
+ {
+  "name": "__r_lrint",
+  "header": "math",
+  "ret": "__caller_narrow long int",
+  "params": [
+   "float"
+  ],
+  "class": "float",
+  "reason": "arg `float`"
+ },
+ {
+  "name": "__r_rem",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`; arg `float`"
+ },
+ {
+  "name": "__r_fma",
+  "header": "math",
+  "ret": "__caller_narrow float",
+  "params": [
+   "float",
+   "float",
+   "float"
+  ],
+  "class": "float",
+  "reason": "returns __caller_narrow float; arg `float`; arg `float`; arg `float`"
+ },
+ {
+  "name": "setjmp",
+  "header": "setjmp",
+  "ret": "int",
+  "params": [
+   "jmp_buf"
+  ],
+  "class": "local",
+  "reason": "compiler-private state (jmp_buf)"
+ },
+ {
+  "name": "longjmp",
+  "header": "setjmp",
+  "ret": "void",
+  "params": [
+   "jmp_buf",
+   "int"
+  ],
+  "class": "local",
+  "reason": "compiler-private state (jmp_buf)"
+ },
+ {
+  "name": "__SIG_DFL",
+  "header": "signal",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__SIG_ERR",
+  "header": "signal",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__SIG_IGN",
+  "header": "signal",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "raise",
+  "header": "signal",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "remove",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rename",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "tmpfile",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_tmpfile64",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "tmpnam",
+  "header": "stdio",
+  "ret": "char *",
+  "params": [
+   "char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fclose",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fflush",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fopen",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [
+   "const char * restrict",
+   "const char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_fopen64",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [
+   "const char * restrict",
+   "const char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "freopen",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [
+   "const char * restrict",
+   "const char * restrict",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_freopen64",
+  "header": "stdio",
+  "ret": "FILE *",
+  "params": [
+   "const char * restrict",
+   "const char * restrict",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setbuf",
+  "header": "stdio",
+  "ret": "void",
+  "params": [
+   "FILE * restrict",
+   "char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setvbuf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "char * restrict",
+   "int",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "printf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "snprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "char * restrict",
+   "size_t",
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "sprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "char * restrict",
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "fscanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "scanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "sscanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "const char * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "vfprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vfscanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vscanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vsnprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "char * restrict",
+   "size_t",
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vsprintf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "char * restrict",
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "vsscanf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "const char * restrict",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "fgetc",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fgets",
+  "header": "stdio",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "int",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fputc",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "int",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fputs",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char * restrict",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__filbuf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gets",
+  "header": "stdio",
+  "ret": "char *",
+  "params": [
+   "char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__flsbuf",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "int",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "puts",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ungetc",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "int",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fread",
+  "header": "stdio",
+  "ret": "size_t",
+  "params": [
+   "void * restrict",
+   "size_t",
+   "size_t",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fwrite",
+  "header": "stdio",
+  "ret": "size_t",
+  "params": [
+   "const void * restrict",
+   "size_t",
+   "size_t",
+   "FILE * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fgetpos",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "_off_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_fgetpos64",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE * restrict",
+   "_off64_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fseek",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *",
+   "long int",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_fseeko",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *",
+   "_off_t",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_fseeko64",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *",
+   "_off64_t",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fsetpos",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *",
+   "const _off_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_fsetpos64",
+  "header": "stdio",
+  "ret": "int",
+  "params": [
+   "FILE *",
+   "const _off64_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ftell",
+  "header": "stdio",
+  "ret": "long int",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_ftello",
+  "header": "stdio",
+  "ret": "_off_t",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_ftello64",
+  "header": "stdio",
+  "ret": "_off64_t",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rewind",
+  "header": "stdio",
+  "ret": "void",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "clearerr",
+  "header": "stdio",
+  "ret": "void",
+  "params": [
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "perror",
+  "header": "stdio",
+  "ret": "void",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "atof",
+  "header": "stdlib",
+  "ret": "double",
+  "params": [
+   "const char *"
+  ],
+  "class": "float",
+  "reason": "returns double"
+ },
+ {
+  "name": "atoi",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "atol",
+  "header": "stdlib",
+  "ret": "long int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "atoll",
+  "header": "stdlib",
+  "ret": "long long int",
+  "params": [
+   "const char *"
+  ],
+  "class": "verify",
+  "reason": "returns long long int"
+ },
+ {
+  "name": "strtod",
+  "header": "stdlib",
+  "ret": "double",
+  "params": [
+   "const char * restrict",
+   "char ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns double"
+ },
+ {
+  "name": "strtof",
+  "header": "stdlib",
+  "ret": "float",
+  "params": [
+   "const char * restrict",
+   "char ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns float"
+ },
+ {
+  "name": "strtold",
+  "header": "stdlib",
+  "ret": "long double",
+  "params": [
+   "const char * restrict",
+   "char ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns long double"
+ },
+ {
+  "name": "strtol",
+  "header": "stdlib",
+  "ret": "long int",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strtoul",
+  "header": "stdlib",
+  "ret": "unsigned long int",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strtoll",
+  "header": "stdlib",
+  "ret": "long long int",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "verify",
+  "reason": "returns long long int"
+ },
+ {
+  "name": "strtoull",
+  "header": "stdlib",
+  "ret": "unsigned long long int",
+  "params": [
+   "const char * restrict",
+   "char ** restrict",
+   "int"
+  ],
+  "class": "verify",
+  "reason": "returns unsigned long long int"
+ },
+ {
+  "name": "rand",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "srand",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "unsigned int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_ANSI_rand",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_ANSI_srand",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "unsigned int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "aligned_alloc",
+  "header": "stdlib",
+  "ret": "void *",
+  "params": [
+   "size_t",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "calloc",
+  "header": "stdlib",
+  "ret": "char *",
+  "params": [
+   "size_t",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "free",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "malloc",
+  "header": "stdlib",
+  "ret": "char *",
+  "params": [
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "realloc",
+  "header": "stdlib",
+  "ret": "char *",
+  "params": [
+   "void *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "abort",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "atexit",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "void (* )(void)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "exit",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "at_quick_exit",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "void (* )(void)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "quick_exit",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_Exit",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getenv",
+  "header": "stdlib",
+  "ret": "char *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "system",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "bsearch",
+  "header": "stdlib",
+  "ret": "void *",
+  "params": [
+   "const void *",
+   "const void *",
+   "size_t",
+   "size_t",
+   "int (* )(const void *, const void *)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "qsort",
+  "header": "stdlib",
+  "ret": "void",
+  "params": [
+   "void *",
+   "size_t",
+   "size_t",
+   "int (* )(const void *, const void *)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "abs",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "div",
+  "header": "stdlib",
+  "ret": "div_t",
+  "params": [
+   "int",
+   "int"
+  ],
+  "class": "structret",
+  "reason": "returns div_t"
+ },
+ {
+  "name": "labs",
+  "header": "stdlib",
+  "ret": "long int",
+  "params": [
+   "long int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ldiv",
+  "header": "stdlib",
+  "ret": "ldiv_t",
+  "params": [
+   "long int",
+   "long int"
+  ],
+  "class": "structret",
+  "reason": "returns ldiv_t"
+ },
+ {
+  "name": "llabs",
+  "header": "stdlib",
+  "ret": "long long int",
+  "params": [
+   "long long int"
+  ],
+  "class": "verify",
+  "reason": "returns long long int; arg `long long int`"
+ },
+ {
+  "name": "lldiv",
+  "header": "stdlib",
+  "ret": "lldiv_t",
+  "params": [
+   "long long int",
+   "long long int"
+  ],
+  "class": "structret",
+  "reason": "returns lldiv_t; arg `long long int`; arg `long long int`"
+ },
+ {
+  "name": "mblen",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbtowc",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "wchar_t * restrict",
+   "const char * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wctomb",
+  "header": "stdlib",
+  "ret": "int",
+  "params": [
+   "char *",
+   "wchar_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbstowcs",
+  "header": "stdlib",
+  "ret": "size_t",
+  "params": [
+   "wchar_t * restrict",
+   "const char * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcstombs",
+  "header": "stdlib",
+  "ret": "size_t",
+  "params": [
+   "char * restrict",
+   "const wchar_t * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcpy",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "const char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strncpy",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "const char * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcat",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "const char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strncat",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "const char * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "memcmp",
+  "header": "string",
+  "ret": "int",
+  "params": [
+   "const void *",
+   "const void *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcmp",
+  "header": "string",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strncmp",
+  "header": "string",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcoll",
+  "header": "string",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strxfrm",
+  "header": "string",
+  "ret": "size_t",
+  "params": [
+   "char * restrict",
+   "const char * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strchr",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcspn",
+  "header": "string",
+  "ret": "size_t",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strpbrk",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strrchr",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strspn",
+  "header": "string",
+  "ret": "size_t",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strstr",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strtok",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "char * restrict",
+   "const char * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "memcpy",
+  "header": "string",
+  "ret": "void *",
+  "params": [
+   "void * restrict",
+   "const void * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "memmove",
+  "header": "string",
+  "ret": "void *",
+  "params": [
+   "void *",
+   "const void *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "memchr",
+  "header": "string",
+  "ret": "void *",
+  "params": [
+   "const void *",
+   "int",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "memset",
+  "header": "string",
+  "ret": "void *",
+  "params": [
+   "void *",
+   "int",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strerror",
+  "header": "string",
+  "ret": "char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strlen",
+  "header": "string",
+  "ret": "size_t",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_swi",
+  "header": "swis",
+  "ret": "int",
+  "params": [
+   "int swi_no",
+   "unsigned int",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "_swix",
+  "header": "swis",
+  "ret": "_kernel_oserror *",
+  "params": [
+   "int swi_no",
+   "unsigned int",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "clock",
+  "header": "time",
+  "ret": "clock_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "difftime",
+  "header": "time",
+  "ret": "double",
+  "params": [
+   "time_t",
+   "time_t"
+  ],
+  "class": "float",
+  "reason": "returns double"
+ },
+ {
+  "name": "mktime",
+  "header": "time",
+  "ret": "time_t",
+  "params": [
+   "struct tm *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "time",
+  "header": "time",
+  "ret": "time_t",
+  "params": [
+   "time_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "timespec_get",
+  "header": "time",
+  "ret": "int",
+  "params": [
+   "struct timespec *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "asctime",
+  "header": "time",
+  "ret": "char *",
+  "params": [
+   "const struct tm *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ctime",
+  "header": "time",
+  "ret": "char *",
+  "params": [
+   "const time_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gmtime",
+  "header": "time",
+  "ret": "struct tm *",
+  "params": [
+   "const time_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "localtime",
+  "header": "time",
+  "ret": "struct tm *",
+  "params": [
+   "const time_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strftime",
+  "header": "time",
+  "ret": "size_t",
+  "params": [
+   "char * restrict",
+   "size_t",
+   "const char * restrict",
+   "const struct tm * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fwprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "struct __FILE_struct * restrict",
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "wprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "swprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "wchar_t * restrict",
+   "size_t n",
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "fwscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "struct __FILE_struct * restrict",
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "wscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "swscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "const wchar_t * restrict",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "vfwprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "struct __FILE_struct * restrict",
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "vfwscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "struct __FILE_struct * restrict",
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "vwprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "vwscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "vswprintf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "wchar_t * restrict",
+   "size_t n",
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "vswscanf",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "const wchar_t * restrict",
+   "__va_listwc"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_listwc`"
+ },
+ {
+  "name": "fgetwc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "struct __FILE_struct *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fgetws",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "int n",
+   "struct __FILE_struct * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fputwc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "wchar_t c",
+   "struct __FILE_struct *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fputws",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t * restrict",
+   "struct __FILE_struct * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getwc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "struct __FILE_struct *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getwchar",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "putwc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "wchar_t",
+   "struct __FILE_struct *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "putwchar",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "wchar_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ungetwc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "wint_t",
+   "struct __FILE_struct *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fwide",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "struct __FILE_struct *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcstod",
+  "header": "wchar",
+  "ret": "double",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns double"
+ },
+ {
+  "name": "wcstof",
+  "header": "wchar",
+  "ret": "float",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns float"
+ },
+ {
+  "name": "wcstold",
+  "header": "wchar",
+  "ret": "long double",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict"
+  ],
+  "class": "float",
+  "reason": "returns long double"
+ },
+ {
+  "name": "wcstol",
+  "header": "wchar",
+  "ret": "long int",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcstoll",
+  "header": "wchar",
+  "ret": "long long int",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict",
+   "int"
+  ],
+  "class": "verify",
+  "reason": "returns long long int"
+ },
+ {
+  "name": "wcstoul",
+  "header": "wchar",
+  "ret": "unsigned long int",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcstoull",
+  "header": "wchar",
+  "ret": "unsigned long long int",
+  "params": [
+   "const wchar_t * restrict",
+   "wchar_t ** restrict",
+   "int"
+  ],
+  "class": "verify",
+  "reason": "returns unsigned long long int"
+ },
+ {
+  "name": "wcscpy",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsncpy",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wmemcpy",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wmemmove",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t *",
+   "const wchar_t *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcscat",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsncat",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcscmp",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsncmp",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcscoll",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsxfrm",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wmemcmp",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcschr",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "const wchar_t *",
+   "wchar_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcscspn",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcspbrk",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsrchr",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "const wchar_t *",
+   "wchar_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsspn",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsstr",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "const wchar_t *",
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcstok",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t * restrict",
+   "const wchar_t * restrict",
+   "wchar_t ** restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wmemchr",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "const wchar_t *",
+   "wchar_t",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcslen",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "const wchar_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wmemset",
+  "header": "wchar",
+  "ret": "wchar_t *",
+  "params": [
+   "wchar_t *",
+   "wchar_t",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsftime",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "wchar_t * restrict",
+   "size_t maxsize",
+   "const wchar_t * restrict",
+   "const struct tm * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "btowc",
+  "header": "wchar",
+  "ret": "wint_t",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wctob",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbsinit",
+  "header": "wchar",
+  "ret": "int",
+  "params": [
+   "const mbstate_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbrlen",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "const char * restrict",
+   "size_t",
+   "mbstate_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbrtowc",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "wchar_t * restrict",
+   "const char * restrict",
+   "size_t",
+   "mbstate_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcrtomb",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "char * restrict",
+   "wchar_t",
+   "mbstate_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mbsrtowcs",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "wchar_t * restrict",
+   "const char ** restrict",
+   "size_t",
+   "mbstate_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wcsrtombs",
+  "header": "wchar",
+  "ret": "size_t",
+  "params": [
+   "char * restrict",
+   "const wchar_t ** restrict",
+   "size_t",
+   "mbstate_t * restrict"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswalnum",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswalpha",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswblank",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswcntrl",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswdigit",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswgraph",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswlower",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswprint",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswpunct",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswspace",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswupper",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswxdigit",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iswctype",
+  "header": "wctype",
+  "ret": "int",
+  "params": [
+   "wint_t",
+   "wctype_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wctype",
+  "header": "wctype",
+  "ret": "wctype_t",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "towlower",
+  "header": "wctype",
+  "ret": "wint_t",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "towupper",
+  "header": "wctype",
+  "ret": "wint_t",
+  "params": [
+   "wint_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "towctrans",
+  "header": "wctype",
+  "ret": "wint_t",
+  "params": [
+   "wint_t",
+   "wctrans_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "wctrans",
+  "header": "wctype",
+  "ret": "wctrans_t",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "opendir",
+  "header": "tcpip/dirent",
+  "ret": "__BEGIN_DECLS DIR *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "readdir",
+  "header": "tcpip/dirent",
+  "ret": "struct dirent *",
+  "params": [
+   "DIR *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rewinddir",
+  "header": "tcpip/dirent",
+  "ret": "void",
+  "params": [
+   "DIR *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "closedir",
+  "header": "tcpip/dirent",
+  "ret": "int",
+  "params": [
+   "DIR *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "telldir",
+  "header": "tcpip/dirent",
+  "ret": "long",
+  "params": [
+   "const DIR *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "seekdir",
+  "header": "tcpip/dirent",
+  "ret": "void",
+  "params": [
+   "DIR *",
+   "long"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "scandir",
+  "header": "tcpip/dirent",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "struct dirent ***",
+   "int (*)(struct dirent *)",
+   "int (*)(const void *, const void *)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "alphasort",
+  "header": "tcpip/dirent",
+  "ret": "int",
+  "params": [
+   "const void *",
+   "const void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getdirentries",
+  "header": "tcpip/dirent",
+  "ret": "int",
+  "params": [
+   "int",
+   "char *",
+   "int",
+   "long *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "warn",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "const char *",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "vwarn",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "const char *",
+   "_BSD_VA_LIST_"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "warnx",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "const char *",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "vwarnx",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "const char *",
+   "_BSD_VA_LIST_"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "err_set_file",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "err_set_exit",
+  "header": "tcpip/err",
+  "ret": "void",
+  "params": [
+   "void (*)(int)"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getifaddrs",
+  "header": "tcpip/ifaddrs",
+  "ret": "__BEGIN_DECLS extern int",
+  "params": [
+   "struct ifaddrs **"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "freeifaddrs",
+  "header": "tcpip/ifaddrs",
+  "ret": "void",
+  "params": [
+   "struct ifaddrs *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endhostent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endnetent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endprotoent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endservent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gethostbyaddr",
+  "header": "tcpip/inetlib",
+  "ret": "struct hostent *",
+  "params": [
+   "const char *addr",
+   "int length",
+   "int type"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gethostbyname",
+  "header": "tcpip/inetlib",
+  "ret": "struct hostent *",
+  "params": [
+   "const char *nam"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gethostent",
+  "header": "tcpip/inetlib",
+  "ret": "struct hostent *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getnetbyaddr",
+  "header": "tcpip/inetlib",
+  "ret": "struct netent *",
+  "params": [
+   "unsigned long net",
+   "int type"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getnetbyname",
+  "header": "tcpip/inetlib",
+  "ret": "struct netent *",
+  "params": [
+   "const char *name"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getnetent",
+  "header": "tcpip/inetlib",
+  "ret": "struct netent *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getprotobyname",
+  "header": "tcpip/inetlib",
+  "ret": "struct protoent *",
+  "params": [
+   "const char *name"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getprotobynumber",
+  "header": "tcpip/inetlib",
+  "ret": "struct protoent *",
+  "params": [
+   "int proto"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getprotoent",
+  "header": "tcpip/inetlib",
+  "ret": "struct protoent *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getservbyname",
+  "header": "tcpip/inetlib",
+  "ret": "struct servent *",
+  "params": [
+   "const char *name",
+   "const char *proto"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getservbyport",
+  "header": "tcpip/inetlib",
+  "ret": "struct servent *",
+  "params": [
+   "int port",
+   "const char *proto"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getservent",
+  "header": "tcpip/inetlib",
+  "ret": "struct servent *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "htonl",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "u_long x"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "htons",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "int x"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_addr",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "const char *cp"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_aton",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "const char *cp",
+   "struct in_addr *in"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_lnaof",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "struct in_addr in"
+  ],
+  "class": "structret",
+  "reason": "arg `struct in_addr in`"
+ },
+ {
+  "name": "inet_makeaddr",
+  "header": "tcpip/inetlib",
+  "ret": "struct in_addr",
+  "params": [
+   "u_long net",
+   "u_long host"
+  ],
+  "class": "structret",
+  "reason": "returns struct in_addr"
+ },
+ {
+  "name": "inet_network",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "const char *cp"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_netof",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "struct in_addr in"
+  ],
+  "class": "structret",
+  "reason": "arg `struct in_addr in`"
+ },
+ {
+  "name": "inet_net_ntop",
+  "header": "tcpip/inetlib",
+  "ret": "char *",
+  "params": [
+   "int",
+   "const void *",
+   "int",
+   "char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_net_pton",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "int",
+   "const char *",
+   "void *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_ntoa",
+  "header": "tcpip/inetlib",
+  "ret": "char *",
+  "params": [
+   "struct in_addr"
+  ],
+  "class": "structret",
+  "reason": "arg `struct in_addr`"
+ },
+ {
+  "name": "inet_ntop",
+  "header": "tcpip/inetlib",
+  "ret": "const char *",
+  "params": [
+   "int",
+   "const void *",
+   "char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "inet_pton",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "int",
+   "const char *",
+   "void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "if_freenameindex",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [
+   "struct if_nameindex *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "if_indextoname",
+  "header": "tcpip/inetlib",
+  "ret": "char *",
+  "params": [
+   "unsigned int",
+   "char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "if_nameindex",
+  "header": "tcpip/inetlib",
+  "ret": "struct if_nameindex *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "if_nametoindex",
+  "header": "tcpip/inetlib",
+  "ret": "unsigned int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "namisipadr",
+  "header": "tcpip/inetlib",
+  "ret": "struct hostent *",
+  "params": [
+   "const char *nam"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ntohl",
+  "header": "tcpip/inetlib",
+  "ret": "u_long",
+  "params": [
+   "u_long x"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ntohs",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "int x"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rresvport",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "int *alport"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sethostent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [
+   "int f"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setnetent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [
+   "int f"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setprotoent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [
+   "int f"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setservent",
+  "header": "tcpip/inetlib",
+  "ret": "void",
+  "params": [
+   "int f"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sysctlbyname",
+  "header": "tcpip/inetlib",
+  "ret": "int",
+  "params": [
+   "const char *name",
+   "void *oldp",
+   "size_t *oldlenp",
+   "void *newp",
+   "size_t newlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iso_addr",
+  "header": "tcpip/inetlib",
+  "ret": "struct iso_addr *",
+  "params": [
+   "const char *addr"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iso_ntoa",
+  "header": "tcpip/inetlib",
+  "ret": "char *",
+  "params": [
+   "const struct iso_addr *isoa"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ns_addr",
+  "header": "tcpip/inetlib",
+  "ret": "struct",
+  "params": [
+   "const char *name"
+  ],
+  "class": "structret",
+  "reason": "returns struct"
+ },
+ {
+  "name": "ns_ntoa",
+  "header": "tcpip/inetlib",
+  "ret": "char *",
+  "params": [
+   "struct ns_addr addr"
+  ],
+  "class": "structret",
+  "reason": "arg `struct ns_addr addr`"
+ },
+ {
+  "name": "freehostent",
+  "header": "tcpip/netdb",
+  "ret": "void",
+  "params": [
+   "struct hostent *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getipnodebyaddr",
+  "header": "tcpip/netdb",
+  "ret": "struct hostent *",
+  "params": [
+   "const void *",
+   "size_t",
+   "int",
+   "int *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getipnodebyname",
+  "header": "tcpip/netdb",
+  "ret": "struct hostent *",
+  "params": [
+   "const char *",
+   "int",
+   "int",
+   "int *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "herror",
+  "header": "tcpip/netdb",
+  "ret": "void",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "hstrerror",
+  "header": "tcpip/netdb",
+  "ret": "const char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getaddrinfo",
+  "header": "tcpip/netdb",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "const struct addrinfo *",
+   "struct addrinfo **"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getnameinfo",
+  "header": "tcpip/netdb",
+  "ret": "int",
+  "params": [
+   "const struct sockaddr *",
+   "socklen_t",
+   "char *",
+   "size_t",
+   "char *",
+   "size_t",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "freeaddrinfo",
+  "header": "tcpip/netdb",
+  "ret": "void",
+  "params": [
+   "struct addrinfo *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gai_strerror",
+  "header": "tcpip/netdb",
+  "ret": "const char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__dn_skipname",
+  "header": "tcpip/resolv",
+  "ret": "__BEGIN_DECLS int",
+  "params": [
+   "const u_char *",
+   "const u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__fp_resstat",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "struct __res_state *",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__fp_query",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "const u_char *",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__fp_nquery",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "const u_char *",
+   "int",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__hostalias",
+  "header": "tcpip/resolv",
+  "ret": "char *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__putlong",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "u_int32_t",
+   "u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__putshort",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "u_int16_t",
+   "u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_time",
+  "header": "tcpip/resolv",
+  "ret": "char *",
+  "params": [
+   "u_int32_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_query",
+  "header": "tcpip/resolv",
+  "ret": "void",
+  "params": [
+   "const u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_cdnname",
+  "header": "tcpip/resolv",
+  "ret": "const u_char *",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "int",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_cdname",
+  "header": "tcpip/resolv",
+  "ret": "const u_char *",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_fqname",
+  "header": "tcpip/resolv",
+  "ret": "const u_char *",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_rr",
+  "header": "tcpip/resolv",
+  "ret": "const u_char *",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "FILE *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_type",
+  "header": "tcpip/resolv",
+  "ret": "const char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_class",
+  "header": "tcpip/resolv",
+  "ret": "const char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "__p_option",
+  "header": "tcpip/resolv",
+  "ret": "const char *",
+  "params": [
+   "u_long option"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "dn_comp",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "u_char *",
+   "int",
+   "u_char **",
+   "u_char **"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "dn_expand",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "const u_char *",
+   "char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_init",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_randomid",
+  "header": "tcpip/resolv",
+  "ret": "u_int16_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_query",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int",
+   "int",
+   "u_char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_search",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int",
+   "int",
+   "u_char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_querydomain",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "int",
+   "int",
+   "u_char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_mkquery",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "int",
+   "const char *",
+   "int",
+   "int",
+   "const u_char *",
+   "int",
+   "const u_char *",
+   "u_char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_send",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const u_char *",
+   "int",
+   "u_char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_isourserver",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const struct sockaddr_in *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_nameinquery",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int",
+   "int",
+   "const u_char *",
+   "const u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "res_queriesmatch",
+  "header": "tcpip/resolv",
+  "ret": "int",
+  "params": [
+   "const u_char *",
+   "const u_char *",
+   "const u_char *",
+   "const u_char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "accept",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct sockaddr *addr",
+   "int *addrlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "bind",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct sockaddr *name",
+   "int namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "connect",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct sockaddr *name",
+   "int namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpeername",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct sockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getsockname",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct sockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getsockopt",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "int level",
+   "int optname",
+   "void *optval",
+   "int *optlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getstablesize",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_nlist",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "kvm_t *kd",
+   "struct nlist *nl"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "listen",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "int backlog"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "recv",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "size_t len",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "recvfrom",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "size_t len",
+   "int flags",
+   "struct sockaddr *from",
+   "int *fromlenaddr"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "recvmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct msghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "select",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int nfds",
+   "fd_set *rfds",
+   "fd_set *wfds",
+   "fd_set *efds",
+   "struct timeval *tv"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "send",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const void *msg",
+   "size_t len",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sendmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct msghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sendto",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const void *msg",
+   "size_t len",
+   "int flags",
+   "const struct sockaddr *to",
+   "int tolen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setsockopt",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "int level",
+   "int optname",
+   "const void *optval",
+   "int optlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "shutdown",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "int how"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketclose",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int d"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socket",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int domain",
+   "int type",
+   "int protocol"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketstat",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct stat *buf"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketioctl",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "unsigned long cmd",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "socketread",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "unsigned int len"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketreadv",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct iovec *iov",
+   "int iovcnt"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketwrite",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const void *buf",
+   "unsigned int len"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketwritev",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct iovec *iov",
+   "int iovcnt"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "socketversion",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sysctl",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int *name",
+   "unsigned int namelen",
+   "void *oldp",
+   "size_t *oldlenp",
+   "void *newp",
+   "size_t newlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "naccept",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct nsockaddr *addr",
+   "int *addrlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ngetpeername",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct nsockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ngetsockname",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct nsockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "nrecvfrom",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "size_t len",
+   "int flags",
+   "struct nsockaddr *from",
+   "int *fromlenaddr"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "nrecvmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct nmsghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "nsendmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct nmsghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sendtosm",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const void *buf",
+   "size_t len",
+   "const void *buf1",
+   "size_t len1",
+   "struct sockaddr_in *to"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "oaccept",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct osockaddr *addr",
+   "int *addrlen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ogetpeername",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct osockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ogetsockname",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct osockaddr *name",
+   "int *namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "orecvfrom",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "size_t len",
+   "int flags",
+   "struct osockaddr *from",
+   "int *fromlenaddr"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "orecvmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct omsghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "osendmsg",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct omsghdr *msg",
+   "int flags"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_copyerror",
+  "header": "tcpip/socklib",
+  "ret": "int",
+  "params": [
+   "_kernel_oserror *e"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "_inet_err",
+  "header": "tcpip/socklib",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "access",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *path",
+   "int mode"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "bcmp",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const void *s1",
+   "const void *s2",
+   "unsigned int length"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "bcopy",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "const void *src",
+   "void *dst",
+   "unsigned int length"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "bzero",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "void *s",
+   "unsigned int length"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "chdir",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *dir"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "chmod",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *path",
+   "unsigned short mode"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "close",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endpwent",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "err",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "int eval",
+   "const char *fmt",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "errx",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "int eval",
+   "const char *fmt",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "err_set_silent",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "int silent"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ffs",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int value"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "filestat",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *fname",
+   "char *type"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "flushinput",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fstat",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "struct stat *buf"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getdtablesize",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getegid",
+  "header": "tcpip/unixlib",
+  "ret": "unsigned long",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "geteuid",
+  "header": "tcpip/unixlib",
+  "ret": "unsigned long",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getgroups",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int ngrps",
+   "unsigned long grparray[]"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gethostname",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "char *name",
+   "int max_namelen"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getlogin",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getopt",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int nargc",
+   "char *const *nargv",
+   "const char *ostr"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpass",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "const char *prompt"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpid",
+  "header": "tcpip/unixlib",
+  "ret": "long",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpwent",
+  "header": "tcpip/unixlib",
+  "ret": "struct passwd *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpwnam",
+  "header": "tcpip/unixlib",
+  "ret": "struct passwd *",
+  "params": [
+   "const char *name"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpwuid",
+  "header": "tcpip/unixlib",
+  "ret": "struct passwd *",
+  "params": [
+   "unsigned long uid"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gettimeofday",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "struct timeval *tv",
+   "struct timezone *tzp"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getuid",
+  "header": "tcpip/unixlib",
+  "ret": "unsigned long",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getvarhostname",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getvarusername",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getwd",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "char *buf"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "index",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "const char *s",
+   "int c"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ioctl",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "unsigned long cmd",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "killfile",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "const char *name"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_close",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "kvm_t *kd"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_open",
+  "header": "tcpip/unixlib",
+  "ret": "kvm_t *",
+  "params": [
+   "const char *uf",
+   "const char *mf",
+   "const char *sf",
+   "int flag",
+   "const char *errout"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_openfiles",
+  "header": "tcpip/unixlib",
+  "ret": "kvm_t *",
+  "params": [
+   "const char *uf",
+   "const char *mf",
+   "const char *sf",
+   "int flag",
+   "char *errout"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_read",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "kvm_t *kd",
+   "unsigned long kva",
+   "void *buf",
+   "size_t len"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "kvm_geterr",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "kvm_t *kd"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "lseek",
+  "header": "tcpip/unixlib",
+  "ret": "long",
+  "params": [
+   "int d",
+   "long offset",
+   "int whence"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "osreadc",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "read",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "void *buf",
+   "unsigned int nbytes"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "readv",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct iovec *iov",
+   "int iovcnt"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rindex",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "const char *s",
+   "int c"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setpwent",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sleep",
+  "header": "tcpip/unixlib",
+  "ret": "unsigned int",
+  "params": [
+   "unsigned int seconds"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strcasecmp",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *a",
+   "const char *b"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strdup",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "const char *s"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strncasecmp",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *a",
+   "const char *b",
+   "size_t n"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "strsep",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "char **stringp",
+   "const char *delim"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "unlink",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "const char *path"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "verr",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "int eval",
+   "const char *fmt",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "verrx",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "int eval",
+   "const char *fmt",
+   "__va_list"
+  ],
+  "class": "variadic",
+  "reason": "arg `__va_list`"
+ },
+ {
+  "name": "write",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const void *buf",
+   "unsigned int nbytes"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "writev",
+  "header": "tcpip/unixlib",
+  "ret": "int",
+  "params": [
+   "int s",
+   "const struct iovec *iov",
+   "int iovcnt"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "xgets",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "char *buf"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "xperror",
+  "header": "tcpip/unixlib",
+  "ret": "void",
+  "params": [
+   "const char *s"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "xputchar",
+  "header": "tcpip/unixlib",
+  "ret": "char",
+  "params": [
+   "char ch"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "xstrerror",
+  "header": "tcpip/unixlib",
+  "ret": "char *",
+  "params": [
+   "int num"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "alarm",
+  "header": "tcpip/unistd",
+  "ret": "unsigned int",
+  "params": [
+   "unsigned int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "chown",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "uid_t",
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "confstr",
+  "header": "tcpip/unistd",
+  "ret": "size_t",
+  "params": [
+   "int",
+   "char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "dup",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "dup2",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "execl",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "execle",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "execlp",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "execv",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char * const *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "execve",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char * const *",
+   "char * const *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "execvp",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char * const *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fork",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fpathconf",
+  "header": "tcpip/unistd",
+  "ret": "long",
+  "params": [
+   "int",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getcwd",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "char *",
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getgid",
+  "header": "tcpip/unistd",
+  "ret": "gid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpgrp",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getppid",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "isatty",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "link",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "pathconf",
+  "header": "tcpip/unistd",
+  "ret": "long",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "pause",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "pipe",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rmdir",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setgid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setpgid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "pid_t",
+   "pid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setsid",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setuid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "uid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sysconf",
+  "header": "tcpip/unistd",
+  "ret": "long",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "tcgetpgrp",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "tcsetpgrp",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "pid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ttyname",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "acct",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "async_daemon",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "brk",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "chroot",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "crypt",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "des_cipher",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char *",
+   "long",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "des_setkey",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *key"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "encrypt",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "endusershell",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "exect",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char * const *",
+   "char * const *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fchdir",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fchown",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "uid_t",
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "fsync",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ftruncate",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "off_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getdomainname",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "gethostid",
+  "header": "tcpip/unistd",
+  "ret": "long",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getmode",
+  "header": "tcpip/unistd",
+  "ret": "mode_t",
+  "params": [
+   "const void *",
+   "mode_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getpagesize",
+  "header": "tcpip/unistd",
+  "ret": "__pure int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "getusershell",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "initgroups",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "iruserok",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "unsigned long",
+   "int",
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mknod",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "mode_t",
+   "dev_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mkstemp",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "mktemp",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "nfssvc",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "void *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "nice",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "psignal",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [
+   "unsigned int",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "profil",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "char *",
+   "int",
+   "int",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "rcmd",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "char **",
+   "int",
+   "const char *",
+   "const char *",
+   "const char *",
+   "int *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "re_comp",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "re_exec",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "readlink",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "reboot",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "revoke",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ruserok",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int",
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sbrk",
+  "header": "tcpip/unistd",
+  "ret": "char *",
+  "params": [
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setdomainname",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setegid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "seteuid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "uid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setgroups",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "const gid_t *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sethostid",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [
+   "long"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sethostname",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setkey",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setlogin",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setmode",
+  "header": "tcpip/unistd",
+  "ret": "void *",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setpgrp",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "pid_t pid",
+   "pid_t pgrp"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setregid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "gid_t",
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setreuid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "uid_t",
+   "uid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setrgid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "gid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setruid",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "uid_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "setusershell",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "swapon",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "symlink",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "const char *"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "sync",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "syscall",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "int",
+   "..."
+  ],
+  "class": "variadic",
+  "reason": "arg `...`"
+ },
+ {
+  "name": "truncate",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [
+   "const char *",
+   "off_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ttyslot",
+  "header": "tcpip/unistd",
+  "ret": "int",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "ualarm",
+  "header": "tcpip/unistd",
+  "ret": "unsigned int",
+  "params": [
+   "unsigned int",
+   "unsigned int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "usleep",
+  "header": "tcpip/unistd",
+  "ret": "void",
+  "params": [
+   "unsigned int"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "valloc",
+  "header": "tcpip/unistd",
+  "ret": "void *",
+  "params": [
+   "size_t"
+  ],
+  "class": "identical",
+  "reason": ""
+ },
+ {
+  "name": "vfork",
+  "header": "tcpip/unistd",
+  "ret": "pid_t",
+  "params": [],
+  "class": "identical",
+  "reason": ""
+ }
+]
