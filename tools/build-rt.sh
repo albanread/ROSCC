@@ -35,6 +35,13 @@ build_profile () {
         "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
             -c rostrt/atomics_ldrex.s -o rostrt/build/atomics-$tag.o
     fi
+    # The SharedCLibrary binding: the generated slot table and the
+    # registration handshake.  The table is profile-independent but is
+    # assembled once per profile so every runtime object matches.
+    "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
+        -c rostrt/roclib.s -o rostrt/build/roclib-$tag.o
+    "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
+        -c rostrt/roclib_init.s -o rostrt/build/roclibinit-$tag.o
     echo "built $tag ($triple/$cpu)"
 }
 
