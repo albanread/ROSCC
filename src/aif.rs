@@ -83,8 +83,11 @@ fn build(objs: &[Object], entry_sym: &str) -> Result<LinkResult, String> {
     }
     // The end of everything linked — the SharedCLibrary handshake wants the
     // top of the client's statics, and programs need a defensible "heap
-    // starts here" without parsing the AIF header themselves.
-    globals.insert("__image_end".to_string(), cursor);
+    // starts here" without parsing the AIF header themselves.  Word
+    // aligned: the module's first stack-chunk write lands at +0xC, and a
+    // two-bytes-short cursor there is an alignment fault that took a week
+    // to find (measured: r12 = 0xD3BA, store to 0xD3C6, abort).
+    globals.insert("__image_end".to_string(), align4(cursor));
     let entry = *globals
         .get(entry_sym)
         .ok_or_else(|| format!("entry symbol '{entry_sym}' not found"))?;

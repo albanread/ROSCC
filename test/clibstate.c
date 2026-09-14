@@ -12,7 +12,7 @@ extern void OS_Write0(const char *);
 /* The binding: slot symbols, declared exactly as the DDE headers spell
  * them (scalar prototypes only). */
 extern unsigned long roclib_init(void);
-extern unsigned long roclib_init_stateful(void);
+extern void roclib_run(int (*main_fn)(int, char **)) __attribute__((noreturn));
 extern int strlen(const char *);
 extern int strcmp(const char *, const char *);
 extern void *malloc(unsigned long);
@@ -23,6 +23,18 @@ extern int fseek(void *, long, int);
 extern long ftell(void *);
 
 static int fails;
+
+static void print_dec(unsigned long v)
+{
+    char b[13];
+    char *p = b + 12;
+    *p = 0;
+    do {
+        *--p = '0' + (v % 10);
+        v /= 10;
+    } while (v);
+    OS_Write0(p);
+}
 
 static void print_hex(unsigned long v)
 {
@@ -51,14 +63,18 @@ static void check(const char *what, unsigned long got, unsigned long want)
     }
 }
 
+static int real_main(int argc, char **argv);
+
 int main(void)
 {
-    unsigned long ver = roclib_init_stateful();
-    if (ver == 0) {
-        OS_Write0("clibstate: init failed\n");
-        return 1;
-    }
-    OS_Write0("clibstate: registered, probing stateful CLib\n");
+    roclib_run(real_main);              /* hands control to the library */
+}
+
+static int real_main(int argc, char **argv)
+{
+    OS_Write0("clibstate: running under the library's _main, argc=");
+    print_dec(argc);
+    OS_Write0("\n");
     /* The stateful half: the _kernel_init step in roclib_init builds the
      * heap and stdio state.  Probe the allocator first, then stdio. */
     char *m = malloc(64);

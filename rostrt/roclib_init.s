@@ -1,31 +1,35 @@
-@ roclib_init — register this program as a SharedCLibrary client.
+@ roclib — register this program as a SharedCLibrary client.
 @
-@ Two steps, exactly as the library's own cl_stub.s drives them:
+@ The flow, read from the library's own sources (see
+@ tools/clibspec/SOURCES.md): cl_stub registers with r0 the descriptor
+@ list, r1 the client's statics end, r2 the RAM limit, r3 = -1, r4 = 0,
+@ r5 = -1, r6 = stack size K<<16 | 1 (the DDE crt claims 4 K), r7 the
+@ AIF zero-init size; SWI XLibInitAPCS_32 (&A0683) patches the slots and
+@ carves the client workspace; then the _kernel_init slot with r0 the
+@ init block and r4 the client word, keeping the module's returned r1/r2.
+@ The module calls the RTSK's Initialise with sl set — cl_init's version
+@ pokes the slot-extension byte, calls _clib_initialise, and returns the
+@ address of its RunSubMain; the module calls that after _kernel_init,
+@ and RunSubMain calls _kernel_command_string then _main, which builds
+@ argv, runs every stateful initial, calls main, and owns exit.
 @
-@   1. SWI XSharedCLibrary_LibInitAPCS_32 (&80683): r0 the descriptor
-@      list, r1/r2 the workspace bounds (the client's statics end and
-@      the RAM limit OS_GetEnv reports), r3 = -1 (no zero-init base),
-@      r4 = 0, r5 = -1 (no statics copy), r6 = stack size K<<16 | bit 0
-@      (32-bit client).  The module fills the MOV pc,#0 slots with
-@      veneers and returns a client word in r0.
-@
-@   2. The _kernel_init slot, with r0 -> _k_init_block (image RO base and
-@      the RTSK block bounds) and r4 = the word LibInit returned.  This
-@      is where the module builds the client's kernel state — heap,
-@      handlers, stdio.  Without it, statics stay zero and malloc/fopen
-@      walk into wild pointers.
-@
-@ The RTSK block is the run-time-system descriptor the module reads for
-@ the client's language ("C") and entry points; v1 carries null handlers
-@ and no ctors.  Returns the library version in r0, or 0 on failure.
+@ roclib_init is the pure registration (proven green); roclib_run is the
+@ complete flow and never returns.
 
         .syntax unified
         .arm
 
         .global roclib_init
+        .global roclib_run
         .extern _clib_stub_init
         .extern __image_end
         .extern _kernel_init
+        .extern _clib_initialise
+        .extern _kernel_command_string
+        .extern _main
+        .extern _k_data_start
+
+.set SL_Client_Offset, -536           @ s/h_stack
 
         .text
 roclib_init:
@@ -45,45 +49,59 @@ roclib_init:
 
         pop     {r4, r5, r6, r7, pc}    @ r6 = version
 
-@ roclib_init_stateful — registration, then the _kernel_init step that
-@ builds the client's kernel state (heap, handlers, stdio).  Driven the
-@ way k_init.s drives it: r0 the init block, r1/r2 the workspace bounds,
-@ r3 = 0, r4 the RAM limit, and v6/sb (r9) pointing at the statics
-@ block — the APCS client register our AAPCS code must supply.  The
-@ module's veneer literal pools sit past each table end (found live:
-@ see the slack in roclib.s).  FRONTIER: this step still faults inside
-@ the module — the argument contract has a residue to map (see
-@ test/clibstate.c).
-        .global roclib_init_stateful
-roclib_init_stateful:
+@ roclib_run(r0 = client main) — the complete flow; never returns.
+roclib_run:
         push    {r4, r5, r6, r7, lr}
-        swi     0x10                    @ OS_GetEnv: r1 = RAM limit
-        mov     r2, r1                  @ workspace end: the RAM limit
-        ldr     r1, =__image_end        @ workspace start
+        ldr     r3, =roclib_client_main
+        str     r0, [r3]
+        swi     0x10                    @ r0 -> command string, r1 = RAM limit
+        mov     r8, r1                  @ RAM limit
+        ldr     r1, =__image_end        @ workspace start: end of everything
+        mov     r2, r8                  @ workspace end: the RAM limit
         ldr     r0, =_clib_stub_init
         mov     r3, #-1
         mov     r4, #0
         mov     r5, #-1
-        ldr     r6, =((4 << 16) | 1)    @ measured from the DDE's own crt
+        ldr     r6, =((4 << 16) | 1)    @ 4 K stack | 32-bit (DDE-measured)
         mov     r7, #0                  @ zero-init size: none
         swi     0xA0683                 @ X SharedCLibrary_LibInitAPCS_32
         bvs     .Lfailed
 
-        @ r9 stays as the SWI left it (the DDE client enters _kernel_init
-        @ the same way — the module computes statics from r1/r0 itself).
-        @ cl_stub's post-LibInit protocol, verbatim: r4 takes the word
-        @ LibInit returned in r0, and r1/r2 keep the module's own stack
-        @ bounds — it carves its layout (its bounds ran 0x2C0 below
-        @ ours on the farm) and _kernel_init wants ITS numbers, not
-        @ ours.  Overwriting them is what walked the garbage chain.
-        mov     r4, r0
+        mov     r4, r0                  @ the client word
         ldr     r0, =_k_init_block      @ {RO base, RTSK base, RTSK limit}
         mov     r3, #0
-        bl      _kernel_init            @ the veneered slot
-        @ If the module returns rather than driving the client through
-        @ _kernel_init's own path, continue to the caller with r6 intact.
+        bl      _kernel_init            @ the module drives the rest from here
 
-        pop     {r4, r5, r6, r7, pc}    @ r6 = version
+        @ If the module returns without having called our RunSub, hang
+        @ loudly rather than fall into an uninitialised exit.
+.Lhang: b       .Lhang
+
+@ The RTSK Initialise, mirroring cl_init's: called by the module with
+@ a1 = the language block and sl = the client stack-chunk base.
+rtsk_initialise:
+        push    {r0, lr}
+        @ Enable Wimp slot extension for _kernel_alloc: the byte at
+        @ StaticData+0x115, relocated by the client's SL offset.
+        ldr     r3, =_k_data_start
+        ldr     r2, [r10, #SL_Client_Offset]
+        add     r3, r3, r2
+        add     r3, r3, #0x100         @ 0x115 in two steps: not an
+        add     r3, r3, #0x15          @ encodable ARM immediate
+        mov     r2, #1
+        strb    r2, [r3]
+        bl      _clib_initialise        @ a1 = the language block, as passed
+        ldr     r0, =roclib_runsub      @ what we return for the module to call
+        pop     {r1, pc}
+
+@ RunSubMain: the library builds argv, runs the initials, calls the
+@ client's main and owns exit.
+roclib_runsub:
+        push    {lr}
+        bl      _kernel_command_string  @ r0 = the command tail
+        ldr     r1, =roclib_client_main
+        ldr     r1, [r1]
+        bl      _main                   @ never returns
+        pop     {pc}
 
 .Lfailed:
         @ r0 -> error block {number, message}: say which SWI was refused
@@ -100,11 +118,15 @@ roclib_init_stateful:
         pop     {r4, r5, r6, r7, pc}
 
 err_prefix:
-        .asciz  "roclib_init: LibInitAPCS_32 (&80683) failed: "
+        .asciz  "roclib: LibInitAPCS_32 (&80683) failed: "
         .align  2
 
         .data
         .align  2
+        .global roclib_client_main
+roclib_client_main:
+        .word   0
+
 _k_init_block:
         .word   0x8080                  @ image RO base (entry address)
         .word   __rtsk
@@ -127,11 +149,5 @@ __rtsk_end:
 
 clang_string:
         .asciz  "C"
-
-        .text
-        .align  2
-rtsk_initialise:                        @ v1: nothing to register yet
-        mov     r0, #0
-        bx      lr
 
         .pool

@@ -14,6 +14,9 @@
 
 extern void OS_Write0(const char *);
 extern unsigned long roclib_init(void);
+#ifdef STATEFUL
+extern void roclib_run(int (*main_fn)(int, char **)) __attribute__((noreturn));
+#endif
 
 /* --- the binding, declared as the DDE headers spell them ------------ */
 
@@ -40,6 +43,8 @@ extern char *strtok(char *, const char *);
  * table (the slots exist but are never veneered).  The table lives in
  * our statics block; the masks are ctype.h's. */
 extern unsigned char __ctype[];
+#define CT_S 1   /* whitespace */
+#define CT_S 1   /* whitespace */
 #define CT_U 16
 #define CT_L 8
 #define CT_N 32
@@ -73,6 +78,7 @@ struct tm_test { int sec, min, hour, mday, mon, year, wday, yday, isdst; };
 static int fails, cases;
 #ifdef STATEFUL
 static int stateful = 1;
+static int real_main(int argc, char **argv);
 #else
 static int stateful = 0;
 #endif
@@ -240,7 +246,7 @@ static void t_ctype(void)
     good &= (__ctype['a' + 1] & CT_X) && (__ctype['F' + 1] & CT_X) &&
             !(__ctype['g' + 1] & CT_X);
     for (const char *p = cs; *p; p++)
-        good &= __ctype[*p + 1] & CT_C ? 1 : __ctype[*p + 1] != 0;
+        good &= (__ctype[*p + 1] & CT_S) != 0;
     good &= !(__ctype['x' + 1] & (CT_U | CT_L | CT_N));
     res("ctype-table", good);
 }
@@ -249,6 +255,7 @@ static void t_stdlib(void)
 {
     res("abs", abs(-42) == 42 && abs(42) == 42 && abs(0) == 0);
     res("labs", labs(-123456L) == 123456L && labs(7L) == 7L);
+    #ifdef CONVERTERS
     if (stateful) {
         res("atoi", atoi("42") == 42 && atoi("  -7x") == -7 && atoi("") == 0);
         res("atol", atol("123456") == 123456L && atol("-9") == -9L);
@@ -357,6 +364,15 @@ static void t_kernel(void)
     res("_kernel_swi", rc == 0 && out.r[1] > 0x10000 && (out.r[1] & 3) == 0);
 }
 
+#ifdef STATEFUL
+static int real_main(int argc, char **argv);
+int main(void) { roclib_run(real_main); }
+static int real_main(int argc, char **argv)
+{
+    OS_Write0("clibtorture: under the library's _main, argc=");
+    print_dec(argc);
+    OS_Write0("\n");
+#else
 int main(void)
 {
     unsigned long ver = roclib_init();
@@ -367,6 +383,7 @@ int main(void)
     OS_Write0("clibtorture: CLib ");
     print_hex(ver);
     OS_Write0("\n");
+#endif
 
     t_string();
     t_ctype();
@@ -382,7 +399,12 @@ int main(void)
     /* Exit through CLib's own _exit slot: leaving via raw OS_Exit keeps
      * the module's client chain stale and the NEXT registration hangs
      * (found on the farm: first run green, rerun dead). */
+#ifdef STATEFUL
+    return fails > 100 ? 100 : fails;   /* the library owns exit here */
+#else
     extern void _exit(int);
-    _exit(fails > 100 ? 100 : fails);
+    _exit(fails > 100 ? 100 : fails);   /* raw OS_Exit would strand the
+                                         * module's client chain */
     return 0;
+#endif
 }

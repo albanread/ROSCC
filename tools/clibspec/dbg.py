@@ -22,6 +22,7 @@ import time
 class Stub:
     def __init__(self, port):
         self.s = socket.create_connection(("127.0.0.1", port), timeout=10)
+        self.s.settimeout(120)
         self.s.sendall(b"+")
         self.buf = b""
 
