@@ -26,6 +26,9 @@ build_profile () {
     done
     "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
         -c rostrt/crt0.s -o rostrt/build/crt0-$tag.o
+    # The C-library entry: same stack setup, then roclib_run drives main.
+    "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
+        -c rostrt/crt0_clib.s -o rostrt/build/crt0clib-$tag.o
     "$CLANG" --target=$triple -mcpu=$cpu -mfloat-abi=soft \
         -c rostrt/aeabi.s -o rostrt/build/aeabi-$tag.o
     if [ "$tag" = sa ]; then
