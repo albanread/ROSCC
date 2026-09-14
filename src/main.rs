@@ -6,12 +6,16 @@
 //!                                 retarget to RISC OS ARM, emit an object
 //!   link [opts] <objs...>         link ELF objects at &8000 into a RISC OS
 //!                                 executable AIF (plus .elf sidecar)
+//!   link --module <objs...>       link at base 0 into a RISC OS relocatable
+//!                                 module (&FFA), header from the `.module`
+//!                                 section (plus .elf sidecar for symbols)
 //!
 //! Targets: riscos-a72 (cortex-a72, Pi 4) and riscos-sa (strongarm110,
 //! RPCEmu sandbox). Default -mcpu follows --cpu.
 
 mod aif;
 mod elf;
+mod module;
 
 #[cfg(feature = "llvm")]
 use std::ffi::{c_char, CStr, CString};
@@ -99,13 +103,31 @@ unsafe fn emit(
 
 fn usage() -> ! {
     eprintln!(
-        "usage: roscc demo\n       roscc ingest <in.ll> [-o out.o] [--cpu strongarm110|cortex-a72]\n       roscc link [--entry sym] [-o out,ff8] <objs...>"
+        "usage: roscc demo\n       roscc ingest <in.ll> [-o out.o] [--cpu strongarm110|cortex-a72]\n       roscc link [--entry sym] [-o out,ff8] <objs...>\n       roscc link --module [-o out,ffa] <objs...>"
     );
     std::process::exit(2)
 }
 
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    // ROSCC_ARGLOG=<file> appends the argument list to that file, for
+    // working out what a build script actually invoked. The variable names
+    // the file rather than merely switching a fixed one on: a hardcoded
+    // path is one developer's machine, and this repository has two
+    // platforms building from it. Failing to open it is not worth stopping
+    // a compile over, so it is ignored.
+    if let Ok(path) = std::env::var("ROSCC_ARGLOG") {
+        use std::io::Write;
+        if let Ok(mut f) = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(&path)
+        {
+            for a in &args {
+                let _ = writeln!(f, "arg[{:?}]", a);
+            }
+        }
+    }
     match args.first().map(|s| s.as_str()) {
         Some("demo") => {
             #[cfg(feature = "llvm")]
@@ -300,19 +322,21 @@ unsafe fn cmd_ingest(args: &[String]) {
 
 fn cmd_link(args: &[String]) {
     let mut entry = "_start".to_string();
-    let mut output = "a.out,ff8".to_string();
+    let mut output: Option<String> = None;
     let mut rt_profile: Option<String> = None;
+    let mut as_module = false;
     let mut objs: Vec<String> = Vec::new();
     let mut i = 0;
     while i < args.len() {
         match args[i].as_str() {
+            "--module" => as_module = true,
             "--entry" => {
                 i += 1;
                 entry = args.get(i).cloned().unwrap_or_else(|| usage());
             }
             "-o" => {
                 i += 1;
-                output = args.get(i).cloned().unwrap_or_else(|| usage());
+                output = Some(args.get(i).cloned().unwrap_or_else(|| usage()));
             }
             "--rt" => {
                 i += 1;
@@ -369,7 +393,7 @@ fn cmd_link(args: &[String]) {
                 eprintln!("roscc: {p}: {e}");
                 std::process::exit(1);
             });
-        if head.starts_with(b"!<arch>\n") {
+        if head.starts_with(b"!<arch>\n") || head.starts_with(b"!<thin>\n") {
             match elf::parse_archive(p) {
                 Ok(mut os) => parsed.append(&mut os),
                 Err(e) => {
@@ -387,6 +411,38 @@ fn cmd_link(args: &[String]) {
             }
         }
     }
+    let output = output.unwrap_or_else(|| {
+        if as_module { "a.out,ffa".into() } else { "a.out,ff8".into() }
+    });
+
+    if as_module {
+        match module::write_module(&parsed, &output) {
+            Ok(m) => {
+                println!(
+                    "roscc: linked {} object(s) -> {} (module, {} bytes)",
+                    parsed.len(),
+                    output,
+                    m.file.len()
+                );
+                for (name, off) in &m.entries {
+                    println!("       {name:<11} +{off:#06x}");
+                }
+                if m.sb_size != 0 {
+                    println!(
+                        "       static data {} bytes ({} copied from +{:#x}, \
+                         rest zeroed), claimed from the RMA at init",
+                        m.sb_size, m.rw_init_size, m.rw_init_off
+                    );
+                }
+            }
+            Err(e) => {
+                eprintln!("roscc: module link failed: {e}");
+                std::process::exit(1);
+            }
+        }
+        return;
+    }
+
     match aif::write_aif(&parsed, &entry, &output) {
         Ok(entry_addr) => {
             println!(

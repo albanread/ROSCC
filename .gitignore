@@ -2,4 +2,12 @@
 rostrt/build/
 *.o
 *.elf
+
+# Built images from the test fixtures.
 test/*.ff8
+tests/*/build/
+
+# Scratch output from a hand-run compile.
+/out/
+
+__pycache__/

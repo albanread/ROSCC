@@ -22,7 +22,7 @@ int Wimp_Initialise(int version, const char *name, int *out_version)
     __asm__ volatile("swi 0x400C0"
                      : "+r"(r0), "+r"(r1)
                      : "r"(r2), "r"(r3)
-                     : "r12", "memory");
+                     : "r12", "lr", "memory");
     if (out_version)
         *out_version = r0;
     return r1; /* task handle */
@@ -36,5 +36,5 @@ void Wimp_CloseDown(int task)
     __asm__ volatile("swi 0x400DD"
                      :
                      : "r"(r0), "r"(r1)
-                     : "r2", "r3", "r12", "memory");
+                     : "r2", "r3", "r12", "lr", "memory");
 }

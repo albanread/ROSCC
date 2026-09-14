@@ -10,6 +10,10 @@ pub struct Section {
     pub name: String,
     pub sh_type: u32,
     pub flags: u32,
+    /// Required alignment. Ignoring it is invisible until something in the
+    /// section has an alignment attribute that matters — an OS heap base, a
+    /// SIMD load — and then it is a fault a long way from here.
+    pub align: u32,
     pub data: Vec<u8>,
 }
 
@@ -69,9 +73,16 @@ pub fn parse(path: &str) -> Result<Object, String> {
 /// table members are consumed for naming only.
 pub fn parse_archive(path: &str) -> Result<Vec<Object>, String> {
     let d = fs::read(path).map_err(|e| format!("{path}: {e}"))?;
-    if &d[0..8] != b"!<arch>\n" {
+    let regular = &d[0..8] == b"!<arch>\n";
+    let thin = &d[0..8] == b"!<thin>\n";
+    if !regular && !thin {
         return Err(format!("{path}: not an ar archive"));
     }
+    // Thin archive member names are file paths relative to the archive.
+    let archive_dir = std::path::Path::new(path)
+        .parent()
+        .map(|p| p.to_path_buf())
+        .unwrap_or_default();
     let mut objs = Vec::new();
     let mut off = 8;
     let mut longnames: Vec<u8> = Vec::new();
@@ -110,9 +121,21 @@ pub fn parse_archive(path: &str) -> Result<Vec<Object>, String> {
         };
 
         if raw_name != "/" && !name.starts_with("__.SYMDEF") && !name.is_empty() {
-            match parse_bytes(data, &format!("{path}({name})")) {
-                Ok(o) => objs.push(o),
-                Err(e) => return Err(e),
+            if thin {
+                let ref_path = std::path::Path::new(&name);
+                let resolved = if ref_path.is_absolute() {
+                    ref_path.to_path_buf()
+                } else {
+                    archive_dir.join(ref_path)
+                };
+                let body = fs::read(&resolved)
+                    .map_err(|e| format!("{}: thin member: {e}", resolved.display()))?;
+                objs.push(parse_bytes(&body, &resolved.to_string_lossy())?);
+            } else {
+                match parse_bytes(data, &format!("{path}({name})")) {
+                    Ok(o) => objs.push(o),
+                    Err(e) => return Err(e),
+                }
             }
         }
         off = end + (size & 1); // members are 2-byte aligned
@@ -139,7 +162,7 @@ pub fn parse_bytes(d: &[u8], path: &str) -> Result<Object, String> {
     let shnum = rd_u16(d, 0x30) as usize;
     let shstrndx = rd_u16(d, 0x32) as usize;
 
-    let mut shs: Vec<(u32, u32, u32, u32, u32, u32, u32)> = Vec::new();
+    let mut shs: Vec<(u32, u32, u32, u32, u32, u32, u32, u32)> = Vec::new();
     for i in 0..shnum {
         let b = shoff + i * shentsize;
         shs.push((
@@ -150,6 +173,7 @@ pub fn parse_bytes(d: &[u8], path: &str) -> Result<Object, String> {
             rd_u32(d, b + 20), // size
             rd_u32(d, b + 24), // link
             rd_u32(d, b + 28), // info
+            rd_u32(d, b + 32), // addralign
         ));
     }
 
@@ -199,7 +223,7 @@ pub fn parse_bytes(d: &[u8], path: &str) -> Result<Object, String> {
 
     // Keep allocatable PROGBITS/NOBITS sections.
     for (i, so) in shs.iter().enumerate() {
-        let (name_off, ty, flags, off, size, _link, _info) = *so;
+        let (name_off, ty, flags, off, size, _link, _info, align) = *so;
         if flags & SHF_ALLOC == 0 || (ty != SHT_PROGBITS && ty != SHT_NOBITS) {
             continue;
         }
@@ -213,7 +237,13 @@ pub fn parse_bytes(d: &[u8], path: &str) -> Result<Object, String> {
             d[off as usize..(off + size) as usize].to_vec()
         };
         obj.keep.insert(i, obj.sections.len());
-        obj.sections.push(Section { name, sh_type: ty, flags, data });
+        obj.sections.push(Section {
+            name,
+            sh_type: ty,
+            flags,
+            align: align.max(4),
+            data,
+        });
     }
 
     // Relocations against kept sections.
