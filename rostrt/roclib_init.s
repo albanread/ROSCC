@@ -31,14 +31,15 @@
 roclib_init:
         push    {r4, r5, r6, r7, lr}
         swi     0x10                    @ OS_GetEnv: r0 -> strings, r1 = RAM limit
-        mov     r7, r1                  @ keep the RAM limit for _kernel_init
+        mov     r2, r1                  @ keep the RAM limit in r7's old role
         ldr     r1, =_k_data_start      @ workspace start: the statics block
-        add     r2, r1, #(512 << 10)    @ workspace end: statics + 512 K stack
+        add     r2, r1, #(512 << 10)    @ workspace end: statics + 512 K
         ldr     r0, =_clib_stub_init    @ descriptor list, -1 terminated
         mov     r3, #-1
         mov     r4, #0
         mov     r5, #-1
-        ldr     r6, =((512 << 16) | 1)  @ 512 K stack, 32-bit client
+        ldr     r6, =((512 << 16) | 1)  @ 512 K stack, 32-bit client — the
+                                        @ proven-green pure registration
         swi     0xA0683                 @ X SharedCLibrary_LibInitAPCS_32
         bvs     .Lfailed
 
@@ -57,18 +58,19 @@ roclib_init:
 roclib_init_stateful:
         push    {r4, r5, r6, r7, lr}
         swi     0x10                    @ OS_GetEnv: r1 = RAM limit
-        mov     r7, r1
-        ldr     r1, =_k_data_start
-        add     r2, r1, #(512 << 10)
+        mov     r2, r1                  @ workspace end: the RAM limit
+        ldr     r1, =__image_end        @ workspace start
         ldr     r0, =_clib_stub_init
         mov     r3, #-1
         mov     r4, #0
         mov     r5, #-1
-        ldr     r6, =((512 << 16) | 1)
+        ldr     r6, =((4 << 16) | 1)    @ measured from the DDE's own crt
+        mov     r7, #0                  @ zero-init size: none
         swi     0xA0683                 @ X SharedCLibrary_LibInitAPCS_32
         bvs     .Lfailed
 
-        ldr     r9, =_k_data_start
+        @ r9 stays as the SWI left it (the DDE client enters _kernel_init
+        @ the same way — the module computes statics from r1/r0 itself).
         @ cl_stub's post-LibInit protocol, verbatim: r4 takes the word
         @ LibInit returned in r0, and r1/r2 keep the module's own stack
         @ bounds — it carves its layout (its bounds ran 0x2C0 below
