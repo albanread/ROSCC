@@ -1,3 +1,9 @@
+> [!CAUTION]
+> 🛑 **REPOSITORY CLOSED — UNMAINTAINED.**
+>
+> Do not assume the reliability of any data in this repository. It will be
+> archived on **15 October 2026**.
+
 # roscc
 
 The RISC OS 5 back end of a modern toolchain. It takes ordinary **ELF32 ARM
