@@ -1,3 +1,5 @@
+This repository is scheduled to be archived on 15 October 2026. Pull requests and issues are not accepted.
+
 # roscc
 
 The RISC OS 5 back end of a toolchain. It takes ELF32 ARM EABI object
@@ -31,4 +33,3 @@ the `llvm` feature).
 
 Licence: MIT — see LICENSE and NOTICE.
 
-This repository is scheduled to be archived. Pull requests and issues are not accepted.
