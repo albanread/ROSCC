@@ -30,3 +30,5 @@ Link a relocatable module — the module header comes from
 the `llvm` feature).
 
 Licence: MIT — see LICENSE and NOTICE.
+
+This repository is scheduled to be archived. Pull requests and issues are not accepted.
